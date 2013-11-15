@@ -1,0 +1,13 @@
+/* CSS Document */
+
+body {
+	background: url(pattern.png);
+}
+
+#game {
+	display: block;
+	margin: auto;
+	
+	background: #FFFFFF;
+	border-radius: 10px;	
+}
