@@ -24,35 +24,54 @@ user_container img{
 
 </style>
 <script>
-function allowDrop(ev)
-{
-ev.preventDefault();
+//data 
+//var status = [false,false,false,false,false,false,false,false,false];
+//initGridStatus();
+/*function initGridStatus(){
+	var status = [false,false,false,false,false,false,false,false,false];
+}*/
+function allowDrop(e){
+	e.preventDefault();
 }
 
-function drag(ev)
-{
-ev.dataTransfer.setData("Text",ev.target.id);
+function drag(e){
+	e.dataTransfer.setData("Text",e.target.id);
+	
+	//test
+	//alert(document.getElementById(e.target.id));
 }
 
-function drop(ev)
-{
-ev.preventDefault();
-var data=ev.dataTransfer.getData("Text");
-ev.target.appendChild(document.getElementById(data));
+function drop(e){
+	e.preventDefault();
+	var data = e.dataTransfer.getData("Text");
+	e.target.appendChild(document.getElementById(data));
+		
+	//to take the last number from the grid id
+	var gridNum = parstInt(e.target.id[e.target.id.length - 1]); 
+	alert(gridNum+" "+data);
+	//If the grid is empty
+	//if(status[gridNum-1] == false){
+		
+		//initGridStatus();
+		//status[gridNum-1] = true;	
+	//}
+	//test
+	
 }
+
 </script>
 </head>
 <body>
 <div id="container">
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" id="g9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 </div>
 <div id="user_container">
 <img id="drag1" src="sA.png" draggable="true" ondragstart="drag(event)" width="90" height="90">
