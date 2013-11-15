@@ -2,11 +2,24 @@
 <html>
 <head>
 <style type="text/css">
-#div1 {
+#container{
 	width:350px;
-	height:70px;
-	padding:10px;
+	height:350px;
+	
+}
+#user_container{
+	height:110px;
+	width:400px;
+}
+.grid {
+	width:90px;
+	height:90px;
+	margin:10px;
 	border:1px solid #aaaaaa;
+	float:left;
+}
+user_container img{
+	float:left;
 }
 
 </style>
@@ -30,13 +43,23 @@ ev.target.appendChild(document.getElementById(data));
 </script>
 </head>
 <body>
-
-<p>Drag the W3Schools image into the rectangle:</p>
-
-<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<br>
-<img id="drag1" src="img_logo.gif" draggable="true" ondragstart="drag(event)" width="90" height="90">
+<div id="container">
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+</div>
+<div id="user_container">
+<img id="drag1" src="sA.png" draggable="true" ondragstart="drag(event)" width="90" height="90">
+<img id="drag2" src="hA.png" draggable="true" ondragstart="drag(event)" width="90" height="90">
+<img id="drag3" src="dA.png" draggable="true" ondragstart="drag(event)" width="90" height="90">
+<img id="drag4" src="cA.png" draggable="true" ondragstart="drag(event)" width="90" height="90">
+</div>
 
 </body>
 </html>
