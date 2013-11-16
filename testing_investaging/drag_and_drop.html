@@ -25,11 +25,16 @@ user_container img{
 </style>
 <script>
 //data 
-//var status = [false,false,false,false,false,false,false,false,false];
-//initGridStatus();
-/*function initGridStatus(){
-	var status = [false,false,false,false,false,false,false,false,false];
-}*/
+var status = new Array();
+for(var i=0;i<9;i++){
+	status[i] = 0;
+}
+initGridStatus();
+function initGridStatus(){
+	for(var i=0;i<9;i++){
+		status[i] = 0;
+	}
+}
 function allowDrop(e){
 	e.preventDefault();
 }
@@ -42,19 +47,30 @@ function drag(e){
 }
 
 function drop(e){
+	
 	e.preventDefault();
 	var data = e.dataTransfer.getData("Text");
 	e.target.appendChild(document.getElementById(data));
-		
+	
+	
 	//to take the last number from the grid id
-	var gridNum = parstInt(e.target.id[e.target.id.length - 1]); 
-	alert(gridNum+" "+data);
+	var gridNum = e.target.id.substring(e.target.id.length - 1); 
+	gridNum = parseInt(gridNum);
+	
+	//test
+	alert(gridNum +" "+data);
+	
+	var str = "";
+	for(var i=0;i<9;i++){
+		str = str + status[i] + " ";
+	}
+	alert(str + " " + status.length);
+	
 	//If the grid is empty
-	//if(status[gridNum-1] == false){
-		
-		//initGridStatus();
-		//status[gridNum-1] = true;	
-	//}
+	if(status[gridNum-1] == 0){ //false
+		initGridStatus();
+		status[gridNum-1] = 1; //true	
+	}
 	//test
 	
 }
