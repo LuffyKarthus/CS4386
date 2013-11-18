@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tic-A-Tac Poker</title>
+<link rel="stylesheet" type="text/css" href="theme.css" media="all">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script src="class.js"></script>
+<script src="animation.js"></script>
+<script>
+//Game resource///////////////////////////////////
+image = new Image();
+image.src = "image.png";
+image.onload = init;
+
+//////////////////////////////////////////////////
+function init(){
+	deck = new PlayingDeck();
+	player = new Player("Eric",115);
+	ai = new Player("Computer",545);
+	
+	dealtCards = new Array();
+	for (i = 0; i < 6; i++) dealtCards[i] = deck.dealCard();
+	focusCardIndex = -1;
+	
+	renderBoard();
+	renderSurface();
+	
+	//Add event handlers
+	$("#surface").mousedown(mouseDownHandler);
+	$("#surface").mousemove(mouseMoveHandler);
+	$("#surface").mouseout(mouseOutHandler);
+	$("#surface").mouseup(mouseUpHandler);
+	
+	
+}
+
+function renderBoard(){
+	board = $("#board")[0].getContext && $("#board")[0].getContext("2d");
+	if (board) {
+		board.clearRect(0,0,960,640);
+		board.drawImage(image,396,360,774,416,93,82,774,416);
+		board.drawImage(image,630,776,540,90,210,520,540,90);
+		player.drawContent();
+		ai.drawContent();
+	}	
+}
+
+function renderSurface(focusCardX,focusCardY){
+	surface = $("#surface")[0].getContext && $("#surface")[0].getContext("2d");
+	if (surface) {
+		surface.clearRect(0,0,960,640);
+		for (i = 0; i < 6; i++)
+			if (i != focusCardIndex && dealtCards[i]) dealtCards[i].drawCard(surface,210+90*i,520,1);
+		if (focusCardIndex >= 0 && dealtCards[focusCardIndex]) dealtCards[focusCardIndex].drawCard(surface,focusCardX,focusCardY,1.1);
+	}
+}
+
+function mouseDownHandler(e){
+	var mouseX = e.offsetX;
+	var mouseY = e.offsetY;
+	//console.log("Down: "+mouseX+" "+mouseY);
+	
+	//Select a card
+	if (mouseX >= 210 && mouseX <= 750 && mouseY >= 520 && mouseY <= 610) {
+		focusCardIndex = Math.floor((mouseX-210)/90);
+		if (!dealtCards[focusCardIndex]) focusCardIndex = -1;
+		else {
+			focusCardAdjustX = mouseX-210-focusCardIndex*90;
+			focusCardAdjustY = mouseY-520;
+			
+			aniFrame = 0;
+			aniShow = setInterval("aniHighlightGrid()",80);
+		}
+	}
+}
+
+function mouseMoveHandler(e){
+	var mouseX = e.offsetX;
+	var mouseY = e.offsetY;
+	//console.log("Move: "+mouseX+" "+mouseY);
+	
+	if (focusCardIndex >= 0) renderSurface(mouseX-focusCardAdjustX,mouseY-focusCardAdjustY);
+}
+
+function mouseUpHandler(e){
+	var mouseX = e.offsetX;
+	var mouseY = e.offsetY;
+	//console.log("Up: "+mouseX+" "+mouseY);
+	
+	aniClear();
+	if (focusCardIndex >= 0 && mouseX >= player.gridX-15 && mouseX <= player.gridX+315 && mouseY >= 155 && mouseY <= 485) {
+		var posX = mouseX-focusCardAdjustX-player.gridX+15;
+		var posY = mouseY-focusCardAdjustY-155;
+		if (posX%105 <= 30 && posY%105 <= 30) {
+			posX = Math.floor(posX/105);
+			posY = Math.floor(posY/105);
+			if (!player.grid[posY*3+posX]) {
+				player.grid[posY*3+posX] = dealtCards[focusCardIndex];
+				dealtCards[focusCardIndex] = deck.dealCard();
+				renderBoard();
+			}
+		}
+	}
+	focusCardIndex = -1;
+	renderSurface();
+}
+
+function mouseOutHandler(e){
+	aniClear();
+	focusCardIndex = -1;
+	renderSurface();
+}
+</script>
+</head>
+
+<body>
+<div>
+	<canvas id="board" width="960" height="640"></canvas>
+    <canvas id="animation" width="960" height="640"></canvas>
+	<canvas id="surface" width="960" height="640"></canvas>
+</div>
+</body>
+</html>
