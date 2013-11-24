@@ -1,22 +1,28 @@
 // JavaScript Document
 map = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
+function getHandsScore(hands){
+	return 0;
+}
+
 function checkHand(grid){
 	var hands = new Array();
 	for (var i = 0; i < map.length; i++) {
-		if (royalFlush([grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]])) hands[i] = new Hand(6,-1);
-		else if (straightFlush([grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]])) hands[i] = new Hand(5,grid[map[i][0]].suit);
-		else if (flush([grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]])) hands[i] = new Hand(4,grid[map[i][0]].suit);
-		else if (straight([grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]])) hands[i] = new Hand(3,-1);
-		else if (threeOfAKind([grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]])) hands[i] = new Hand(2,-1);
-		else if (pair([grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]])) hands[i] = new Hand(1,-1);
+		var cards = [grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]];
+		
+		if (royalFlush(cards)) hands[i] = new Hand(6,-1);
+		else if (straightFlush(cards)) hands[i] = new Hand(5,grid[map[i][0]].suit);
+		else if (flush(cards)) hands[i] = new Hand(4,grid[map[i][0]].suit);
+		else if (straight(cards)) hands[i] = new Hand(3,-1);
+		else if (threeOfAKind(cards)) hands[i] = new Hand(2,-1);
+		else if (pair(cards)) hands[i] = new Hand(1,-1);
 		else hands[i] = null;
 	}
 	return hands;
 }
 
 function royalFlush(cards){
-	return ((cards[0].rank > 9) && (cards[1].rank > 9) && (cards[2].rank > 9) && straight(cards) && flush(cards));
+	return (cards[0] && cards[1] && cards[2] && cards[0].rank > 9 && cards[1].rank > 9 && cards[2].rank > 9 && straightFlush(cards));
 }
 
 function straightFlush(cards){
@@ -24,24 +30,28 @@ function straightFlush(cards){
 }
 
 function flush(cards){
-	return (cards[0].suit == cards[1].suit && cards[0].suit == cards[2].suit);
+	return (cards[0] && cards[1] && cards[2] && cards[0].suit == cards[1].suit && cards[0].suit == cards[2].suit);
 }
 
 function straight(cards){
+	if (!cards[0] || !cards[1] || !cards[2]) return false;
 	for (var i = 0; i < 2; i++)
 		for (var j = 0; j < 2-i; j++)
-			if (cards[i].rank > cards[i+1]) {
-				var temp = this.cards[a];
-				this.cards[a] = this.cards[b];
-				this.cards[b] = temp;
+			if (cards[j].rank < cards[j+1].rank) {
+				var temp = cards[j];
+				cards[j] = cards[j+1];
+				cards[j+1] = temp;
 			}
-	return (cards[2].rank-cards[1].rank == 1 && cards[1].rank-cards[0].rank == 1);
+	return (cards[0].rank-cards[1].rank == 1 && cards[1].rank-cards[2].rank == 1);
 }
 
 function threeOfAKind(cards){
-	return (cards[0].rank == cards[1].rank && cards[0].rank == cards[2].rank);
+	return (cards[0] && cards[1] && cards[2] && cards[0].rank == cards[1].rank && cards[0].rank == cards[2].rank);
 }
 
 function pair(cards){
-	return (cards[0].rank == cards[1].rank || cards[0].rank == cards[2].rank || cards[1].rank == cards[2].rank);
+	if (cards[0] && cards[1] && cards[0].rank == cards[1].rank) return true;
+	if (cards[0] && cards[2] && cards[0].rank == cards[2].rank) return true;
+	if (cards[1] && cards[2] && cards[1].rank == cards[2].rank) return true;
+	return false;
 }

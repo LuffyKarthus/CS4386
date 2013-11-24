@@ -5,6 +5,7 @@
 <title>Tic-A-Tac Poker</title>
 <link rel="stylesheet" type="text/css" href="theme.css" media="all">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script src="ai.js"></script>
 <script src="class.js"></script>
 <script src="card.js"></script>
 <script src="handler.js"></script>
@@ -33,6 +34,8 @@ function init(){
 	$("#surface").mouseout(mouseOutHandler);
 	$("#surface").mouseup(mouseUpHandler);
 	
+	playerTurn = true;
+	
 	gameLoop();
 }
 
@@ -40,7 +43,35 @@ function gameLoop(){
 	for (var i = 0; i < 6; i++)
 		if (!dealtCards[i]) dealtCards[i] = deck.dealCard();
 	
-	allowMouse = true;
+	if (!playerTurn) {
+		//AI action	
+		if (ai.move) {
+			ai.decision = aiAction();
+			
+			focusCardIndex = ai.decision.focusCardIndex;
+			dealtCards[focusCardIndex].posX = 210+focusCardIndex*90;
+			dealtCards[focusCardIndex].posY = 520;
+			dealtCards[focusCardIndex].scale = 1.1;
+			
+			ai.move = false;
+		}
+		
+		//Moving the card
+		if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x) dealtCards[focusCardIndex].posX -= 5;
+		if (dealtCards[focusCardIndex].posX < ai.decision.destPos.x) dealtCards[focusCardIndex].posX += 5;
+		if (dealtCards[focusCardIndex].posY > ai.decision.destPos.y) dealtCards[focusCardIndex].posY -= 5;
+		if (dealtCards[focusCardIndex].posY < ai.decision.destPos.y) dealtCards[focusCardIndex].posY += 5;
+		
+		if (dealtCards[focusCardIndex].posX == ai.decision.destPos.x && dealtCards[focusCardIndex].posY == ai.decision.destPos.y) {
+			ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+			dealtCards[focusCardIndex] = null;
+			focusCardIndex = -1;
+			
+			ai.move = true;
+			player.move = true;
+			playerTurn = true;	
+		}
+	}
 	
 	renderBoard();
 	renderSurface();

@@ -2,7 +2,7 @@
 focusCardIndex = -1;
 
 function mouseDownHandler(e){
-	if (!allowMouse) return;
+	if (!player.move) return;
 	
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
@@ -19,12 +19,16 @@ function mouseDownHandler(e){
 		dealtCards[focusCardIndex].scale = 1.1;
 		
 		aniFrame = 0;
-		aniShow = setInterval("aniHighlightGrid()",80);
+		//Poker
+		if (dealtCards[focusCardIndex].suit <= 3) aniShow = setInterval("aniHighlightGrid([player.getGridStatus(false),null])",80);
+		
+		//Torch
+		if (dealtCards[focusCardIndex].suit == 4 && dealtCards[focusCardIndex].rank == 2) aniShow = setInterval("aniHighlightGrid([player.getGridStatus(true),ai.getGridStatus(true)])",80);
 	}
 }
 
 function mouseMoveHandler(e){
-	if (!allowMouse) return;
+	if (!player.move) return;
 	
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
@@ -37,31 +41,25 @@ function mouseMoveHandler(e){
 }
 
 function mouseUpHandler(e){
-	if (!allowMouse) return;
+	if (!player.move) return;
 	
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
 	console.log("Up: "+mouseX+" "+mouseY);
 	
 	aniClear();
-	if (focusCardIndex >= 0 && dealtCards[focusCardIndex].posX >= player.gridPosX-15 && dealtCards[focusCardIndex].posX <= player.gridPosX+315 && dealtCards[focusCardIndex].posY >= 155 && dealtCards[focusCardIndex].posY <= 485) {
-		var posX = dealtCards[focusCardIndex].posX-player.gridPosX+15;
-		var posY = dealtCards[focusCardIndex].posY-155;
-		if (posX%105 <= 30 && posY%105 <= 30) {
-			posX = Math.floor(posX/105);
-			posY = Math.floor(posY/105);
-			if (!player.grid[posY*3+posX]) {
-				dealtCards[focusCardIndex].scale = 1;
-				player.grid[posY*3+posX] = dealtCards[focusCardIndex];
-				dealtCards[focusCardIndex] = null;
-			}
+	if (focusCardIndex >= 0 && mouseX >= player.gridPosX && mouseX <= player.gridPosX+300 && mouseY >= 170 && mouseY <= 470) {
+		if ((mouseX-player.gridPosX)%105 <= 90 && (mouseY-170)%105 <= 90) {
+			var posX = Math.floor((mouseX-player.gridPosX)/105);
+			var posY = Math.floor((mouseY-170)/105);
+			if (player.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) dealtCards[focusCardIndex] = null;
 		}
 	}
 	focusCardIndex = -1;
 }
 
 function mouseOutHandler(e){
-	if (!allowMouse) return;
+	if (!player.move) return;
 	
 	aniClear();
 	focusCardIndex = -1;
