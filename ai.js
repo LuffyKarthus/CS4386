@@ -13,3 +13,15 @@ function aiAction(){
 	
 	return {focusCardIndex:choose,destPos:destPos};
 }
+function aggressive(){
+
+}
+function targetOriented(){
+
+}
+function conservative(){
+
+}
+function random(){
+	
+}
