@@ -80,7 +80,7 @@ function conservative(){
 		{
 			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
 				
-					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor(i+3)/3)*105+170};
+					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor(i+3)/3)*105+170}};
 						return {focusCardIndex:pick[z],destPos:destPos};
 			}
 			if ( (!ai.grid[i] && ai.grid[i+3]%8 &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
