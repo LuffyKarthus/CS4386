@@ -72,22 +72,22 @@ function conservative(){			//By Karthus
 		for (var j=0;j<6;j++)
 		{
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank) {				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
-					if (ai.grid[(i+1)%8].rank==null)
+					if (ai.grid[(i+1)%8]==null)
 					{
-						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor((i)/3)*105+170};
+						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor((i)/3)*105+170};
 						alert("check empty1");
 					}
-					if (ai.grid[(i+2)%8].rank==null)
+					if (ai.grid[(i+2)%8]==null)
 					{
-						var destPos = {pos:i,x:((i+2)%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
+						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty2");
 					}
-					if (ai.grid[(i+3)%8].rank==null)
+					if (ai.grid[(i+3)%8]==null)
 					{
-						var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
+						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty3");
 					}
-					if (ai.grid[(i+4)%8].rank==null)
+					if (ai.grid[(i+4)%8]=null)
 					{
 						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty4");
@@ -95,7 +95,7 @@ function conservative(){			//By Karthus
 
 					for (var j=0;i<9;i++)
 					{
-						if (ai.grid[j].rank==null)
+						if (ai.grid[j]==null)
 						var found=j;
 						break;
 					}	
