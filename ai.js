@@ -139,7 +139,7 @@ function conservative(){
 	{
 		for (var j=0;j<6;j++)
 		{
-			if (!ai.grid[i]  &&  (dealtCards[j].rank==ai.grid[i].rank) ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
+			if (!ai.grid[i]  &&  (dealtCards[j].rank==ai.grid[i].rank)){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 					var found=j;
 					return {focusCardIndex:found,destPos:destPos};
