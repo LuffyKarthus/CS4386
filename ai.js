@@ -73,23 +73,23 @@ function conservative(){
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};		
 			break;
 		}
-		
+
 	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
 		{
 			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:pick[z],destPos:destPos};
+					return {focusCardIndex:pick[0],destPos:destPos};
 			}
 			if ( (!ai.grid[i] && ai.grid[i+3]%8 &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:pick[z],destPos:destPos};
+					return {focusCardIndex:pick[0],destPos:destPos};
 																
 			}
 			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:pick[z],destPos:destPos};															
+					return {focusCardIndex:pick[0],destPos:destPos};															
 			}
 
 		}	
