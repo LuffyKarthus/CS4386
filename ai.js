@@ -73,7 +73,8 @@ function conservative(){			//By Karthus
 					var found=j;
 					alert("found");
 							alert("pairs");
-					if (!ai.grid[(i)%8] ){
+							!ai.grid[(i)%8;
+					if (ai.grid[(i)%8] ){
 						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};
