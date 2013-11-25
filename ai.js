@@ -77,7 +77,7 @@ function conservative(){			//By Karthus
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var found=j;
 					alert("found");
-					checkempty[i]=1;				if (checkempty[i]==1) not empty 
+					checkempty[i]=1;			//	if (checkempty[i]==1) not empty 
 					if (ai.grid[(i)] && checkempty[i]==0){
 						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
