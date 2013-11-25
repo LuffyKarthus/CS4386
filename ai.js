@@ -77,6 +77,7 @@ function conservative(){			//By Karthus
 						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor((i)/3)*105+170};
 						alert("check empty1");
 					}
+/*
 					if (ai.grid[(i+2)%8]==null)
 					{
 						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
@@ -92,14 +93,14 @@ function conservative(){			//By Karthus
 						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty4");
 					}
-
+*/
 					for (var j=0;i<9;i++)
 					{
 						if (ai.grid[j]==null)
 						var found=j;
 						break;
 					}	
-
+	
 				alert("pairs");
 					return {focusCardIndex:found,destPos:destPos};
 			}
