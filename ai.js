@@ -1,6 +1,6 @@
 // JavaScript Document/Users/karthus/Desktop/CS4386/ai.js
 function aiAction(){
-	return random();
+	return conservative();
 	//For refecing
 	/*for (var i = 0; i < 6; i++)
 
