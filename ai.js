@@ -83,10 +83,10 @@ function conservative(){			//By Karthus
 						alert("check empty2");
 						alert(destPos);
 					}
-					for (var i=0;i<9;i++)
+					for (var j=0;i<9;i++)
 					{
-						if (ai.grid[i]==null)
-						var found=i;
+						if (ai.grid[j]==null)
+						var found=j;
 						break;
 					}	
 				alert("pairs");
