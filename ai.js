@@ -1,8 +1,32 @@
+// JavaScript Document/Users/karthus/Desktop/CS4386/ai.js
 
+/* Eric
+
+Plz follow the return format of aiAction().
+
+1. focusCardIndex:
+
+2. destPos: {pos:__,x:(__%3)*105+ai.gridPosX,y:Math.floor(__/3)*105+170}  !!!!!!! player.gridPosX if burn player's card
+
+3. if AI steal a card from player, plz also provide
+		stealPos: {pos:__,x:(__%3)*105+player.gridPosX,y:Math.floor(__/3)*105+170}
+
+4. plz provide the burn target if use burn
+		burnTarget:
+
+5. if AI use clown, plz provide the suit and the rank
+		suit:
+		rank:
+
+*/
 function aiAction(){
+<<<<<<< HEAD
 
 	return conservative();
 
+=======
+	return conservative();
+>>>>>>> f7323ec9af26d5df9fe8700cf2926a3c79b95b66
 	//For refecing
 	/*for (var i = 0; i < 6; i++)
 
@@ -124,22 +148,31 @@ function conservative(){
 	//thoughts by jimmyshum:
 	//ai tends to get points for completing any conditions
 	var pick=new Array();
-	var j=0;
+	var z=0;
+
 	for (var i=0;i<6;i++)									// not picking up the special cards
 	{
 			if (dealtCards[i].suit!=SPECIAL_SUIT)
 			{
-				pick[j]=i;
-				j++;
+				pick[z]=i;
+				z++;
 				break;
 			}
 	}
 
-	for (var i = 0; i < 9; i++)
+	for (var i = 0; i < 6; i++)
 
-		//ai.grid[i] : check whether the grid has card or not 
-		if (!ai.grid[i]) {
-			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+		//suit 0 - 3 => spade heart diamond club
+		//suit 4 => special card
+
+		if (dealtCards[i].suit != SPECIAL_SUIT ) {
+			var choose = i;
+			break;
+		}
+
+	for (var i = 0; i < 9; i++)		
+		if (!ai.grid[i]) {												//ai.grid[i] : check whether the grid has card or not 
+			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};		
 			break;
 		}
 
@@ -147,27 +180,23 @@ function conservative(){
 	{
 		for (var j=0;j<6;j++)
 		{
-			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
-				
-					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-						return {focusCardIndex:choose,destPos:destPos};
+			if (!ai.grid[i+3] && ai.grid[i+3]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
+					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+					return {focusCardIndex:dealtCards[j],destPos:destPos};
 			}
-			if ( (!ai.grid[i] && ai.grid[i+3]%8 &&  (dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) ){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
-				{
-					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					return {focusCardIndex:choose,destPos:destPos};
-				}																	
+			if ( (!ai.grid[i+3] && ai.grid[i+3]%8 &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
+					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+					return {focusCardIndex:dealtCards[j],destPos:destPos};
+																
 			}
-			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
-				{
-					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-						return {focusCardIndex:choose,destPos:destPos};
-				}																
+			if (!ai.grid[i+3] && ai.grid[i+3]%8 && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
+					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+					return {focusCardIndex:dealtCards[j],destPos:destPos};															
 			}
 
 		}	
 	}
-	return random();							//focusCardIndex : the index from the card deck 
+			return {focusCardIndex:ealtCards[j],destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 
 }
