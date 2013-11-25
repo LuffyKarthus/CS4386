@@ -91,21 +91,21 @@ function conservative(){
 		{
 			if (!ai.grid[i+3] && ai.grid[i+3]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:pick[z],destPos:destPos};
+					return {focusCardIndex:dealtCards[j],destPos:destPos};
 			}
 			if ( (!ai.grid[i+3] && ai.grid[i+3]%8 &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:pick[z],destPos:destPos};
+					return {focusCardIndex:dealtCards[j],destPos:destPos};
 																
 			}
 			if (!ai.grid[i+3] && ai.grid[i+3]%8 && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:pick[z],destPos:destPos};															
+					return {focusCardIndex:dealtCards[j],destPos:destPos};															
 			}
 
 		}	
 	}
-			return {focusCardIndex:pick[z],destPos:destPos};							//focusCardIndex : the index from the card deck 
+			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 
 }
