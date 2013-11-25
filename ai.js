@@ -29,9 +29,42 @@ function aggressive(){
 }
 function targetOriented(){
 
+
+
+
 }
 function conservative(){
+	for (var i=0;i<9;i++)
+	{
+		for (var j=0;j<6;j++)
+		{
+			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8)){				// Get for pairs
+				
+					var deskPos={};
+					break;
+			}
+			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Straight
+				{
+					var deskPos={};
+					break;
+				}																	
+			}
+			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Flush
+				{
+					var deskPos={};
+					break;
+				}																
+			}
+			if (!ai.grid[i]) {													// just get a card
+				var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+				break;
+			}
 
+		}	
+		
+	}
+
+	return {focusCardIndex:choose,destPos:destPos};
 }
 function random(){
 	var randNum;
