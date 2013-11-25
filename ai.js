@@ -1,5 +1,7 @@
 
 function aiAction(){
+	return conservative();
+/*
 <<<<<<< HEAD
 	return random();
 	//return conservative();
