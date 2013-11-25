@@ -48,6 +48,14 @@ function conservative(){
 			}
 	}
 
+	for (var i = 0; i < 9; i++)
+
+		//ai.grid[i] : check whether the grid has card or not 
+		if (!ai.grid[i]) {
+			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+			break;
+		}
+
 	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
