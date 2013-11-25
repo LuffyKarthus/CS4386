@@ -97,23 +97,10 @@ function conservative(){
 						return {focusCardIndex:pick[z],destPos:destPos};
 				}																
 			}
-<<<<<<< HEAD
 
-=======
-			/*
->>>>>>> e9ee640c852dfbf6cdb24d2f64eeb05f120e8667
-			if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
-					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					return {focusCardIndex:pick[z],destPos:destPos};
-			*/
-<<<<<<< HEAD
-		
-
-=======
->>>>>>> e9ee640c852dfbf6cdb24d2f64eeb05f120e8667
 		}	
 	}
-			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
+			return {focusCardIndex:pick[z],destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 
 }
