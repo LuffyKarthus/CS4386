@@ -66,7 +66,7 @@ function conservative(){			//By Karthus
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
-
+		ai.grid[i];
 	}
 	for (var i=0;i<9;i++)		//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
@@ -76,7 +76,7 @@ function conservative(){			//By Karthus
 					var found=j;
 					alert("found");			
 					if (ai.grid[(i)]){
-						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};		
 					}
