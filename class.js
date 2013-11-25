@@ -12,10 +12,10 @@ function Card(suit,rank){
 	}
 }
 
-function Hand(kind,flushSuit,pairs){
+function Hand(kind,flushSuit,matchPos){
 	this.kind = kind
 	this.flushSuit = flushSuit;
-	this.pairs = pairs;
+	this.matchPos = matchPos;
 	
 	this.scale = 3;
 	
@@ -53,14 +53,14 @@ function Deck(){
 	}
 	
 	//Add special cards
-	for (var i = 0; i < 12; i++) {
+	for (var i = 0; i < 11; i++) {
 		do {
 			var pos = Math.floor(Math.random()*(this.length-6));
-		} while (this.cards[pos].suit == 4);
+		} while (this.cards[pos].suit == SPECIAL_SUIT);
 		
 		var rank = CLOWN_RANK;
-		if (i > 1) rank = 0;
-		if (i > 6) rank = TORCH_RANK;
+		if (i > 0) rank = THIEF_RANK;
+		if (i > 5) rank = TORCH_RANK;
 		this.cards[pos] = new Card(SPECIAL_SUIT,rank);
 	}
 	
@@ -78,6 +78,7 @@ function Player(name,gridPosX){
 	this.hands = new Array();
 	this.noOfCard = 0;
 	this.score = 0;
+	this.showScore = 0;
 	
 	this.move = true;
 	this.decision = null;
@@ -98,7 +99,6 @@ function Player(name,gridPosX){
 			card.scale = 1;
 			this.grid[pos] = card;
 			this.noOfCard++;
-			this.updateHand();
 			return true;
 		}
 		//Thief
@@ -108,7 +108,6 @@ function Player(name,gridPosX){
 			returnCard.scale = 1.1;
 			this.grid[pos] = null;
 			this.noOfCard--;
-			this.updateHand();
 			return returnCard;
 		}
 		//Torch
@@ -116,7 +115,6 @@ function Player(name,gridPosX){
 			if (!this.grid[pos]) return false;
 			this.grid[pos] = null;
 			this.noOfCard--;
-			this.updateHand();
 			return true;
 		}
 		
@@ -126,24 +124,38 @@ function Player(name,gridPosX){
 	this.updateHand = function(){
 		var newHands = checkHand(this.grid);
 		for (var i = 0; i < 8; i++)
-			if (!this.hands[i] || !newHands[i] || this.hands[i].kind != newHands[i].kind) this.hands[i] = newHands[i];
-		
-		this.score = getHandsScore(this.hands);
+			if (!this.hands[i] || !newHands[i] || this.hands[i].kind != newHands[i].kind) {
+				this.hands[i] = newHands[i];
+				this.score = getHandsScore(this.hands);
+				
+				//Show the animation
+				if (this.hands[i]) {
+					aniFrame = 0;
+					aniHighlightHandPos = this.hands[i].matchPos;
+					aniShow = setInterval("aniHighlightHand("+this.gridPosX+",aniHighlightHandPos)",60);
+					return;
+				}
+			}
+		if (!this.move) this.decision = "end";
 	}
 	
 	this.drawContent = function(){
+		if (!aniShow) this.updateHand();
+		
 		//Draw the play's name and score
 		board.fillStyle = "#0077FF";
 		board.font = "bold 25px Verdana";
 		board.textAlign = "left";
 		board.fillText(this.name,this.gridPosX+2,120);
 		board.textAlign = "right";
-		board.fillText(this.score,this.gridPosX+298,120);
-		//Draw the player's hands
-		for (var i = 0; i < 8; i++)
-			if (this.hands[i]) this.hands[i].drawHand(this.gridPosX+2+i*38);
+		board.fillText(this.showScore,this.gridPosX+298,120);
+		if (this.showScore < this.score) this.showScore += 10;
+		if (this.showScore > this.score) this.showScore -= 10;
 		//Draw the player's cards
 		for (var i = 0; i < 9; i++)
 			if (this.grid[i]) this.grid[i].drawCard(board,this.gridPosX+105*(i%3),170+105*Math.floor(i/3));
+		//Draw the player's hands
+		for (var i = 0; i < 8; i++)
+			if (this.hands[i]) this.hands[i].drawHand(this.gridPosX+2+i*38);
 	}
 }

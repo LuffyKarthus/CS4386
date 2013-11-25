@@ -7,7 +7,7 @@ function mouseDownHandler(e){
 	
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
-	console.log("Down: "+mouseX+" "+mouseY);
+	//console.log("Down: "+mouseX+" "+mouseY);
 	
 	//Select a card
 	if (mouseX >= 210 && mouseX <= 750 && mouseY >= 520 && mouseY <= 610) {
@@ -50,7 +50,7 @@ function mouseUpHandler(e){
 	
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
-	console.log("Up: "+mouseX+" "+mouseY);
+	//console.log("Up: "+mouseX+" "+mouseY);
 	
 	//Drop on player's grid
 	if (focusCardIndex >= 0 && mouseX >= player.gridPosX && mouseX <= player.gridPosX+300 && mouseY >= 170 && mouseY <= 470) {
@@ -62,7 +62,6 @@ function mouseUpHandler(e){
 					dealtCards[focusCardIndex] = null;
 					isStealing = false;
 					
-					playerTurn = false;
 					player.move = false;
 				}
 		}
@@ -91,7 +90,6 @@ function mouseUpHandler(e){
 				if (ai.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) {
 					dealtCards[focusCardIndex] = null;
 					
-					playerTurn = false;
 					player.move = false;
 				}
 		}
