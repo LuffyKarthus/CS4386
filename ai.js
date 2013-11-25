@@ -72,17 +72,18 @@ function conservative(){			//By Karthus
 		for (var j=0;j<6;j++)
 		{
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
+					var found=j;
+					alert("found");
+							alert("pairs");
 					if (ai.grid[(i)%8]){
 						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 					}
 
 					for (var j=0;j<9;j++){
-						if (ai.grid[j].rank)
+						if (ai.grid[j].rank==null)
 						{
-							var found=j;
-							alert("found");
-							alert("pairs");
+							alert("find empty grid");			
 						}
 						break;
 					}	
