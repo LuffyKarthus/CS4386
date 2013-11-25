@@ -81,7 +81,6 @@ function conservative(){			//By Karthus
 					{
 						var destPos = {pos:i,x:((i+2)%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty2");
-						alert(destPos);
 					}
 					if (ai.grid[(i+3)%8]==null)
 					{
@@ -92,15 +91,15 @@ function conservative(){			//By Karthus
 					{
 						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty4");
-						alert(destPos);
 					}
-
+/*
 					for (var j=0;i<9;i++)
 					{
 						if (ai.grid[j]==null)
 						var found=j;
 						break;
 					}	
+					*/
 				alert("pairs");
 					return {focusCardIndex:found,destPos:destPos};
 			}
