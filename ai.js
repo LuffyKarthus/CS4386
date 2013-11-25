@@ -78,9 +78,9 @@ function conservative(){			//By Karthus
 					}
 
 					for (var j=0;j<9;j++){
-						if (ai.grid[j])
+						if (ai.grid[j].rank==null)
 						{
-							var found=i;
+							var found=j;
 							alert("found");
 							alert("pairs");
 						}
