@@ -73,8 +73,7 @@ function conservative(){			//By Karthus
 					var found=j;
 					alert("found");
 					
-					if (ai.grid[(i+1)%8])
-							;
+
 					if (ai.grid[(i)%8]){
 						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
@@ -91,6 +90,8 @@ function conservative(){			//By Karthus
 					*/
 				//	return {focusCardIndex:found,destPos:destPos};
 			}
+			else 
+				found=choose;
 			/*		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
@@ -107,7 +108,7 @@ function conservative(){			//By Karthus
 		}	
 	}
 				alert("random");
-				return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
+				return {focusCardIndex:found,destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 }
 /*
