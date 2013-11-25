@@ -64,9 +64,17 @@ function conservative(){			//By Karthus
 					found=j;
 					alert("found");	
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] ){
-						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-						alert("check empty grid 1");
-						return {focusCardIndex:found,destPos:destPos};		
+
+						for (var z=0;z<9;z++)
+						{
+							if (!ai.grid[z])
+							{
+								var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+								alert("check empty grid 1");
+								break;
+							}
+						}
+						return {focusCardIndex:found,destPos:destPos};	
 					}	
 			}		
 			/*		// Get for Straight && ai.grid[i] : 
