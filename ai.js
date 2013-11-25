@@ -48,36 +48,35 @@ function conservative(){
 			}
 	}
 
-
 	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
 		{
-			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8)){				// Get for pairs			
+			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8)){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
 				
-					var deskPos={pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170}};
+					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
 						return {focusCardIndex:choose,destPos:destPos};
 			}
-			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Straight
+			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
 				{
-					var deskPos={pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170}};
+					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
 					return {focusCardIndex:choose,destPos:destPos};
 				}																	
 			}
-			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Flush
+			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 				{
-					var deskPos={pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170}};
+					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
 						return {focusCardIndex:choose,destPos:destPos};
 				}																
 			}
-			if (!ai.grid[i]) {												check whether the grid has card or not					// just get a card
-					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+			if (!ai.grid[i]) {												// just get a card && check whether the grid has card or not
+					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 					return {focusCardIndex:choose,destPos:destPos};
 			}
 		}	
 	}
-			return {focusCardIndex:choose,destPos:destPos};				//focusCardIndex : the index from the card deck 
-																		//destPos : the position of the ai grid 
+			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
+																					//destPos : the position of the ai grid 
 
 }
 function random(){
