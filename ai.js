@@ -81,7 +81,7 @@ function conservative(){			//By Karthus
 						return {focusCardIndex:j,destPos:destPos};
 					}
 
-
+					/*
 					for (var j=0;j<9;j++){
 						if (ai.grid[j].rank)
 						{
@@ -89,8 +89,8 @@ function conservative(){			//By Karthus
 						}
 						break;
 					}	
-					
-					return {focusCardIndex:found,destPos:destPos};
+					*/
+				//	return {focusCardIndex:found,destPos:destPos};
 			}
 			/*		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		
