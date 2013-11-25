@@ -74,7 +74,7 @@ function conservative(){			//By Karthus
 					}	
 			}		
 			
-			if (ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit) && dealtCards[j].suit!=SPECIAL_SUIT){				// Get for Flush 
+			if (ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit) && dealtCards[j].suit!=SPECIAL_SUIT){		// Get for Flush 
 				found=j;
 				alert("suit");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
@@ -90,13 +90,23 @@ function conservative(){			//By Karthus
 					}	
 																
 			}
-			/*																	// Get for Straight 
-			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		
-				var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-				found=j;											
-				break;
+				
+			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
+				found=j;
+				alert("Straight");
+					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
+
+						for (var z=0;z<3;z++){
+							
+							if (!ai.grid[z]){
+								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+								alert("check empty grid 2");
+								return {focusCardIndex:found,destPos:destPos};	
+							}
+						}
+					}	
 			}		
-			*/
+			
 		}	
 	}
 					alert("random");
