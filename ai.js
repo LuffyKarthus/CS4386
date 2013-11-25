@@ -81,15 +81,6 @@ function conservative(){			//By Karthus
 						return {focusCardIndex:found,destPos:destPos};		
 					}
 					/*
-					for (var j=0;j<9;j++){
-						if (ai.grid[j].rank)
-						{
-							alert("find empty grid");			
-						}
-						break;
-					}	
-					*/
-				//	return {focusCardIndex:found,destPos:destPos};
 			}
 			
 				found=choose;
