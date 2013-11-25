@@ -163,4 +163,4 @@ function targetOriented(){
 	else
 		return random();
 }
-
+*/
