@@ -94,7 +94,7 @@ function conservative(){			//By Karthus
 					}
 */
 					for (var j=0;j<9;j++){
-						if (ai.grid[j]==null)
+						if (ai.grid[j])
 						var found=j;
 						break;
 					}	
