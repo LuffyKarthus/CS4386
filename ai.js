@@ -55,16 +55,21 @@ function conservative(){			//By Karthus
 				break;
 			}
 	}*/
+	var checkempty=new Array();
+
 	for (var i = 0; i < 6; i++)
 		if (dealtCards[i].suit != SPECIAL_SUIT ) {								//suit 0 - 3 => spade heart diamond club										
 			var choose = i;														//suit 4 => special card
 			break;
 		}
-	for (var i = 0; i < 9; i++)		
+
+	for (var i = 0; i < 9; i++){
 		if (!ai.grid[i]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
+		checkempty[i]=0;
+	}
 	for (var i=0;i<9;i++)		//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
@@ -72,8 +77,8 @@ function conservative(){			//By Karthus
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var found=j;
 					alert("found");
-
-					if (ai.grid[(i)]){
+					checkempty[i]=1;				if (checkempty[i]==1) not empty 
+					if (ai.grid[(i)] && checkempty[i]==0){
 						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};
