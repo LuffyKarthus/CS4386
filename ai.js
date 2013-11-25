@@ -134,7 +134,7 @@ function conservative(){
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};		
 			break;
 		}
-/*
+
 	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
@@ -158,7 +158,7 @@ function conservative(){
 
 		}	
 	}
-	*/
+
 	alert("hi");
 			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
