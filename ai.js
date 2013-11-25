@@ -57,19 +57,19 @@ function conservative(){
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
 						return {focusCardIndex:choose,destPos:destPos};
 			}
-			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
+			if (dealtCards[j].rank>=ai.grid[i].rank && ai.grid[i+3]%8){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
 				{
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
 					return {focusCardIndex:choose,destPos:destPos};
 				}																	
 			}
-			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
+			if (dealtCards[j].suit==ai.grid[i].suit && ai.grid[i+3]%8){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 				{
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
 						return {focusCardIndex:choose,destPos:destPos};
 				}																
 			}
-			if (!ai.grid[i]) {												// just get a card && check whether the grid has card or not
+			if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
 					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 					return {focusCardIndex:choose,destPos:destPos};
 			}
