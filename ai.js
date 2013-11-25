@@ -144,6 +144,7 @@ function conservative(){
 					var found=j;
 					return {focusCardIndex:found,destPos:destPos};
 			}
+			/*
 			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 					var found=j;
@@ -155,7 +156,7 @@ function conservative(){
 					var found=j;
 					return {focusCardIndex:found,destPos:destPos};															
 			}
-
+			*/
 		}	
 	}
 
