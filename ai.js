@@ -52,7 +52,7 @@ function conservative(){
 	{
 		for (var j=0;j<6;j++)
 		{
-			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8)){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
+			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
 				
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
 						return {focusCardIndex:choose,destPos:destPos};
