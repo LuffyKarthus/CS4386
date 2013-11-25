@@ -105,7 +105,7 @@ function conservative(){
 
 		}	
 	}
-			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
+			return {focusCardIndex:ealtCards[j],destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 
 }
