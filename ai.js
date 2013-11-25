@@ -46,18 +46,12 @@ function aiAction(){
 }
 function conservative(){			//By Karthus
 	/*
-	var pick=new Array();
-	var z=0;
-	for (var i=0;i<6;i++)									// not picking up the special cards{
-			if (dealtCards[i].suit!=SPECIAL_SUIT){
-				pick[z]=i;
-				z++;
-				break;
-			}
-	}*/
-	for (var i = 0; i < 6; i++)
+
+	*/
+	var found;
+	for (var i = 0; i < 6; i++)								// not picking up the special cards{
 		if (dealtCards[i].suit != SPECIAL_SUIT ) {								//suit 0 - 3 => spade heart diamond club										
-			var choose = i;														//suit 4 => special card
+			found= i;														//suit 4 => special card
 			break;
 		}
 
@@ -72,18 +66,17 @@ function conservative(){			//By Karthus
 		for (var j=0;j<6;j++)
 		{
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
-					var found=j;
+					found=j;
 					alert("found");	
 
-					if (	ai.grid[(i)] && ai.grid [(i+1)%8] 	){
+					if (ai.grid[(i)] && ai.grid [(i+1)%8] ){
 						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};		
 					}
 					
 			}
-			else 
-				found=choose;
+			
 			/*		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
