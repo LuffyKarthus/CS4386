@@ -105,6 +105,7 @@ function targetOriented(){
 function conservative(){
 	//thoughts by jimmyshum:
 	//ai tends to get points for completing any conditions
+	/*
 	var pick=new Array();
 	var z=0;
 
@@ -117,7 +118,7 @@ function conservative(){
 				break;
 			}
 	}
-
+	*/
 	for (var i = 0; i < 6; i++)
 
 		//suit 0 - 3 => spade heart diamond club
