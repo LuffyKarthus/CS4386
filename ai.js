@@ -92,14 +92,14 @@ function conservative(){			//By Karthus
 						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty4");
 					}
-/*
+
 					for (var j=0;i<9;i++)
 					{
-						if (ai.grid[j]==null)
+						if (ai.grid[j].rank==null)
 						var found=j;
 						break;
 					}	
-					*/
+
 				alert("pairs");
 					return {focusCardIndex:found,destPos:destPos};
 			}
