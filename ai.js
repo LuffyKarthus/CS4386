@@ -1,4 +1,4 @@
-// JavaScript Document
+// JavaScript Document/Users/karthus/Desktop/CS4386/ai.js
 function aiAction(){
 	for (var i = 0; i < 6; i++)
 		if (dealtCards[i].suit <= 3) {
