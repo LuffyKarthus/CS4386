@@ -69,7 +69,7 @@ function conservative(){			//By Karthus
 						{
 							if (!ai.grid[z])
 							{
-								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor((i*2)%3)*105+170};
+								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 								alert("check empty grid 1");
 								break;
 							}
