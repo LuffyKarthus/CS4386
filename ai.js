@@ -60,7 +60,7 @@ function conservative(){			//By Karthus
 	{
 		for (var j=0;j<6;j++)
 		{
-			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank && dealtCards[j].suit!=SPECIAL_SUIT){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
+			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank && dealtCards[j].suit!=SPECIAL_SUIT){	// Get for pairs  and three of a kind : check whether the grid has card or not 			
 					found=j;
 					alert("found");	
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
@@ -74,7 +74,7 @@ function conservative(){			//By Karthus
 								break;
 							}
 						}
-						return {focusCardIndex:found,destPos:destPos};	
+					//	return {focusCardIndex:found,destPos:destPos};	
 					}	
 			}		
 			/*		// Get for Straight && ai.grid[i] : 
@@ -83,6 +83,8 @@ function conservative(){			//By Karthus
 					var found=j;
 					return {focusCardIndex:found,destPos:destPos};													
 			}		//	&& ai.grid[i+3]%8
+
+
 			if (!ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit)){					// Get for Flush && ai.grid[i]
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 					var found=j;
