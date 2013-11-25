@@ -20,22 +20,17 @@ Plz follow the return format of aiAction().
 
 */
 function aiAction(){
-
 	return conservative();
 	//For referencing
 	/*for (var i = 0; i < 6; i++)
-
 		//suit 0 - 3 => spade heart diamond club
 		//suit 4 => special card
-
 		if (dealtCards[i].suit <= 3) {
 			var choose = i;
 			break;
 		}
 	for (var i = 0; i < 9; i++)
-
-		//ai.grid[i] : check whether the grid has card or not 
-		if (!ai.grid[i]) {
+		if (!ai.grid[i]) {									//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 			break;
 		}
@@ -68,23 +63,19 @@ function conservative(){			//By Karthus
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					found=j;
 					alert("found");	
-
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] ){
 						var destPos = {pos:i,x:((i+1)%8)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};		
-					}
-					
-			}
-			
-			/*		// Get for Straight && ai.grid[i] : check whether the grid has card or not
+					}	
+			}		
+			/*		// Get for Straight && ai.grid[i] : 
 			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 					var found=j;
-					return {focusCardIndex:found,destPos:destPos};
-																
+					return {focusCardIndex:found,destPos:destPos};													
 			}		//	&& ai.grid[i+3]%8
-			if (!ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit)){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
+			if (!ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit)){					// Get for Flush && ai.grid[i]
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 					var found=j;
 					return {focusCardIndex:found,destPos:destPos};															
