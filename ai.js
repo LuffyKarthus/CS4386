@@ -65,11 +65,11 @@ function conservative(){			//By Karthus
 					alert("found");	
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] ){
 
-						for (var z=0;z<9;z++)
+						for (var z=0;z<3;z++)
 						{
 							if (!ai.grid[z])
 							{
-								var destPos = {pos:i,x:(z%8)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor((i*2)%3)*105+170};
 								alert("check empty grid 1");
 								break;
 							}
