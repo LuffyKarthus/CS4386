@@ -24,7 +24,6 @@ function aiAction(){
 	return {focusCardIndex:choose,destPos:destPos};*/
 }
 function aggressive(){
-<<<<<<< HEAD
 	//thoughts by jimmyshum:
 	//ai player would not only be target-oriented, it would also think about the player grid for raising the probability of winning the game
 
@@ -33,14 +32,10 @@ function targetOriented(){
 	//thoughts by jimmyshum:
 	//ai player would like to choose some particular conditions for awarding higher scores 
 }
+
 function conservative(){
 	//thoughts by jimmyshum:
 	//ai tends to get points for completing any conditions
-=======
-}
-function targetOriented(){
-}
-function conservative(){
 	var pick=new Array();
 	var j=0;
 	for (var i=0;i<6;i++)									// not picking up the special cards
@@ -84,7 +79,6 @@ function conservative(){
 			return {focusCardIndex:choose,destPos:destPos};				//focusCardIndex : the index from the card deck 
 																		//destPos : the position of the ai grid 
 
->>>>>>> 5a118b1109c593bf9342f58781672191ef680a66
 }
 function random(){
 	//thoughts by jimmyshum:
