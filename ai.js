@@ -63,7 +63,7 @@ function conservative(){			//By Karthus
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank && dealtCards[j].suit!=SPECIAL_SUIT){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					found=j;
 					alert("found");	
-					if (ai.grid[(i)] && ai.grid [(i+1)%8] ){
+					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
 						for (var z=0;z<3;z++)
 						{
