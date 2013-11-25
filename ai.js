@@ -73,7 +73,7 @@ function conservative(){			//By Karthus
 					var found=j;
 					alert("found");
 					
-					if (!ai.grid[(i+1)%8])
+					if (ai.grid[(i+1)%8])
 							;
 					if (ai.grid[(i)%8]){
 						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
