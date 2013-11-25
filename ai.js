@@ -1,11 +1,8 @@
 
 function aiAction(){
-<<<<<<< HEAD
-	return random();
-	//return conservative();
-=======
+
 	return conservative();
->>>>>>> 8aae6fe7aa257539da582e49412e0794105ca647
+
 	//For refecing
 	/*for (var i = 0; i < 6; i++)
 
@@ -28,6 +25,46 @@ function aiAction(){
 	//destPos : the position of the ai grid 
 	return {focusCardIndex:choose,destPos:destPos};*/
 }
+function random(){
+	//thoughts by jimmyshum:
+	//ai player would choose the cards in random
+
+	var randNum;
+
+	//For the CardDeck Part
+	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
+	do{
+	 	randNum = Math.floor(Math.random()*6);
+
+	 	//|check
+	 	//alert("choose: "+randNum);
+	 	//|check
+	}while(randNum == 6);
+	var choose = randNum;
+
+	//For the ai grid part
+	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
+	do{
+		do{
+			randNum = Math.floor(Math.random()*9);	
+		}while(randNum == 9);
+		//|check
+		//alert("destPos: "+randNum);
+		//|check
+		if (!ai.grid[randNum]) {
+			var destPos = {pos:randNum,x:(randNum%3)*105+ai.gridPosX,y:Math.floor(randNum/3)*105+170};
+		}
+		//|check
+		//alert(!ai.grid[randNum]);
+		//|check
+	}while(ai.grid[randNum]);
+
+	//focusCardIndex : the index from the card deck 
+	//destPos : the position of the ai grid 
+	return {focusCardIndex:choose,destPos:destPos};
+
+
+}
 function aggressive(){
 	//thoughts by jimmyshum:
 	//ai player would not only be target-oriented, it would also think about the player grid for raising the probability of winning the game
@@ -36,6 +73,51 @@ function aggressive(){
 function targetOriented(){
 	//thoughts by jimmyshum:
 	//ai player would like to choose some particular conditions for awarding higher scores 
+	var prior = new Array();
+	var occupiedGrid = 0;
+	//count the empty grid in ai panel
+	for(var i=0;i<9;i++){
+		if(ai.grid[i]){
+			occupiedGrid++;
+		}
+	}
+
+	//Action dealing with the number of empty grid , the first step
+	if(occupiedGrid == 0){
+		for(var i=0;i<6;i++){
+			if(dealtCards[i].suit!=SPECIAL_SUIT){
+				if(dealtCards[i].rank >= 10 && dealtCards[i].rank <= 12){
+					prior.push(i);
+				}
+			}
+		}
+		var choose = prior[Math.floor(Math.random()*prior.length)];
+		//test
+		alert(choose);
+
+
+		//For the ai grid part
+		//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
+		do{
+			do{
+				randNum = Math.floor(Math.random()*9);	
+			}while(randNum == 9);
+			//|check
+			//alert("destPos: "+randNum);
+			//|check
+			if (!ai.grid[randNum]) {
+				var destPos = {pos:randNum,x:(randNum%3)*105+ai.gridPosX,y:Math.floor(randNum/3)*105+170};
+			}
+			//|check
+			//alert(!ai.grid[randNum]);
+			//|check
+		}while(ai.grid[randNum]);
+
+		return {focusCardIndex:choose,destPos:destPos};
+
+	}
+	else
+		return random();
 }
 
 function conservative(){
@@ -82,63 +164,10 @@ function conservative(){
 						return {focusCardIndex:choose,destPos:destPos};
 				}																
 			}
-<<<<<<< HEAD
-			/*if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
-					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					return {focusCardIndex:choose,destPos:destPos};
-			}*/
-			
-=======
-			/*
-			if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
-					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					return {focusCardIndex:choose,destPos:destPos};
-			}
-			*/
->>>>>>> 8aae6fe7aa257539da582e49412e0794105ca647
+
 		}	
 	}
 	return random();							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
-
-}
-function random(){
-	//thoughts by jimmyshum:
-	//ai player would choose the cards in random
-
-	var randNum;
-
-	//For the CardDeck Part
-	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
-	do{
-	 	randNum = Math.floor(Math.random()*6);
-
-	 	//|check
-	 	//alert("choose: "+randNum);
-	 	//|check
-	}while(randNum == 6);
-	var choose = randNum;
-
-	//For the ai grid part
-	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
-	do{
-		do{
-			randNum = Math.floor(Math.random()*9);	
-		}while(randNum == 9);
-		//|check
-		//alert("destPos: "+randNum);
-		//|check
-		if (!ai.grid[randNum]) {
-			var destPos = {pos:randNum,x:(randNum%3)*105+ai.gridPosX,y:Math.floor(randNum/3)*105+170};
-		}
-		//|check
-		//alert(!ai.grid[randNum]);
-		//|check
-	}while(ai.grid[randNum]);
-
-	//focusCardIndex : the index from the card deck 
-	//destPos : the position of the ai grid 
-	return {focusCardIndex:choose,destPos:destPos};
-
 
 }
