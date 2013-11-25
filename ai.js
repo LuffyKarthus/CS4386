@@ -80,7 +80,7 @@ function conservative(){			//By Karthus
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};		
 					}
-					/*
+					
 			}
 			
 				found=choose;
