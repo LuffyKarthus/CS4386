@@ -40,7 +40,7 @@ function conservative(){
 	var j=0;
 	for (var i=0;i<6;i++)									// not picking up the special cards
 	{
-			if (dealtCards[i].suit<=3)
+			if (dealtCards[i].suit!=SPECIAL_SUIT)
 			{
 				pick[j]=i;
 				j++;
