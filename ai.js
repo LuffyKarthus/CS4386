@@ -83,7 +83,12 @@ function conservative(){			//By Karthus
 						alert("check empty2");
 						alert(destPos);
 					}
-					var found=j;
+					for (var i=0;i<9;i++)
+					{
+						if (ai.grid[i]!=null)
+						var found=i;
+						break;
+					}	
 				alert("pairs");
 					return {focusCardIndex:found,destPos:destPos};
 			}
