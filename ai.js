@@ -55,6 +55,8 @@ function conservative(){			//By Karthus
 				break;
 			}
 	}*/
+
+
 	for (var i = 0; i < 6; i++)
 		if (dealtCards[i].suit != SPECIAL_SUIT ) {								//suit 0 - 3 => spade heart diamond club										
 			var choose = i;														//suit 4 => special card
@@ -71,9 +73,15 @@ function conservative(){			//By Karthus
 		{
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank) {				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					if (ai.grid[(i+3)%8]==null)
+					{
 						var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
+						alert("check empty");
+					}
 					if (ai.grid[(i+2)%8]==null)
+					{
 						var destPos = {pos:i,x:((i+2)%3)*105+ai.gridPosX,y:Math.floor((i+2)/3)*105+170};
+						alert("check empty");
+					}
 					var found=j;
 				alert("pairs");
 					return {focusCardIndex:found,destPos:destPos};
