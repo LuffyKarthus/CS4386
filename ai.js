@@ -65,7 +65,7 @@ function conservative(){
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 						return {focusCardIndex:choose,destPos:destPos};
 			}
-			if ( (ai.grid[i+3]%8 &&  (dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
+			if ( (ai.grid[i+3]%8 &&  (dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) ){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
 				{
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 					return {focusCardIndex:choose,destPos:destPos};
