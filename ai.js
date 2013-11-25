@@ -1,7 +1,11 @@
 
 function aiAction(){
+<<<<<<< HEAD
 	return random();
 	//return conservative();
+=======
+	return conservative();
+>>>>>>> 8aae6fe7aa257539da582e49412e0794105ca647
 	//For refecing
 	/*for (var i = 0; i < 6; i++)
 
@@ -41,40 +45,57 @@ function conservative(){
 	var j=0;
 	for (var i=0;i<6;i++)									// not picking up the special cards
 	{
-			if (dealtCards[i].suit<=3)
+			if (dealtCards[i].suit!=SPECIAL_SUIT)
 			{
-				var pick[j]=i;
+				pick[j]=i;
 				j++;
 				break;
 			}
 	}
 
+	for (var i = 0; i < 9; i++)
+
+		//ai.grid[i] : check whether the grid has card or not 
+		if (!ai.grid[i]) {
+			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+			break;
+		}
+
 	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
 		{
-			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8)){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
+			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
 				
-					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
+					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 						return {focusCardIndex:choose,destPos:destPos};
 			}
-			if (dealtCards[j].rank>=ai.grid[i].rank && ai.grid[i+3]%8){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
+			if ( (!ai.grid[i] && ai.grid[i+3]%8 &&  (dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) ){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
 				{
-					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
+					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 					return {focusCardIndex:choose,destPos:destPos};
 				}																	
 			}
-			if (dealtCards[j].suit==ai.grid[i].suit && ai.grid[i+3]%8){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
+			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 				{
-					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170}};
+					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 						return {focusCardIndex:choose,destPos:destPos};
 				}																
 			}
+<<<<<<< HEAD
 			/*if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
 					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 					return {focusCardIndex:choose,destPos:destPos};
 			}*/
 			
+=======
+			/*
+			if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
+					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
+					return {focusCardIndex:choose,destPos:destPos};
+			}
+			*/
+>>>>>>> 8aae6fe7aa257539da582e49412e0794105ca647
 		}	
 	}
 	return random();							//focusCardIndex : the index from the card deck 
