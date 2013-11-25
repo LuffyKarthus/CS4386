@@ -52,7 +52,7 @@ function conservative(){
 
 		//ai.grid[i] : check whether the grid has card or not 
 		if (!ai.grid[i]) {
-			var destPos = pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170;
+			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 			break;
 		}
 
