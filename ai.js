@@ -149,7 +149,7 @@ function conservative(){
 					var found=j;
 					return {focusCardIndex:found,destPos:destPos};
 																
-			}			&& ai.grid[i+3]%8
+			}		//	&& ai.grid[i+3]%8
 			if (!ai.grid[i]  && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 					var found=j;
