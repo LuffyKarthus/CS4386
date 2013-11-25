@@ -16,7 +16,7 @@ canvas {
 }
 
 #board {
-	background: #00EEFF;
+	background: url(background.png);
 	box-shadow: 0px 3px 10px #00DDFF;
 	border-radius: 10px;
 }

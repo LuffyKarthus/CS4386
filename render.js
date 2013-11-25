@@ -40,6 +40,9 @@ function renderSurface(){
 				if (dealtCards[i].scale < 1) dealtCards[i].scale += 0.1;
 				else if (i != focusCardIndex) dealtCards[i].scale = 1;
 			}
-		if (focusCardIndex >= 0) dealtCards[focusCardIndex].drawCard(surface,dealtCards[focusCardIndex].posX,dealtCards[focusCardIndex].posY);
+		if (focusCardIndex >= 0) {
+			dealtCards[focusCardIndex].drawCard(surface,dealtCards[focusCardIndex].posX,dealtCards[focusCardIndex].posY);
+			if (!playerTurn) surface.drawImage(image,250,470,22,34,dealtCards[focusCardIndex].posX+42,dealtCards[focusCardIndex].posY+42,22,34);
+		}
 	}
 }

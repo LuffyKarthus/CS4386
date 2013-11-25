@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="utf-moveSpeed">
 <title>Tic-A-Tac Poker</title>
 <link rel="stylesheet" type="text/css" href="theme.css" media="all">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="ai.js"></script>
-<script src="class.js"></script>
 <script src="card.js"></script>
+<script src="class.js"></script>
 <script src="handler.js"></script>
 <script src="render.js"></script>
 <script>
@@ -57,12 +57,15 @@ function gameLoop(){
 		}
 		
 		//Moving the card
-		if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x) dealtCards[focusCardIndex].posX -= 5;
-		if (dealtCards[focusCardIndex].posX < ai.decision.destPos.x) dealtCards[focusCardIndex].posX += 5;
-		if (dealtCards[focusCardIndex].posY > ai.decision.destPos.y) dealtCards[focusCardIndex].posY -= 5;
-		if (dealtCards[focusCardIndex].posY < ai.decision.destPos.y) dealtCards[focusCardIndex].posY += 5;
+		var moveAngle = Math.abs(Math.atan((dealtCards[focusCardIndex].posY-ai.decision.destPos.y)/(dealtCards[focusCardIndex].posX-ai.decision.destPos.x)));
+		var moveSpeed = 8;
+		if (dealtCards[focusCardIndex].posX < ai.decision.destPos.x) dealtCards[focusCardIndex].posX += Math.floor(moveSpeed*Math.cos(moveAngle));
+		if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x) dealtCards[focusCardIndex].posX -= Math.floor(moveSpeed*Math.cos(moveAngle));
+		if (dealtCards[focusCardIndex].posY < ai.decision.destPos.y) dealtCards[focusCardIndex].posY += Math.floor(moveSpeed*Math.sin(moveAngle));
+		if (dealtCards[focusCardIndex].posY > ai.decision.destPos.y) dealtCards[focusCardIndex].posY -= Math.floor(moveSpeed*Math.sin(moveAngle));
 		
-		if (dealtCards[focusCardIndex].posX == ai.decision.destPos.x && dealtCards[focusCardIndex].posY == ai.decision.destPos.y) {
+		if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x-moveSpeed && dealtCards[focusCardIndex].posX < ai.decision.destPos.x+moveSpeed &&
+			dealtCards[focusCardIndex].posY > ai.decision.destPos.y-moveSpeed && dealtCards[focusCardIndex].posY < ai.decision.destPos.y+moveSpeed) {
 			ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
 			dealtCards[focusCardIndex] = null;
 			focusCardIndex = -1;

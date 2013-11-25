@@ -17,7 +17,7 @@ function Hand(kind,flushSuit,pairs){
 	this.flushSuit = flushSuit;
 	this.pairs = pairs;
 	
-	this.scale = 0;
+	this.scale = 2;
 	
 	this.drawHand = function(posX){
 		if (this.flushSuit >= 0) board.drawImage(image,30+30*this.flushSuit,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
@@ -26,6 +26,8 @@ function Hand(kind,flushSuit,pairs){
 		if (this.kind == 3) board.drawImage(image,210,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
 		if (this.kind == 2) board.drawImage(image,150,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
 		if (this.kind == 1) board.drawImage(image,180,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		
+		if (this.scale > 1) this.scale -= 0.1;
 	}
 }
 
@@ -126,10 +128,7 @@ function Player(name,gridPosX){
 		board.fillText(this.score,this.gridPosX+298,120);
 		//Draw the player's hands
 		for (var i = 0; i < 8; i++)
-			if (this.hands[i]) {
-				this.hands[i].drawHand(this.gridPosX+2+i*38);
-				if (this.hands[i].scale < 1) this.hands[i].scale += 0.1;
-			}
+			if (this.hands[i]) this.hands[i].drawHand(this.gridPosX+2+i*38);
 		//Draw the player's cards
 		for (var i = 0; i < 9; i++)
 			if (this.grid[i]) this.grid[i].drawCard(board,this.gridPosX+105*(i%3),170+105*Math.floor(i/3));
