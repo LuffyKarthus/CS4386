@@ -67,7 +67,7 @@ function conservative(){			//By Karthus
 							
 							if (!ai.grid[z]){
 								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-								alert("check empty grid 1");
+								alert("Pair1");
 								return {focusCardIndex:found,destPos:destPos};	
 							}
 						}
@@ -83,7 +83,7 @@ function conservative(){			//By Karthus
 							
 							if (!ai.grid[z]){
 								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-								alert("check empty grid 2");
+								alert("Suit1");
 								return {focusCardIndex:found,destPos:destPos};	
 							}
 						}
@@ -100,7 +100,7 @@ function conservative(){			//By Karthus
 							
 							if (!ai.grid[z]){
 								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-								alert("check empty grid 2");
+								alert("Straight1");
 								return {focusCardIndex:found,destPos:destPos};	
 							}
 						}
