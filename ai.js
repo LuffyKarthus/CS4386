@@ -76,7 +76,7 @@ function conservative(){			//By Karthus
 					alert("found");
 							alert("pairs");
 					if (ai.grid[(i)%8] ){
-						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 					}
 
