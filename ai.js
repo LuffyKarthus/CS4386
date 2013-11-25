@@ -1,24 +1,4 @@
 // JavaScript Document/Users/karthus/Desktop/CS4386/ai.js
-
-/* Eric
-
-Plz follow the return format of aiAction().
-
-1. focusCardIndex:
-
-2. destPos: {pos:__,x:(__%3)*105+ai.gridPosX,y:Math.floor(__/3)*105+170}  !!!!!!! player.gridPosX if burn player's card
-
-3. if AI steal a card from player, plz also provide
-		stealPos: {pos:__,x:(__%3)*105+player.gridPosX,y:Math.floor(__/3)*105+170}
-
-4. plz provide the burn target if use burn
-		burnTarget:
-
-5. if AI use clown, plz provide the suit and the rank
-		suit:
-		rank:
-
-*/
 function aiAction(){
 	return conservative();
 	//For refecing
