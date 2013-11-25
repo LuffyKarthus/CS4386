@@ -90,7 +90,7 @@ function conservative(){			//By Karthus
 					}
 					if (ai.grid[(i+4)%8]==null)
 					{
-						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor((i)/3)*105+170)};
+						var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i/3)*105+170)};
 						alert("check empty4");
 						alert(destPos);
 					}
