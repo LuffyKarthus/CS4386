@@ -42,7 +42,7 @@ function conservative(){
 	{
 			if (dealtCards[i].suit<=3)
 			{
-				var pick[j]=i;
+				pick[j]=i;
 				j++;
 				break;
 			}
