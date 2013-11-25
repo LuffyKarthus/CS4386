@@ -91,9 +91,9 @@ function conservative(){			//By Karthus
 			*/
 		}	
 	}
-				alert("random");
-				return {focusCardIndex:found,destPos:destPos};							//focusCardIndex : the index from the card deck 
-																					//destPos : the position of the ai grid 
+					alert("random");
+					return {focusCardIndex:found,destPos:destPos};				//focusCardIndex : the index from the card deck 
+																				//destPos : the position of the ai grid 
 }
 /*
 function aggressive(){
