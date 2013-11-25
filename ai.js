@@ -1,6 +1,7 @@
-// JavaScript Document/Users/karthus/Desktop/CS4386/ai.js
+
 function aiAction(){
 	return random();
+	//return conservative();
 	//For refecing
 	/*for (var i = 0; i < 6; i++)
 
@@ -69,13 +70,14 @@ function conservative(){
 						return {focusCardIndex:choose,destPos:destPos};
 				}																
 			}
-			if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
+			/*if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
 					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 					return {focusCardIndex:choose,destPos:destPos};
-			}
+			}*/
+			
 		}	
 	}
-			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
+	return random();							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 
 }
