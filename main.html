@@ -59,7 +59,7 @@ function gameLoop(){
 		
 		//Moving the card
 		var moveAngle = Math.abs(Math.atan((dealtCards[focusCardIndex].posY-ai.decision.destPos.y)/(dealtCards[focusCardIndex].posX-ai.decision.destPos.x)));
-		var moveSpeed = 8;
+		var moveSpeed = 10;
 		if (dealtCards[focusCardIndex].posX < ai.decision.destPos.x) dealtCards[focusCardIndex].posX += Math.floor(moveSpeed*Math.cos(moveAngle));
 		if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x) dealtCards[focusCardIndex].posX -= Math.floor(moveSpeed*Math.cos(moveAngle));
 		if (dealtCards[focusCardIndex].posY < ai.decision.destPos.y) dealtCards[focusCardIndex].posY += Math.floor(moveSpeed*Math.sin(moveAngle));

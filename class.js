@@ -20,12 +20,18 @@ function Hand(kind,flushSuit,pairs){
 	this.scale = 2;
 	
 	this.drawHand = function(posX){
-		if (this.flushSuit >= 0) board.drawImage(image,30+30*this.flushSuit,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == ROYAL_FLUSH) board.drawImage(image,0,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == STRAIGHT_FLUSH) board.drawImage(image,210,460,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == FLUSH) board.drawImage(image,210,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == STRAIGHT) board.drawImage(image,150,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == PAIR) board.drawImage(image,180,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.flushSuit >= 0)
+			board.drawImage(image,30+30*this.flushSuit,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == ROYAL_FLUSH)
+			board.drawImage(image,0,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == STRAIGHT_FLUSH)
+			board.drawImage(image,210,460,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == STRAIGHT)
+			board.drawImage(image,210,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == THREE_OF_A_KIND)
+			board.drawImage(image,150,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == PAIR)
+			board.drawImage(image,180,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
 		
 		if (this.scale > 1) this.scale -= 0.1;
 	}
@@ -86,8 +92,6 @@ function Player(name,gridPosX){
 	}
 	
 	this.updateGrid = function(pos,card){
-		playerTurn = !playerTurn;
-		this.move = false;
 		//Poker
 		if (card.suit != SPECIAL_SUIT) {
 			if (this.grid[pos]) return false;
@@ -97,7 +101,18 @@ function Player(name,gridPosX){
 			this.updateHand();
 			return true;
 		}
+		//Clown
 		
+		//Thief
+		if (card.suit == SPECIAL_SUIT && card.rank == THIEF_RANK) {
+			if (!this.grid[pos]) return null;
+			var returnCard = this.grid[pos];
+			returnCard.scale = 1.1;
+			this.grid[pos] = null;
+			this.noOfCard--;
+			this.updateHand();
+			return returnCard;
+		}
 		//Torch
 		if (card.suit == SPECIAL_SUIT && card.rank == TORCH_RANK) {
 			if (!this.grid[pos]) return false;

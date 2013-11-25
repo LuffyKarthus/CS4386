@@ -1,8 +1,9 @@
 // JavaScript Document
 focusCardIndex = -1;
+isStealing = false;
 
 function mouseDownHandler(e){
-	if (!player.move) return;
+	if (!player.move || isStealing) return;
 	
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
@@ -51,29 +52,61 @@ function mouseUpHandler(e){
 	var mouseY = e.offsetY;
 	console.log("Up: "+mouseX+" "+mouseY);
 	
-	aniClear();
 	//Drop on player's grid
 	if (focusCardIndex >= 0 && mouseX >= player.gridPosX && mouseX <= player.gridPosX+300 && mouseY >= 170 && mouseY <= 470) {
 		if ((mouseX-player.gridPosX)%105 <= 90 && (mouseY-170)%105 <= 90) {
 			var posX = Math.floor((mouseX-player.gridPosX)/105);
 			var posY = Math.floor((mouseY-170)/105);
-			if (player.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) dealtCards[focusCardIndex] = null;
+			if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].rank != THIEF_RANK)
+				if (player.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) {
+					aniClear();
+					
+					dealtCards[focusCardIndex] = null;
+					focusCardIndex = -1;
+					
+					isStealing = false;
+					
+					playerTurn = false;
+					player.move = false;
+				}
 		}
 	}
 	//Drop on ai's grid
-	//&& dealtCards[focusCardIndex].suit == 4 && (dealtCards[focusCardIndex].rank == 1 || dealtCards[focusCardIndex].rank == 2)
 	if (focusCardIndex >= 0 && mouseX >= ai.gridPosX && mouseX <= ai.gridPosX+300 && mouseY >= 170 && mouseY <= 470) {
 		if ((mouseX-ai.gridPosX)%105 <= 90 && (mouseY-170)%105 <= 90) {
 			var posX = Math.floor((mouseX-ai.gridPosX)/105);
 			var posY = Math.floor((mouseY-170)/105);
-			if (card = ai.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) dealtCards[focusCardIndex] = null;
+			
+			if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == THIEF_RANK) {
+				stoleCard = ai.updateGrid(posY*3+posX,dealtCards[focusCardIndex]);
+				if (stoleCard) {
+					aniClear();
+					aniFrame = 0;
+					aniShow = setInterval("aniHighlightGrid([player.getGridStatus(false),null])",80);
+					
+					dealtCards[focusCardIndex] = stoleCard;
+					
+					isStealing = true;
+					return;
+				}
+			}
+			
+			if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK)
+				if (ai.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) {
+					aniClear();
+					
+					dealtCards[focusCardIndex] = null;
+					focusCardIndex = -1;
+					
+					playerTurn = false;
+					player.move = false;
+				}
 		}
 	}
-	focusCardIndex = -1;
 }
 
 function mouseOutHandler(e){
-	if (!player.move) return;
+	if (!player.move || isStealing) return;
 	
 	aniClear();
 	focusCardIndex = -1;
