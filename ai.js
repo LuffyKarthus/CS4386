@@ -64,7 +64,7 @@ function conservative(){			//By Karthus
 					found=j;
 					alert("found");	
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] ){
-						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+						var destPos = {pos:i,x:((i+0)%3)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};		
 					}	
