@@ -19,11 +19,15 @@ function mouseDownHandler(e){
 		dealtCards[focusCardIndex].scale = 1.1;
 		
 		aniFrame = 0;
-		//Poker
-		if (dealtCards[focusCardIndex].suit <= 3) aniShow = setInterval("aniHighlightGrid([player.getGridStatus(false),null])",80);
-		
+		//Poker or clown
+		if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == CLOWN_RANK)
+			aniShow = setInterval("aniHighlightGrid([player.getGridStatus(false),null])",80);
+		//Thief
+		if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == THIEF_RANK)
+			aniShow = setInterval("aniHighlightGrid([null,ai.getGridStatus(true)])",80);
 		//Torch
-		if (dealtCards[focusCardIndex].suit == 4 && dealtCards[focusCardIndex].rank == 2) aniShow = setInterval("aniHighlightGrid([player.getGridStatus(true),ai.getGridStatus(true)])",80);
+		if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK)
+			aniShow = setInterval("aniHighlightGrid([player.getGridStatus(true),ai.getGridStatus(true)])",80);
 	}
 }
 
@@ -48,11 +52,21 @@ function mouseUpHandler(e){
 	console.log("Up: "+mouseX+" "+mouseY);
 	
 	aniClear();
+	//Drop on player's grid
 	if (focusCardIndex >= 0 && mouseX >= player.gridPosX && mouseX <= player.gridPosX+300 && mouseY >= 170 && mouseY <= 470) {
 		if ((mouseX-player.gridPosX)%105 <= 90 && (mouseY-170)%105 <= 90) {
 			var posX = Math.floor((mouseX-player.gridPosX)/105);
 			var posY = Math.floor((mouseY-170)/105);
 			if (player.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) dealtCards[focusCardIndex] = null;
+		}
+	}
+	//Drop on ai's grid
+	//&& dealtCards[focusCardIndex].suit == 4 && (dealtCards[focusCardIndex].rank == 1 || dealtCards[focusCardIndex].rank == 2)
+	if (focusCardIndex >= 0 && mouseX >= ai.gridPosX && mouseX <= ai.gridPosX+300 && mouseY >= 170 && mouseY <= 470) {
+		if ((mouseX-ai.gridPosX)%105 <= 90 && (mouseY-170)%105 <= 90) {
+			var posX = Math.floor((mouseX-ai.gridPosX)/105);
+			var posY = Math.floor((mouseY-170)/105);
+			if (card = ai.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) dealtCards[focusCardIndex] = null;
 		}
 	}
 	focusCardIndex = -1;

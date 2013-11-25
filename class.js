@@ -21,11 +21,11 @@ function Hand(kind,flushSuit,pairs){
 	
 	this.drawHand = function(posX){
 		if (this.flushSuit >= 0) board.drawImage(image,30+30*this.flushSuit,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == 6) board.drawImage(image,0,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == 5) board.drawImage(image,210,460,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == 3) board.drawImage(image,210,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == 2) board.drawImage(image,150,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
-		if (this.kind == 1) board.drawImage(image,180,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == ROYAL_FLUSH) board.drawImage(image,0,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == STRAIGHT_FLUSH) board.drawImage(image,210,460,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == FLUSH) board.drawImage(image,210,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == STRAIGHT) board.drawImage(image,150,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
+		if (this.kind == PAIR) board.drawImage(image,180,470,30,30,Math.floor(posX+30*(1-this.scale)*0.5),Math.floor(135+30*(1-this.scale)*0.5),30*this.scale,30*this.scale);
 		
 		if (this.scale > 1) this.scale -= 0.1;
 	}
@@ -52,10 +52,10 @@ function Deck(){
 			var pos = Math.floor(Math.random()*(this.length-6));
 		} while (this.cards[pos].suit == 4);
 		
-		var rank = 0; //Clown
-		if (i > 2) rank = 1; //Thief
-		if (i > 5) rank = 2; //Torch
-		this.cards[pos] = new Card(4,rank);
+		var rank = CLOWN_RANK;
+		if (i > 2) rank = THIEF_RANK;
+		if (i > 5) rank = TORCH_RANK;
+		this.cards[pos] = new Card(SPECIAL_SUIT,rank);
 	}
 	
 	this.dealCard = function(){
@@ -89,7 +89,7 @@ function Player(name,gridPosX){
 		playerTurn = !playerTurn;
 		this.move = false;
 		//Poker
-		if (card.suit <= 3) {
+		if (card.suit != SPECIAL_SUIT) {
 			if (this.grid[pos]) return false;
 			card.scale = 1;
 			this.grid[pos] = card;
@@ -99,7 +99,7 @@ function Player(name,gridPosX){
 		}
 		
 		//Torch
-		if (card.suit == 4 && card.rank == 2) {
+		if (card.suit == SPECIAL_SUIT && card.rank == TORCH_RANK) {
 			if (!this.grid[pos]) return false;
 			this.grid[pos] = null;
 			this.noOfCard--;

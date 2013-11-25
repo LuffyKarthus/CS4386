@@ -10,12 +10,12 @@ function checkHand(grid){
 	for (var i = 0; i < map.length; i++) {
 		var cards = [grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]];
 		
-		if (royalFlush(cards)) hands[i] = new Hand(6,-1);
-		else if (straightFlush(cards)) hands[i] = new Hand(5,grid[map[i][0]].suit);
-		else if (flush(cards)) hands[i] = new Hand(4,grid[map[i][0]].suit);
-		else if (straight(cards)) hands[i] = new Hand(3,-1);
-		else if (threeOfAKind(cards)) hands[i] = new Hand(2,-1);
-		else if (pair(cards)) hands[i] = new Hand(1,-1);
+		if (royalFlush(cards)) hands[i] = new Hand(ROYAL_FLUSH,-1);
+		else if (straightFlush(cards)) hands[i] = new Hand(STRAIGHT_FLUSH,grid[map[i][0]].suit);
+		else if (flush(cards)) hands[i] = new Hand(FLUSH,grid[map[i][0]].suit);
+		else if (straight(cards)) hands[i] = new Hand(STRAIGHT,-1);
+		else if (threeOfAKind(cards)) hands[i] = new Hand(THREE_OF_A_KIND,-1);
+		else if (pair(cards)) hands[i] = new Hand(PAIR,-1);
 		else hands[i] = null;
 	}
 	return hands;
