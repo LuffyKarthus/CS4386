@@ -98,10 +98,11 @@ function conservative(){			//By Karthus
 						{
 							var found=j;
 							alert("found");
+							alert("pairs");
 						}
 						break;
 					}	
-					alert("pairs");
+					
 					return {focusCardIndex:found,destPos:destPos};
 			}
 			/*		// Get for Straight && ai.grid[i] : check whether the grid has card or not
