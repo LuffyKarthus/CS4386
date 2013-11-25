@@ -22,9 +22,7 @@ Plz follow the return format of aiAction().
 function aiAction(){
 
 	return conservative();
-
-
-	//For refecing
+	//For referencing
 	/*for (var i = 0; i < 6; i++)
 
 		//suit 0 - 3 => spade heart diamond club
@@ -46,39 +44,27 @@ function aiAction(){
 	//destPos : the position of the ai grid 
 	return {focusCardIndex:choose,destPos:destPos};*/
 }
-
-
-function conservative(){
-	//By Karthus:
-	//ai tends to get points for completing any conditions
+function conservative(){			//By Karthus
 	/*
 	var pick=new Array();
 	var z=0;
-
-	for (var i=0;i<6;i++)									// not picking up the special cards
-	{
-			if (dealtCards[i].suit!=SPECIAL_SUIT)
-			{
+	for (var i=0;i<6;i++)									// not picking up the special cards{
+			if (dealtCards[i].suit!=SPECIAL_SUIT){
 				pick[z]=i;
 				z++;
 				break;
 			}
-	}
-	*/
+	}*/
 	for (var i = 0; i < 6; i++)
-		//suit 0 - 3 => spade heart diamond club
-		//suit 4 => special card
-		if (dealtCards[i].suit != SPECIAL_SUIT ) {
-			var choose = i;
+		if (dealtCards[i].suit != SPECIAL_SUIT ) {								//suit 0 - 3 => spade heart diamond club										
+			var choose = i;														//suit 4 => special card
 			break;
 		}
-
 	for (var i = 0; i < 9; i++)		
-		if (ai.grid[i]) {												//ai.grid[i] : check whether the grid has card or not 
+		if (!ai.grid[i]) {												//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
-
 	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
