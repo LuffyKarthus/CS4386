@@ -58,6 +58,7 @@ function conservative(){
 	//ai tends to get points for completing any conditions
 	var pick=new Array();
 	var z=0;
+/*
 	for (var i=0;i<6;i++)									// not picking up the special cards
 	{
 			if (dealtCards[i].suit!=SPECIAL_SUIT)
@@ -67,6 +68,16 @@ function conservative(){
 				break;
 			}
 	}
+*/
+	for (var i = 0; i < 6; i++)
+
+		//suit 0 - 3 => spade heart diamond club
+		//suit 4 => special card
+
+		if (dealtCards[i].suit <= 3) {
+			var choose = i;
+			break;
+		}
 
 	for (var i = 0; i < 9; i++)		
 		if (!ai.grid[i]) {												//ai.grid[i] : check whether the grid has card or not 
@@ -80,21 +91,21 @@ function conservative(){
 		{
 			if (!ai.grid[i] && ai.grid[i]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:1,destPos:destPos};
+					return {focusCardIndex:choose,destPos:destPos};
 			}
 			if ( (!ai.grid[i] && ai.grid[i]%8 &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:1,destPos:destPos};
+					return {focusCardIndex:choose,destPos:destPos};
 																
 			}
 			if (!ai.grid[i] && ai.grid[i]%8 && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-					return {focusCardIndex:1,destPos:destPos};															
+					return {focusCardIndex:choose,destPos:destPos};															
 			}
 
 		}	
 	}
-			return {focusCardIndex:1,destPos:destPos};							//focusCardIndex : the index from the card deck 
+			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 
 }
