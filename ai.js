@@ -61,25 +61,23 @@ function conservative(){			//By Karthus
 			break;
 		}
 	for (var i = 0; i < 9; i++)		
-		if (!ai.grid[i]) {												//ai.grid[i] : check whether the grid has card or not 
+		if (!ai.grid[i]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
-	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
+	for (var i=0;i<9;i++)		//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
 		{
-			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
+			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var found=j;
 					alert("found");
 					
-
-					if (ai.grid[(i)%3]){
+					if (ai.grid[(i)%8]){
 						var destPos = {pos:i,x:((i+1)%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 						return {focusCardIndex:found,destPos:destPos};
 					}
-
 					/*
 					for (var j=0;j<9;j++){
 						if (ai.grid[j].rank)
