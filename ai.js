@@ -41,6 +41,7 @@ function aiAction(){
 }
 function conservative(){			//By Karthus
 
+
 	var found;
 	for (var i = 0; i < 6; i++)								// not picking up the special cards{
 		if (dealtCards[i].suit != SPECIAL_SUIT ) {								//suit 0 - 3 => spade heart diamond club										
@@ -63,14 +64,14 @@ function conservative(){			//By Karthus
 			//	alert("found");	
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
-						for (var z=0;z<3;z++){
-							
-							if (!ai.grid[z]){
-								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-							//	alert("Pair1");
-								return {focusCardIndex:found,destPos:destPos};	
+							for (var z=0;z<3;z++){
+								
+								if (!ai.grid[z]){
+									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+								//	alert("Pair1");
+									return {focusCardIndex:found,destPos:destPos};	
+								}
 							}
-						}
 					}	
 			}		
 			
@@ -79,31 +80,31 @@ function conservative(){			//By Karthus
 			//	alert("suit");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
-						for (var z=0;z<3;z++){
-							
-							if (!ai.grid[z]){
-								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-							//	alert("Suit1");
-								return {focusCardIndex:found,destPos:destPos};	
+							for (var z=0;z<3;z++){
+								
+								if (!ai.grid[z]){
+									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+								//	alert("Suit1");
+									return {focusCardIndex:found,destPos:destPos};	
+								}
 							}
-						}
 					}	
 																
 			}
 				
-			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
+			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) && dealtCards[j].suit!=SPECIAL_SUIT) )){	// Get for Straight 	
 				found=j;
 			//	alert("Straight");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
-						for (var z=0;z<3;z++){
-							
-							if (!ai.grid[z]){
-								var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-							//	alert("Straight1");
-								return {focusCardIndex:found,destPos:destPos};	
+							for (var z=0;z<3;z++){
+								
+								if (!ai.grid[z]){
+									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+								//	alert("Straight1");
+									return {focusCardIndex:found,destPos:destPos};	
+								}
 							}
-						}
 					}	
 			}		
 			
