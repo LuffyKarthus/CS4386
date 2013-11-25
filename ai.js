@@ -93,8 +93,8 @@ function conservative(){			//By Karthus
 						alert("check empty4");
 					}
 */
-					for (var j=0;i<9;i++){
-						if (ai.grid[j])
+					for (var j=0;j<9;j++){
+						if (ai.grid[j]==null)
 						var found=j;
 						break;
 					}	
