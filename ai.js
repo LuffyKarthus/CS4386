@@ -70,9 +70,9 @@ function conservative(){			//By Karthus
 		for (var j=0;j<6;j++)
 		{
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank) {				// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
-					if (ai.grid[(i+3)%8] && ai.grid[(i+3)%8]==null)
+					if (ai.grid[(i+3)%8]==null)
 						var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					if (ai.grid[(i+2)%8] && ai.grid[(i+2)%8]==null)
+					if (ai.grid[(i+2)%8]==null)
 						var destPos = {pos:i,x:((i+2)%3)*105+ai.gridPosX,y:Math.floor((i+2)/3)*105+170};
 					var found=j;
 				alert("pairs");
