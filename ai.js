@@ -72,7 +72,7 @@ function conservative(){			//By Karthus
 	{
 		for (var j=0;j<6;j++)
 		{
-			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
+			if (  dealtCards[j].rank==ai.grid[i].rank){		// Get for pairs && ai.grid[i] : check whether the grid has card or not 			
 					var found=j;
 					alert("found");			
 					if (ai.grid[(i)]){
