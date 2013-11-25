@@ -77,10 +77,12 @@ function conservative(){
 						return {focusCardIndex:choose,destPos:destPos};
 				}																
 			}
+			/*
 			if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
 					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
 					return {focusCardIndex:choose,destPos:destPos};
 			}
+			*/
 		}	
 	}
 			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
