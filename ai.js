@@ -95,7 +95,10 @@ function conservative(){			//By Karthus
 */
 					for (var j=(9-i);j<9;j++){
 						if (ai.grid[j])
-						var found=j;
+						{
+							var found=j;
+							alert("found");
+						}
 						break;
 					}	
 					alert("pairs");
