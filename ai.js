@@ -13,7 +13,7 @@ function aiAction(){
 		}
 	for (var i = 0; i < 9; i++)
 
-		//ai.grid[i] : check whetther the grid has card or not 
+		//ai.grid[i] : check whether the grid has card or not 
 		if (!ai.grid[i]) {
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 			break;
@@ -24,47 +24,53 @@ function aiAction(){
 	return {focusCardIndex:choose,destPos:destPos};*/
 }
 function aggressive(){
-
-
 }
 function targetOriented(){
-
-
-
-
 }
 function conservative(){
-	for (var i=0;i<9;i++)
+	var pick=new Array();
+	var j=0;
+	for (var i=0;i<6;i++)									// not picking up the special cards
+	{
+			if (dealtCards[i].suit<=3)
+			{
+				var pick[j]=i;
+				j++;
+				break;
+			}
+	}
+
+
+	for (var i=0;i<9;i++)					//Priority from getting pairs,Straight,Flush.    If a pattern can't be formed  ,then simply pick a card
 	{
 		for (var j=0;j<6;j++)
 		{
-			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8)){				// Get for pairs
+			if (dealtCards[j].rank==ai.grid[i].rank && ai.grid[i+3]%8)){				// Get for pairs			
 				
-					var deskPos={};
-					break;
+					var deskPos={pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170}};
+						return {focusCardIndex:choose,destPos:destPos};
 			}
 			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Straight
 				{
-					var deskPos={};
-					break;
+					var deskPos={pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170}};
+					return {focusCardIndex:choose,destPos:destPos};
 				}																	
 			}
 			if (dealtCards[j].club==ai.grid[i].club && ai.grid[i+3]%8){					// Get for Flush
 				{
-					var deskPos={};
-					break;
+					var deskPos={pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170}};
+						return {focusCardIndex:choose,destPos:destPos};
 				}																
 			}
-			if (!ai.grid[i]) {													// just get a card
-				var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-				break;
+			if (!ai.grid[i]) {												check whether the grid has card or not					// just get a card
+					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+					return {focusCardIndex:choose,destPos:destPos};
 			}
-
 		}	
-		
 	}
+			return {focusCardIndex:choose,destPos:destPos};				//focusCardIndex : the index from the card deck 
+																		//destPos : the position of the ai grid 
 
-	return {focusCardIndex:choose,destPos:destPos};
 }
 function random(){
 	var randNum;
