@@ -49,7 +49,7 @@ function aiAction(){
 
 
 function conservative(){
-	//thoughts by jimmyshum:
+	//By Karthus:
 	//ai tends to get points for completing any conditions
 	/*
 	var pick=new Array();
@@ -66,10 +66,8 @@ function conservative(){
 	}
 	*/
 	for (var i = 0; i < 6; i++)
-
 		//suit 0 - 3 => spade heart diamond club
 		//suit 4 => special card
-
 		if (dealtCards[i].suit != SPECIAL_SUIT ) {
 			var choose = i;
 			break;
@@ -90,7 +88,7 @@ function conservative(){
 					var found=j;
 					return {focusCardIndex:choose,destPos:destPos};
 			}
-			/*
+			
 			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
 					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 					var found=j;
@@ -102,7 +100,7 @@ function conservative(){
 					var found=j;
 					return {focusCardIndex:found,destPos:destPos};															
 			}
-			*/
+			
 		}	
 	}
 
@@ -110,7 +108,7 @@ function conservative(){
 			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
 }
-
+/*
 function aggressive(){
 	//thoughts by jimmyshum:
 	//ai player would not only be target-oriented, it would also think about the player grid for raising the probability of winning the game
