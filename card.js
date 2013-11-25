@@ -21,8 +21,12 @@ function checkHand(grid){
 	return hands;
 }
 
+function isClown(card){
+	return (card && card.suit == SPECIAL_SUIT && card.rank == CLOWN_RANK);
+}
+
 function royalFlush(cards){
-	return (cards[0] && cards[1] && cards[2] && cards[0].rank > 9 && cards[1].rank > 9 && cards[2].rank > 9 && straightFlush(cards));
+	return (cards[0] && cards[1] && cards[2] && (cards[0].rank > 9 || isClown(cards[0])) && (cards[1].rank > 9 || isClown(cards[1])) && (cards[2].rank > 9 || isClown(cards[2])) && straightFlush(cards));
 }
 
 function straightFlush(cards){
@@ -30,7 +34,7 @@ function straightFlush(cards){
 }
 
 function flush(cards){
-	return (cards[0] && cards[1] && cards[2] && cards[0].suit == cards[1].suit && cards[0].suit == cards[2].suit);
+	return (cards[0] && cards[1] && cards[2] && (cards[0].suit == cards[1].suit || isClown(cards[0]) || isClown(cards[1])) && (cards[0].suit == cards[2].suit || isClown(cards[0]) || isClown(cards[2])));
 }
 
 function straight(cards){
@@ -42,16 +46,16 @@ function straight(cards){
 				cards[j] = cards[j+1];
 				cards[j+1] = temp;
 			}
-	return (cards[0].rank-cards[1].rank == 1 && cards[1].rank-cards[2].rank == 1);
+	return ((cards[0].rank-cards[1].rank == 1 || isClown(cards[0]) || isClown(cards[1])) && (cards[1].rank-cards[2].rank == 1 || isClown(cards[1]) || isClown(cards[2])));
 }
 
 function threeOfAKind(cards){
-	return (cards[0] && cards[1] && cards[2] && cards[0].rank == cards[1].rank && cards[0].rank == cards[2].rank);
+	return (cards[0] && cards[1] && cards[2] && (cards[0].rank == cards[1].rank || isClown(cards[0]) || isClown(cards[1])) && (cards[0].rank == cards[2].rank || isClown(cards[1]) || isClown(cards[2])));
 }
 
 function pair(cards){
-	if (cards[0] && cards[1] && cards[0].rank == cards[1].rank) return true;
-	if (cards[0] && cards[2] && cards[0].rank == cards[2].rank) return true;
-	if (cards[1] && cards[2] && cards[1].rank == cards[2].rank) return true;
+	if (cards[0] && cards[1] && (cards[0].rank == cards[1].rank || isClown(cards[0]) || isClown(cards[1]))) return true;
+	if (cards[0] && cards[2] && (cards[0].rank == cards[2].rank || isClown(cards[0]) || isClown(cards[2]))) return true;
+	if (cards[1] && cards[2] && (cards[1].rank == cards[2].rank || isClown(cards[1]) || isClown(cards[2]))) return true;
 	return false;
 }

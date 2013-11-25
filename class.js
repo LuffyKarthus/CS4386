@@ -17,7 +17,7 @@ function Hand(kind,flushSuit,pairs){
 	this.flushSuit = flushSuit;
 	this.pairs = pairs;
 	
-	this.scale = 2;
+	this.scale = 3;
 	
 	this.drawHand = function(posX){
 		if (this.flushSuit >= 0)
@@ -59,8 +59,8 @@ function Deck(){
 		} while (this.cards[pos].suit == 4);
 		
 		var rank = CLOWN_RANK;
-		if (i > 2) rank = THIEF_RANK;
-		if (i > 5) rank = TORCH_RANK;
+		if (i > 1) rank = 0;
+		if (i > 6) rank = TORCH_RANK;
 		this.cards[pos] = new Card(SPECIAL_SUIT,rank);
 	}
 	
@@ -92,8 +92,8 @@ function Player(name,gridPosX){
 	}
 	
 	this.updateGrid = function(pos,card){
-		//Poker
-		if (card.suit != SPECIAL_SUIT) {
+		//Poker or clown
+		if (card.suit != SPECIAL_SUIT || card.suit == SPECIAL_SUIT && card.rank == CLOWN_RANK) {
 			if (this.grid[pos]) return false;
 			card.scale = 1;
 			this.grid[pos] = card;
@@ -101,8 +101,6 @@ function Player(name,gridPosX){
 			this.updateHand();
 			return true;
 		}
-		//Clown
-		
 		//Thief
 		if (card.suit == SPECIAL_SUIT && card.rank == THIEF_RANK) {
 			if (!this.grid[pos]) return null;

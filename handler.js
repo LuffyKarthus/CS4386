@@ -59,11 +59,7 @@ function mouseUpHandler(e){
 			var posY = Math.floor((mouseY-170)/105);
 			if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].rank != THIEF_RANK)
 				if (player.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) {
-					aniClear();
-					
 					dealtCards[focusCardIndex] = null;
-					focusCardIndex = -1;
-					
 					isStealing = false;
 					
 					playerTurn = false;
@@ -93,15 +89,17 @@ function mouseUpHandler(e){
 			
 			if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK)
 				if (ai.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) {
-					aniClear();
-					
 					dealtCards[focusCardIndex] = null;
-					focusCardIndex = -1;
 					
 					playerTurn = false;
 					player.move = false;
 				}
 		}
+	}
+	
+	if (!isStealing) {
+		aniClear();
+		focusCardIndex = -1;
 	}
 }
 
