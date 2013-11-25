@@ -24,16 +24,22 @@ function aiAction(){
 	return {focusCardIndex:choose,destPos:destPos};*/
 }
 function aggressive(){
-
+	//thoughts by jimmyshum:
+	//ai player would not only be target-oriented, it would also think about the player grid for raising the probability of winning the game
 
 }
 function targetOriented(){
-
+	//thoughts by jimmyshum:
+	//ai player would like to choose some particular conditions for awarding higher scores 
 }
 function conservative(){
-
+	//thoughts by jimmyshum:
+	//ai tends to get points for completing any conditions
 }
 function random(){
+	//thoughts by jimmyshum:
+	//ai player would choose the cards in random
+
 	var randNum;
 
 	//For the CardDeck Part
@@ -52,7 +58,7 @@ function random(){
 	do{
 		do{
 			randNum = Math.floor(Math.random()*9);	
-		}while(randNum == 10);
+		}while(randNum == 9);
 		//|check
 		//alert("destPos: "+randNum);
 		//|check
