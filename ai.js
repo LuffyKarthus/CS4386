@@ -44,13 +44,13 @@ function conservative(){
 	//thoughts by jimmyshum:
 	//ai tends to get points for completing any conditions
 	var pick=new Array();
-	var j=0;
+	var z=0;
 	for (var i=0;i<6;i++)									// not picking up the special cards
 	{
 			if (dealtCards[i].suit!=SPECIAL_SUIT)
 			{
-				pick[j]=i;
-				j++;
+				pick[z]=i;
+				z++;
 				break;
 			}
 	}
@@ -70,33 +70,26 @@ function conservative(){
 			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].rank==ai.grid[i].rank ){				// Get for pairs && ai.grid[i] : check whether the grid has card or not 		
 				
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-						return {focusCardIndex:choose,destPos:destPos};
+						return {focusCardIndex:pick[z],destPos:destPos};
 			}
 			if ( (!ai.grid[i] && ai.grid[i+3]%8 &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank)) )){					// Get for Straight && ai.grid[i] : check whether the grid has card or not
 				{
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					return {focusCardIndex:choose,destPos:destPos};
+					return {focusCardIndex:pick[z],destPos:destPos};
 				}																	
 			}
 			if (!ai.grid[i] && ai.grid[i+3]%8 && dealtCards[j].suit==ai.grid[i].suit){					// Get for Flush && ai.grid[i] : check whether the grid has card or not
 				{
 					var deskPos={pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-						return {focusCardIndex:choose,destPos:destPos};
+						return {focusCardIndex:pick[z],destPos:destPos};
 				}																
 			}
 
-			/*if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
-					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					return {focusCardIndex:choose,destPos:destPos};
-			}*/
-			
-
-			/*
 			if (!ai.grid[i]) {															// just get a card && check whether the grid has card or not
 					var destPos = {pos:i,x:((i+3)%3)*105+ai.gridPosX,y:Math.floor((i+3)/3)*105+170};
-					return {focusCardIndex:choose,destPos:destPos};
-			}
+					return {focusCardIndex:pick[z],destPos:destPos};
 			*/
+		
 
 		}	
 	}
