@@ -75,22 +75,10 @@ function conservative(){			//By Karthus
 					var found=j;
 					alert("found");
 							alert("pairs");
-					if (ai.grid[(i)%8] && i>=0 && i<=2){
-						var destPos = {pos:i,x:(i+1%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+					if (ai.grid[(i)%8] ){
+						var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 						alert("check empty grid 1");
 					}
-
-					if (ai.grid[(i)%8] && i>=3 && i<=5){
-						var destPos = {pos:i,x:(i+1%3)*105+ai.gridPosX,y:Math.floor(i+1/3)*105+170};
-						alert("check empty grid 1");
-					}
-
-					if (ai.grid[(i)%8] && i>=6 && i<=8){
-						var destPos = {pos:i,x:(i+1%3)*105+ai.gridPosX,y:Math.floor(i+2/3)*105+170};
-						alert("check empty grid 1");
-					}
-
-
 
 
 					for (var j=0;j<9;j++){
