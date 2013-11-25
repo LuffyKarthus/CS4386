@@ -100,9 +100,8 @@ function conservative(){			//By Karthus
 						var found=j;
 						break;
 					}	
-	
 				alert("pairs");
-					return {focusCardIndex:found,destPos:destPos};
+					return {focusCardIndex:choose,destPos:destPos};
 			}
 			/*
 			if ( (!ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){		// Get for Straight && ai.grid[i] : check whether the grid has card or not
