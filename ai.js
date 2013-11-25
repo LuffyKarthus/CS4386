@@ -117,7 +117,10 @@ function conservative(){			//By Karthus
 			*/
 		}	
 	}
-
+				while (desPos!=null)
+				{
+					desPos+=1;
+				}
 	alert("random");
 			return {focusCardIndex:choose,destPos:destPos};							//focusCardIndex : the index from the card deck 
 																					//destPos : the position of the ai grid 
