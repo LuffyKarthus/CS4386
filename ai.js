@@ -34,21 +34,22 @@ function conservative(){		//By Karthus
 	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
 			found=i;
-			alert("trial#1");
+			alert("Joker");
 			return {focusCardIndex:found,destPos:destPos};	
 		}
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
-				alert("trial#2");
+				alert("Torch");
 			return {focusCardIndex:found,destPos:destPos};
 			//* return {focusCardIndex:found,destPos:destPos};	
 		}
-		else if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
+	}
+	for (var i = 0; i < 6; i++){
+		if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
 			found=i;		
-			alert("trial#3");											
+			alert("normal card");											
 			return {focusCardIndex:found,destPos:destPos};
 		}
-		break;
 	}
 	alert("testing");
 //  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
