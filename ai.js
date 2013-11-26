@@ -57,7 +57,15 @@ function conservative()
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
 			alert("Torch");
-			//  need function update
+			for (var i=0;i<9;i++)
+			{	
+				if (play.grid[i%9])
+				{
+					var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+					break;
+				}
+			}
+
 			return {focusCardIndex:found,destPos:destPos,burnTarget:"player"};
 		}
 
