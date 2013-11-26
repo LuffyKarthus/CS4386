@@ -24,11 +24,7 @@ function aiAction(){
 function conservative(){		//By Karthus
 
 	var found;
-	for (var i = 0; i < 6; i++)								// not picking up the special cards{
-		if (dealtCards[i].suit != SPECIAL_SUIT ) {								//suit 0 - 3 => spade heart diamond club										
-			found= i;														//suit 4 => special card
-			break;
-		}
+
 
 	for (var i = 0; i < 9; i++){
 		if (!ai.grid[i]) {										//ai.grid[i] : check whether the grid has card or not 
@@ -37,7 +33,20 @@ function conservative(){		//By Karthus
 		}
 	}
 
-	
+	for (var i = 0; i < 6; i++){
+		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank!=2){						//get special cards 
+			found=i;
+			return {focusCardIndex:found,destPos:destPos};	
+		}
+	}
+
+
+	for (var i = 0; i < 6; i++){
+		if (dealtCards[i].suit != SPECIAL_SUIT ) {																
+			found= i;													
+			break;
+		}
+	}
 
 
 	for (var i=0;i<9;i++){				//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
@@ -73,8 +82,7 @@ function conservative(){		//By Karthus
 									return {focusCardIndex:found,destPos:destPos};	
 								}
 							}
-					}	
-																
+					}						
 			}
 				
 			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
