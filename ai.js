@@ -45,9 +45,8 @@ function conservative(){		//By Karthus
 		}
 		else if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
 			found= i;													
-			break;
+			return {focusCardIndex:found,destPos:destPos};
 		}
-		break;
 	}
 
 	for (var i=0;i<9;i++){			//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
