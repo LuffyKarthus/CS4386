@@ -34,10 +34,20 @@ function conservative(){		//By Karthus
 	}
 
 	for (var i = 0; i < 6; i++){
-		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank!=1){						//get special cards 
+		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){						//get special cards 
 			found=i;
 			return {focusCardIndex:found,destPos:destPos};	
 		}
+		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){						//get special cards 
+			found=i;
+
+
+
+
+			return {focusCardIndex:found,destPos:destPos};	
+		}
+		else break;
+
 	}
 
 
@@ -55,14 +65,14 @@ function conservative(){		//By Karthus
 
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
 				found=j;
-			//	alert("found");	
+				alert("found");	
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
 							for (var z=0;z<3;z++){
 								
 								if (!ai.grid[z]){
 									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-								//	alert("Pair1");
+									alert("Pair1");
 									return {focusCardIndex:found,destPos:destPos};	
 								}
 							}
@@ -71,14 +81,14 @@ function conservative(){		//By Karthus
 			
 			if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		// Get for Flush 
 				found=j;
-			//	alert("suit");
+				alert("suit");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
 							for (var z=0;z<3;z++){
 								
 								if (!ai.grid[z]){
 									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-								//	alert("Suit1");
+									alert("Suit1");
 									return {focusCardIndex:found,destPos:destPos};	
 								}
 							}
@@ -87,14 +97,14 @@ function conservative(){		//By Karthus
 				
 			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
 				found=j;
-			//	alert("Straight");
+				alert("Straight");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
 							for (var z=0;z<3;z++){
 								
 								if (!ai.grid[z]){
 									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-								//	alert("Straight1");
+									alert("Straight1");
 									return {focusCardIndex:found,destPos:destPos};	
 								}
 							}
