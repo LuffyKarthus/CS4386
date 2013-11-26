@@ -435,7 +435,7 @@ function checkValue(dealtCards,grid){
 		}
 		alert(i+ ":  " + temp);
 		//
-		*/
+		
 		value = [0,0,0,0,0,0,0,0,0];
 	}
 	return valueArr;
