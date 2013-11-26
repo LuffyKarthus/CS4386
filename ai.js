@@ -65,7 +65,7 @@ function aiAction(){
 									
 										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		//*** check here
 												alert("good1");
-												for (var z=0;z<3;z++){
+												for (var z=0;z<8;z++){
 												
 													if (!ai.grid[z]){
 														alert("pairs");
@@ -84,7 +84,7 @@ function aiAction(){
 									found=j;
 										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 													alert("good2");
-												for (var z=0;z<3;z++){
+												for (var z=0;z<8;z++){
 
 													if (!ai.grid[z]){
 														alert("flush");
@@ -103,7 +103,7 @@ function aiAction(){
 									found=j;
 											if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 														alert("good3");
-													for (var z=0;z<3;z++){
+													for (var z=0;z<8;z++){
 														
 														if (!ai.grid[z]){
 															alert("straight");
@@ -115,7 +115,7 @@ function aiAction(){
 									}		
 			
 		}	
-	}											//focusCardIndex : the index from the card deck 
+	}												//focusCardIndex : the index from the card deck 
 	alert("random");						
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
