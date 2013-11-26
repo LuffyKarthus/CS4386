@@ -24,8 +24,6 @@ function aiAction(){
 function conservative(){		//By Karthus
 
 	var found;
-
-
 	for (var i = 0; i < 9; i++){
 		if (!ai.grid[i]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
@@ -48,8 +46,8 @@ function conservative(){		//By Karthus
 			return {focusCardIndex:found,destPos:destPos};
 		}
 	}
-
-	for (var i=0;i<9;i++){			//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
+//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
+	for (var i=0;i<9;i++){			
 
 		for (var j=0;j<6;j++){
 
@@ -65,8 +63,15 @@ function conservative(){		//By Karthus
 								}
 							}
 					}	
-			}		
-			
+			}
+		}		
+	}		
+	
+
+		for (var i=0;i<9;i++){			
+
+		for (var j=0;j<6;j++){
+
 			if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		// Get for Flush 
 				found=j;
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
@@ -80,7 +85,13 @@ function conservative(){		//By Karthus
 							}
 					}						
 			}
-				
+		}
+	}	
+		for (var i=0;i<9;i++){			
+
+		for (var j=0;j<6;j++){
+
+
 			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
 				found=j;
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
@@ -96,7 +107,7 @@ function conservative(){		//By Karthus
 			}		
 			
 		}	
-	}												//focusCardIndex : the index from the card deck 
+	}											//focusCardIndex : the index from the card deck 
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
 /*
