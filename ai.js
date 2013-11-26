@@ -34,12 +34,12 @@ function conservative(){		//By Karthus
 	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
 			found=i;
-			console.log("Joker");
+			alert("Joker");
 			return {focusCardIndex:found,destPos:destPos};	
 		}
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
-			console.log("Torch");
+			alert("Torch");
 			//  need function update
 			return {focusCardIndex:found,destPos:destPos};
 		}
@@ -61,7 +61,7 @@ function conservative(){		//By Karthus
 										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
 												for (var z=0;z<3;z++){
-													
+													alert("hi");
 													if (!ai.grid[z]){
 														alert("pairs");
 														var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
