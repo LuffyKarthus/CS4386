@@ -69,7 +69,12 @@ function aiAction(){
 								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
 									found=j;	
 									//	if (ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		
-											
+										for(var k=0;k<8;k++)
+										{
+											if (!ai.grid[k)
+												ai.grid[k];
+										}
+
 												for (var z=0;z<3;z++){
 													alert("good1");
 													if (!ai.grid[z]){
