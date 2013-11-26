@@ -19,15 +19,16 @@ Plz follow the return format of aiAction().
 		rank:
 */
 function aiAction(){
-
+	toReturn = conservative();
+	console.log(toReturn.destPos.pos+" "+toReturn.focusCardIndex);
+	return toReturn;
 	//return targetOriented();
 	//For refecing
-	for (var i = 0; i < 6; i++)
+	//suit 0 - 3 => spade heart diamond club
+	//suit 4 => special card
 
-		//suit 0 - 3 => spade heart diamond club
-		//suit 4 => special card
-
-
+function conservative()
+{
 	var found;
 	
 	for (var i = 0; i < 9; i++){
@@ -127,6 +128,8 @@ function aiAction(){
 	alert("random");						
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
+
+
 /*
 function aggressive(){
 	//thoughts by jimmyshum:
