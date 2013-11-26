@@ -58,7 +58,7 @@ function conservative()
 			found=i;
 			alert("Torch");
 			//  need function update
-			return {focusCardIndex:found,destPos:destPos};
+			return {focusCardIndex:found,destPos:destPos,burnTarget:"player"};
 		}
 
 	//		alert("Thief");															//get Thief
