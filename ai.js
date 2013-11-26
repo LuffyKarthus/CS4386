@@ -58,6 +58,7 @@ function conservative(){		//By Karthus
 							for (var z=0;z<3;z++){
 								
 								if (!ai.grid[z]){
+									alert("pairs");
 									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 									return {focusCardIndex:found,destPos:destPos};	
 								}
@@ -79,6 +80,7 @@ function conservative(){		//By Karthus
 							for (var z=0;z<3;z++){
 								
 								if (!ai.grid[z]){
+									alert("flush");
 									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 									return {focusCardIndex:found,destPos:destPos};	
 								}
@@ -99,6 +101,7 @@ function conservative(){		//By Karthus
 							for (var z=0;z<3;z++){
 								
 								if (!ai.grid[z]){
+									alert("straight");
 									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 									return {focusCardIndex:found,destPos:destPos};	
 								}
@@ -108,6 +111,7 @@ function conservative(){		//By Karthus
 			
 		}	
 	}											//focusCardIndex : the index from the card deck 
+	alert("random");
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
 /*
