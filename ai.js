@@ -30,7 +30,7 @@ function aiAction(){
 
 	var found;
 	for (var i = 0; i < 9; i++){
-		if (!ai.grid[i]) {										//ai.grid[i] : check whether the grid has card or not 
+		if (!ai.grid[(i+1)%8]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
@@ -59,7 +59,7 @@ function aiAction(){
 										//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 	for (var i=0;i<9;i++){								
 		for (var j=0;j<6;j++){
-								// Get for pairs  and three of a kind  
+										// Get for pairs  and three of a kind  
 								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
 									found=j;
 									
@@ -100,7 +100,7 @@ function aiAction(){
 	for (var i=0;i<9;i++){								
 		for (var j=0;j<6;j++){
 								if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	 	
-										found=j;
+									found=j;
 											if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 														alert("good3");
 													for (var z=0;z<3;z++){
