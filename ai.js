@@ -68,7 +68,7 @@ function aiAction(){
 										// Get for pairs  and three of a kind  
 								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
 									found=j;	
-										if ( ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		
+									//	if (ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		
 											
 												for (var z=0;z<3;z++){
 													alert("good1");
@@ -78,7 +78,7 @@ function aiAction(){
 														return {focusCardIndex:found,destPos:destPos};	
 													}
 												}
-										}	
+									//	}	
 								}
 				}
 	}
