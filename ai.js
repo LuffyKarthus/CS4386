@@ -9,7 +9,7 @@ Plz follow the return format of aiAction().
 2. destPos: {pos:__,x:(__%3)*105+ai.gridPosX,y:Math.floor(__/3)*105+170}  !!!!!!! player.gridPosX if burn player's card
 
 3. if AI steal a card from player, plz also provide
-		stealPos: {pos:__,x:(__%3)*105+player.gridPosX,y:Math.floor(__/3)*105+170}
+		stealToPos: {pos:__,x:(__%3)*105+player.gridPosX,y:Math.floor(__/3)*105+170}
 
 4. plz provide the burn target if use burn
 		burnTarget:
@@ -51,15 +51,14 @@ function conservative(){		//By Karthus
 			break;								
 		}
 	}
-		//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
-	for (var i=0;i<9;i++){						
-		
+										//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
+	for (var i=0;i<9;i++){								
 		for (var j=0;j<6;j++){
-			
-								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
+								// Get for pairs  and three of a kind  
+								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
 									found=j;
 									
-										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
+										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		//*** check here
 												alert("good1");
 												for (var z=0;z<3;z++){
 												
@@ -73,16 +72,15 @@ function conservative(){		//By Karthus
 								}
 				}
 	}
-	for (var i=0;i<9;i++){						
-		
+										// Get for Flush
+	for (var i=0;i<9;i++){								
 		for (var j=0;j<6;j++){
-
-								if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		// Get for Flush 
+								if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		
 									found=j;
 										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
-
+													alert("good2");
 												for (var z=0;z<3;z++){
-													
+
 													if (!ai.grid[z]){
 														alert("flush");
 														var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
@@ -93,24 +91,23 @@ function conservative(){		//By Karthus
 								}
 			}
 		}	
-		for (var i=0;i<9;i++){						
-		
-			for (var j=0;j<6;j++){
-					
-									if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
-											found=j;
-												if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
-
-														for (var z=0;z<3;z++){
-															
-															if (!ai.grid[z]){
-																alert("straight");
-																var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-																return {focusCardIndex:found,destPos:destPos};	
-															}
+										// Get for Straight
+	for (var i=0;i<9;i++){								
+		for (var j=0;j<6;j++){
+								if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	 	
+										found=j;
+											if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
+														alert("good3");
+													for (var z=0;z<3;z++){
+														
+														if (!ai.grid[z]){
+															alert("straight");
+															var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+															return {focusCardIndex:found,destPos:destPos};	
 														}
-												}	
-										}		
+													}
+											}	
+									}		
 			
 		}	
 	}											//focusCardIndex : the index from the card deck 
