@@ -147,12 +147,12 @@ function Player(name,gridPosX){
 		if (!aniShow) this.updateHands();
 		
 		//Draw the play's name and score
-		board.fillStyle = "#0044FF";
-		board.font = "bold 25px Verdana";
+		board.fillStyle = "#0077FF";
+		board.font = "30px Lilita One";
 		board.textAlign = "left";
-		board.fillText(this.name,this.gridPosX+2,120);
+		board.fillText(this.name,this.gridPosX+2,122);
 		board.textAlign = "right";
-		board.fillText(this.shownScore,this.gridPosX+298,120);
+		board.fillText(this.shownScore,this.gridPosX+298,122);
 		if (this.shownScore < this.score) this.shownScore += 10;
 		if (this.shownScore > this.score) this.shownScore -= 10;
 		//Draw the player's cards

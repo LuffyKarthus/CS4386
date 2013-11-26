@@ -50,7 +50,7 @@ function mouseMoveHandler(e){
 				aniHighlightHandPos = player.hands[index].matchPos;
 				aniHighlightHandInFoucus = true;
 				aniHighlightHandInFoucusIndex = index;
-				aniShow = setInterval("aniHighlightHand(player.gridPosX,aniHighlightHandPos)",20);	
+				aniShow = setInterval("aniHighlightHand(player.gridPosX,aniHighlightHandPos)",20);
 			}
 		} else if (player.mouseX >= ai.gridPosX-8 && player.mouseX <= ai.gridPosX+308 && player.mouseY >= 125 && player.mouseY <= 175 && (player.mouseX-ai.gridPosX)%38 >= 2) {
 			var index = Math.floor((player.mouseX-ai.gridPosX)/38);
@@ -59,7 +59,7 @@ function mouseMoveHandler(e){
 				aniHighlightHandPos = ai.hands[index].matchPos;
 				aniHighlightHandInFoucus = true;
 				aniHighlightHandInFoucusIndex = index;
-				aniShow = setInterval("aniHighlightHand(ai.gridPosX,aniHighlightHandPos)",20);	
+				aniShow = setInterval("aniHighlightHand(ai.gridPosX,aniHighlightHandPos)",20);
 			}
 		} else {
 			aniHighlightHandInFoucus = false;
@@ -82,6 +82,10 @@ function mouseUpHandler(e){
 			var posY = Math.floor((player.mouseY-170)/105);
 			if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].rank != THIEF_RANK)
 				if (player.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) {
+					var effectPos = posY*3+posX;
+					aniClear();
+					aniShow = setInterval("aniDropCardEffect(player.gridPosX,"+effectPos+")",20);
+					
 					dealtCards[focusCardIndex] = null;
 					isStealing = false;
 					player.move = false;
@@ -109,13 +113,16 @@ function mouseUpHandler(e){
 			
 			if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK)
 				if (ai.updateGrid(posY*3+posX,dealtCards[focusCardIndex])) {
+					var effectPos = posY*3+posX;
+					aniClear();
+					aniShow = setInterval("aniDropCardEffect(ai.gridPosX,"+effectPos+")",20);
+					
 					dealtCards[focusCardIndex] = null;
 					player.move = false;
 				}
 		}
 	
 	if (!isStealing) {
-		aniClear();
 		focusCardIndex = -1;
 	}
 }

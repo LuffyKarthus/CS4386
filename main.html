@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-moveSpeed">
 <title>Tic-A-Tac Poker</title>
+<link href="http://fonts.googleapis.com/css?family=Lilita+One" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="theme.css" media="all">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="ai.js"></script>
@@ -38,8 +39,8 @@ function init(){
 	for (var i = 0; i < 6; i++)
 		if (!dealtCards[i]) dealtCards[i] = deck.dealCard();
 	
-	player = new Player("Eric",115);
-	ai = new Player("AI",545);
+	player = new Player("Human",115);
+	ai = new Player("Computer",545);
 	
 	//Get canvas
 	animation = $("#animation")[0].getContext && $("#animation")[0].getContext("2d");
@@ -124,11 +125,19 @@ function gameLoop(){
 				dealtCards[focusCardIndex].posY > ai.decision.destPos.y-moveSpeed && dealtCards[focusCardIndex].posY < ai.decision.destPos.y+moveSpeed) {
 				//Poker, clown or torch (AI)
 				if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].suit == SPECIAL_SUIT &&
-					(dealtCards[focusCardIndex].rank == CLOWN_RANK || dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "ai"))
+					(dealtCards[focusCardIndex].rank == CLOWN_RANK || dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "ai")) {
 					ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+					
+					aniClear();
+					aniShow = setInterval("aniDropCardEffect(ai.gridPosX,ai.decision.destPos.pos)",20);
+				}
 				//Torch (Player)
-				if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "player")
+				if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "player") {
 					player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+					
+					aniClear();
+					aniShow = setInterval("aniDropCardEffect(player.gridPosX,ai.decision.destPos.pos)",20);
+				}
 				//Thief
 				if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == THIEF_RANK) {
 					dealtCards[focusCardIndex] = player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
