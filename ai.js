@@ -22,6 +22,7 @@ function aiAction(){
 	toReturn = conservative();
 	console.log(toReturn.destPos.pos+" "+toReturn.focusCardIndex);
 	return toReturn;
+}
 	//return targetOriented();
 	//For refecing
 	//suit 0 - 3 => spade heart diamond club
