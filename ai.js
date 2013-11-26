@@ -59,9 +59,9 @@ function conservative()
 			alert("Torch");
 			for (var k=0;i<9;i++)
 			{	
-				if (player.grid[k%9])
+				if (player.grid[k])
 				{
-					var destPos = {pos:k,x:(k)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+					var destPos = {pos:k,x:(k)*105+player.gridPosX,y:Math.floor(k/3)*105+170};
 					break;
 				}
 			}
