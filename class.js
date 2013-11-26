@@ -73,14 +73,18 @@ function Deck(){
 
 function Player(name,gridPosX){
 	this.name = name;
+	
 	this.gridPosX = gridPosX;
 	this.grid = new Array();
 	this.hands = new Array();
 	this.noOfCard = 0;
+	
 	this.score = 0;
-	this.showScore = 0;
+	this.shownScore = 0;
 	
 	this.move = true;
+	this.mouseX = this.gridPosX+147;
+	this.mouseY = 317;
 	this.decision = null;
 	
 	this.getGridStatus = function(flag){
@@ -143,14 +147,14 @@ function Player(name,gridPosX){
 		if (!aniShow) this.updateHands();
 		
 		//Draw the play's name and score
-		board.fillStyle = "#0077FF";
+		board.fillStyle = "#0044FF";
 		board.font = "bold 25px Verdana";
 		board.textAlign = "left";
 		board.fillText(this.name,this.gridPosX+2,120);
 		board.textAlign = "right";
-		board.fillText(this.showScore,this.gridPosX+298,120);
-		if (this.showScore < this.score) this.showScore += 10;
-		if (this.showScore > this.score) this.showScore -= 10;
+		board.fillText(this.shownScore,this.gridPosX+298,120);
+		if (this.shownScore < this.score) this.shownScore += 10;
+		if (this.shownScore > this.score) this.shownScore -= 10;
 		//Draw the player's cards
 		for (var i = 0; i < 9; i++)
 			if (this.grid[i]) this.grid[i].drawCard(board,this.gridPosX+105*(i%3),170+105*Math.floor(i/3));
