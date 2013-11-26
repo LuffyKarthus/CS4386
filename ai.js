@@ -35,18 +35,18 @@ function conservative(){		//By Karthus
 		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
 			found=i;
 			alert("trial#1");
-			break;	
+			return {focusCardIndex:found,destPos:destPos};	
 		}
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
 				alert("trial#2");
-			break;
+			return {focusCardIndex:found,destPos:destPos};
 			//* return {focusCardIndex:found,destPos:destPos};	
 		}
 		else if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
 			found= i;		
 			alert("trial#3");											
-			break;
+			return {focusCardIndex:found,destPos:destPos};
 		}
 		break;
 	}
