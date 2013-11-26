@@ -72,5 +72,5 @@ function getPair(cards){
 	if (cards[0] && cards[1] && (cards[0].rank == cards[1].rank || isClown(cards[0]) || isClown(cards[1]))) return [0,1];
 	if (cards[0] && cards[2] && (cards[0].rank == cards[2].rank || isClown(cards[0]) || isClown(cards[2]))) return [0,2];
 	if (cards[1] && cards[2] && (cards[1].rank == cards[2].rank || isClown(cards[1]) || isClown(cards[2]))) return [1,2];
-	return null;
+	return false;
 }

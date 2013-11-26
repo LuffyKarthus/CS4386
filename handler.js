@@ -80,6 +80,7 @@ function mouseUpHandler(e){
 					aniShow = setInterval("aniHighlightGrid([player.getGridStatus(false),null])",80);
 					
 					dealtCards[focusCardIndex] = stoleCard;
+					ai.updateHand();
 					
 					isStealing = true;
 					return;

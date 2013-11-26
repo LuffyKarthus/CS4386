@@ -5,13 +5,29 @@
 <title>Tic-A-Tac Poker</title>
 <link rel="stylesheet" type="text/css" href="theme.css" media="all">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
-<script src="constants.js"></script>
 <script src="ai.js"></script>
 <script src="card.js"></script>
 <script src="class.js"></script>
 <script src="handler.js"></script>
 <script src="render.js"></script>
 <script>
+//Constant////////////////////////////////////////
+SPADE_SUIT = 0;
+CLUB_SUIT = 1;
+HEART_SUIT = 2;
+DIAMOND_SUIT = 3;
+SPECIAL_SUIT = 4;
+CLOWN_RANK = 0;
+THIEF_RANK = 1;
+TORCH_RANK = 2;
+
+ROYAL_FLUSH = 6;
+STRAIGHT_FLUSH = 5;
+FLUSH = 4;
+STRAIGHT = 3;
+THREE_OF_A_KIND = 2;
+PAIR = 1;
+
 //Game resource///////////////////////////////////
 image = new Image();
 image.src = "image.png";
@@ -40,6 +56,7 @@ function init(){
 	
 	playerTurn = true;
 	
+	inGame = true;
 	gameLoop();
 }
 
@@ -89,7 +106,8 @@ function gameLoop(){
 			ai.move = true;
 			ai.decision = null;
 		}
-		else player.move = true;
+		else if (player.noOfCard < 9) player.move = true;
+		else inGame = false;
 	}
 	
 	if (!playerTurn && ai.decision == "end") {
@@ -99,11 +117,19 @@ function gameLoop(){
 			player.move = true;
 			player.decision = null;
 		}
+		else if (ai.noOfCard < 9) ai.move = true;
+		else inGame = false;
 	}
 	
 	renderBoard();
 	renderSurface();
-	setTimeout("gameLoop()",20);	
+	
+	if (inGame) setTimeout("gameLoop()",20);
+	else endGame();
+}
+
+function endGame(){
+	alert("END!");
 }
 </script>
 </head>
