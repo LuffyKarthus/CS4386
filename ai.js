@@ -68,7 +68,7 @@ function aiAction(){
 										// Get for pairs  and three of a kind  
 								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
 									found=j;	
-										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8] && ai.grid[(i+3)%8] && ai.grid[(i+4)%8]){ 		
+										if (ai.grid[(i)] ){ 		
 											
 												for (var z=0;z<3;z++){
 													alert("good1");
