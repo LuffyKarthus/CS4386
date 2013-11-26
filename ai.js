@@ -36,6 +36,14 @@ function aiAction(){
 		}
 	}
 
+		for (var i = 0; i < 6; i++){
+		if (dealtCards[i].suit != SPECIAL_SUIT ){									// normal cards		
+			found=i;	
+			break;								
+		}
+	}
+
+
 	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
 			found=i;
@@ -48,21 +56,16 @@ function aiAction(){
 			//  need function update
 			return {focusCardIndex:found,destPos:destPos};
 		}
+
+	//		alert("Thief");																		//get Thief
 	}
 
-	for (var i = 0; i < 6; i++){
-		if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
-			found=i;	
-			break;								
-		}
-	}
 										//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 	for (var i=0;i<9;i++){								
 		for (var j=0;j<6;j++){
 										// Get for pairs  and three of a kind  
 								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
-									found=j;
-									
+									found=j;	
 										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		//*** check here
 											
 												for (var z=0;z<3;z++){
@@ -85,7 +88,6 @@ function aiAction(){
 										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 													alert("good2");
 												for (var z=0;z<3;z++){
-
 													if (!ai.grid[z]){
 														alert("flush");
 														var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
@@ -104,7 +106,6 @@ function aiAction(){
 											if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 														alert("good3");
 													for (var z=0;z<3;z++){
-														
 														if (!ai.grid[z]){
 															alert("straight");
 															var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
