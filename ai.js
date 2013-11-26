@@ -49,8 +49,8 @@ function conservative(){		//By Karthus
 		}
 		break;
 	}
-	
-	for (var i=0;i<9;i++){				//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
+
+	for (var i=0;i<9;i++){			//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 
 		for (var j=0;j<6;j++){
 
@@ -97,9 +97,8 @@ function conservative(){		//By Karthus
 			}		
 			
 		}	
-	}
-					return {focusCardIndex:found,destPos:destPos};				//focusCardIndex : the index from the card deck 
-																				//destPos : the position of the ai grid 
+	}												//focusCardIndex : the index from the card deck 
+	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
 /*
 function aggressive(){
