@@ -30,7 +30,7 @@ function aiAction(){
 
 	var found;
 	for (var i = 0; i < 9; i++){
-		if (!ai.grid[(i+1)%3]) {										//ai.grid[i] : check whether the grid has card or not 
+		if (!ai.grid[i*2%8]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
