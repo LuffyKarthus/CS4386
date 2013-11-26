@@ -48,7 +48,6 @@ function conservative(){		//By Karthus
 		if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
 			found=i;		
 			alert("normal card");											
-			return {focusCardIndex:found,destPos:destPos};
 		}
 	}
 	alert("testing");
