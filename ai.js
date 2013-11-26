@@ -71,7 +71,7 @@ function aiAction(){
 									//	if (ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		
 										for(var k=0;k<8;k++)
 										{
-											if (!ai.grid[k)
+											if (!ai.grid[k])
 												ai.grid[k];
 										}
 
