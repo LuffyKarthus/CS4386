@@ -61,6 +61,7 @@ function conservative()
 			{	
 				if (player.grid[k])
 				{
+					found=i;
 					var destPos = {pos:k,x:(k)*105+player.gridPosX,y:Math.floor(k/3)*105+170};
 					break;
 				}
