@@ -121,8 +121,8 @@ function Player(name,gridPosX){
 		return false;
 	}
 	
-	this.updateHand = function(){
-		var newHands = checkHand(this.grid);
+	this.updateHands = function(){
+		var newHands = checkHands(this.grid);
 		for (var i = 0; i < 8; i++)
 			if (!this.hands[i] || !newHands[i] || this.hands[i].kind != newHands[i].kind) {
 				this.hands[i] = newHands[i];
@@ -130,7 +130,7 @@ function Player(name,gridPosX){
 				
 				//Show the animation
 				if (this.hands[i]) {
-					aniFrame = 0;
+					aniClear();
 					aniHighlightHandPos = this.hands[i].matchPos;
 					aniShow = setInterval("aniHighlightHand("+this.gridPosX+",aniHighlightHandPos)",60);
 					return;
@@ -140,7 +140,7 @@ function Player(name,gridPosX){
 	}
 	
 	this.drawContent = function(){
-		if (!aniShow) this.updateHand();
+		if (!aniShow) this.updateHands();
 		
 		//Draw the play's name and score
 		board.fillStyle = "#0077FF";

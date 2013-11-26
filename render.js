@@ -1,5 +1,7 @@
 // JavaScript Document
 aniShow = null;
+aniHighlightHandInFoucus = false;
+aniHighlightHandInFoucusIndex = -1;
 
 function aniHighlightGrid(status){
 	if (animation) {
@@ -21,7 +23,7 @@ function aniHighlightHand(gridPosX,matchPos){
 		animation.globalAlpha = ((aniFrame > 10)?20-aniFrame:aniFrame)/10;
 		for (var i = 0; i < matchPos.length; i++)
 			animation.drawImage(image,270,560,108,108,gridPosX-9+105*(matchPos[i]%3),161+105*Math.floor(matchPos[i]/3),108,108);
-		aniFrame++;
+		if (aniHighlightHandInFoucus && aniFrame < 10 || !aniHighlightHandInFoucus) aniFrame++;
 		if (aniFrame >= 20) aniClear();
 	}
 }
@@ -30,6 +32,7 @@ function aniClear(){
 	if (aniShow) clearInterval(aniShow);
 	if (animation) animation.clearRect(0,0,960,640);
 	aniShow = null;
+	aniFrame = 0;
 }
 
 function renderBoard(){

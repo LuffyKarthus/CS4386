@@ -13,7 +13,7 @@ function getHandsScore(hands){
 	return score;
 }
 
-function checkHand(grid){
+function checkHands(grid){
 	var hands = new Array();
 	for (var i = 0; i < map.length; i++) {
 		var cards = [grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]];

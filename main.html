@@ -61,6 +61,10 @@ function init(){
 }
 
 function gameLoop(){
+	if (playerTurn) {
+		
+	}
+	
 	if (!playerTurn) {
 		//AI action	
 		if (!ai.decision && dealtCards[dealtCardIndex].scale == 1) {
@@ -94,10 +98,10 @@ function gameLoop(){
 	
 	if (playerTurn && player.decision == "end" || !playerTurn && ai.decision == "end")
 		for (var i = 0; i < 6; i++)
-		if (!dealtCards[i]) {
-			dealtCards[i] = deck.dealCard();
-			dealtCardIndex = i;
-		}
+			if (!dealtCards[i]) {
+				dealtCards[i] = deck.dealCard();
+				dealtCardIndex = i;
+			}
 	
 	if (playerTurn && player.decision == "end") {
 		player.decision = null;
