@@ -39,14 +39,14 @@ function conservative(){		//By Karthus
 		}
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
-				alert("Torch");
+			alert("Torch");
 			return {focusCardIndex:found,destPos:destPos};
-			//* return {focusCardIndex:found,destPos:destPos};	
 		}
 	}
 	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
-			found=i;									
+			found=i;	
+			break;								
 		}
 	}
 	alert("testing");
@@ -69,13 +69,7 @@ function conservative(){		//By Karthus
 							}
 					}	
 			}
-		}		
-	}		
-	
-
-		for (var i=0;i<9;i++){			
-
-		for (var j=0;j<6;j++){
+				
 
 			if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		// Get for Flush 
 				found=j;
@@ -91,12 +85,6 @@ function conservative(){		//By Karthus
 							}
 					}						
 			}
-		}
-	}	
-		for (var i=0;i<9;i++){			
-
-		for (var j=0;j<6;j++){
-
 
 			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
 				found=j;
