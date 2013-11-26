@@ -57,7 +57,7 @@ function conservative()
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
 			alert("Torch");
-			for (var k=0;i<9;i++)
+			for (var k=0;k<9;k++)
 			{	
 				if (player.grid[k])
 				{
