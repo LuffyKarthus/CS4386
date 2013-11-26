@@ -44,6 +44,7 @@ function conservative(){		//By Karthus
 			return {focusCardIndex:found,destPos:destPos};
 		}
 	}
+
 	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
 			found=i;	
@@ -51,9 +52,9 @@ function conservative(){		//By Karthus
 		}
 	}
 	alert("testing");
-	
-	for (var i=0;i<9;i++){												//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 
+	for (var i=0;i<9;i++){												//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
+			alert("test1");
 		for (var j=0;j<6;j++){
 
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
