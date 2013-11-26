@@ -29,8 +29,6 @@ function conservative(){		//By Karthus
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
-
-		return {focusCardIndex:found,destPos:destPos};
 	}
 
 	for (var i = 0; i < 6; i++){
