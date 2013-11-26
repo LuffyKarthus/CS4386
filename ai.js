@@ -76,7 +76,6 @@ function conservative()
 			do (m = Math.floor(Math.random()*9))
 			while(ai.grid[m]);
 			var stealToPos = {pos:m,x:(m%3)*105+ai.gridPosX,y:Math.floor(m/3)*105+170};
-			alert(stealToPos.pos);
 
 			return {focusCardIndex:found,destPos:destPos,stealToPos:stealToPos};
 		}
