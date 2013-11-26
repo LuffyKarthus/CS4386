@@ -58,8 +58,8 @@ function conservative(){		//By Karthus
 			
 								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
 									found=j;
-									alert("good");
-										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
+									
+										if (ai.grid[(i)] && ai.grid [(i+1)%8] ){
 												alert("good1");
 												for (var z=0;z<3;z++){
 												
