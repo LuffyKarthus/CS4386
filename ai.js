@@ -119,7 +119,7 @@ function aiAction(){
 	alert("random");						
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
-
+/*
 function aggressive(){
 	//thoughts by jimmyshum:
 	//ai player would not only be target-oriented, it would also think about the player grid for raising the probability of winning the game
