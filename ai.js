@@ -34,7 +34,7 @@ function conservative(){		//By Karthus
 	}
 
 	for (var i = 0; i < 6; i++){
-		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank!=2){						//get special cards 
+		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank!=1){						//get special cards 
 			found=i;
 			return {focusCardIndex:found,destPos:destPos};	
 		}
