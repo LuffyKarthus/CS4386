@@ -46,8 +46,7 @@ function conservative(){		//By Karthus
 	}
 	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
-			found=i;		
-			alert("normal card");											
+			found=i;									
 		}
 	}
 	alert("testing");
