@@ -35,16 +35,17 @@ function aiAction(){
 			break;
 		}
 	}
-
-		for (var i = 0; i < 6; i++){
+	
+	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit != SPECIAL_SUIT ){									// normal cards		
 			found=i;	
 			break;								
 		}
 	}
-
+	
 
 	for (var i = 0; i < 6; i++){
+
 		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
 			found=i;
 			alert("Joker");
@@ -70,7 +71,7 @@ function aiAction(){
 											
 												for (var z=0;z<3;z++){
 													alert("good1");
-													if (ai.grid[z]){
+													if (!ai.grid[z]){
 														alert("pairs");
 														var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 														return {focusCardIndex:found,destPos:destPos};	
