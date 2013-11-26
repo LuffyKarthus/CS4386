@@ -43,7 +43,7 @@ function conservative(){		//By Karthus
 		}
 		else if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
 			found= i;													
-			breask;
+			break;
 		}
 	}
 //  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
