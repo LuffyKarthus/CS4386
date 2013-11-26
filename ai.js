@@ -78,9 +78,8 @@ function conservative()
 										}
 
 												for (var z=0;z<3;z++){
-													alert("good1");
 													if (!ai.grid[z]){
-														alert("pairs");
+													//	alert("pairs");
 														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 														return {focusCardIndex:found,destPos:destPos};	
 													}
@@ -94,11 +93,10 @@ function conservative()
 		for (var j=0;j<6;j++){
 								if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		
 									found=j;
-										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
-													alert("good2");
+										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){												
 												for (var z=0;z<3;z++){
 													if (!ai.grid[z]){
-														alert("flush");
+													//	alert("flush");
 														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 														return {focusCardIndex:found,destPos:destPos};	
 													}
@@ -113,10 +111,9 @@ function conservative()
 								if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	 	
 									found=j;
 											if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
-														alert("good3");
 													for (var z=0;z<3;z++){
 														if (!ai.grid[z]){
-															alert("straight");
+														//	alert("straight");
 															var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 															return {focusCardIndex:found,destPos:destPos};	
 														}
