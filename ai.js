@@ -81,7 +81,7 @@ function conservative()
 												for (var z=0;z<3;z++){
 													if (!ai.grid[z]){
 													//	alert("pairs");
-														var destPos = {pos:z,x:(z)*105+ai.gridPosX,z:Math.floor(i%3)*105+170};
+														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 														return {focusCardIndex:found,destPos:destPos};	
 													}
 												}
