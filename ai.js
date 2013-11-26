@@ -27,8 +27,10 @@ function conservative(){		//By Karthus
 	for (var i = 0; i < 9; i++){
 		if (!ai.grid[i]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
-			break;
+			return {focusCardIndex:found,destPos:destPos};
 		}
+		
+
 	}
 
 	for (var i = 0; i < 6; i++){
