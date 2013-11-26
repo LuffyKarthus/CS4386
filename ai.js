@@ -17,30 +17,11 @@ Plz follow the return format of aiAction().
 5. if AI use clown, plz provide the suit and the rank
 		suit:
 		rank:
-
 */
 function aiAction(){
 	return conservative();
-	//For referencing
-	/*for (var i = 0; i < 6; i++)
-		//suit 0 - 3 => spade heart diamond club
-		//suit 4 => special card
-		if (dealtCards[i].suit <= 3) {
-			var choose = i;
-			break;
-		}
-	for (var i = 0; i < 9; i++)
-		if (!ai.grid[i]) {									//ai.grid[i] : check whether the grid has card or not 
-			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
-			break;
-		}
-	
-	//focusCardIndex : the index from the card deck 
-	//destPos : the position of the ai grid 
-	return {focusCardIndex:choose,destPos:destPos};*/
 }
-function conservative(){			//By Karthus
-
+function conservative(){		//By Karthus
 
 	var found;
 	for (var i = 0; i < 6; i++)								// not picking up the special cards{
@@ -55,11 +36,13 @@ function conservative(){			//By Karthus
 			break;
 		}
 	}
+
+	//&& dealtCards[j].suit!=SPECIAL_SUIT
 	for (var i=0;i<9;i++){				//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 
 		for (var j=0;j<6;j++){
 
-			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank && dealtCards[j].suit!=SPECIAL_SUIT){	// Get for pairs  and three of a kind  			
+			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
 				found=j;
 			//	alert("found");	
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
@@ -75,7 +58,7 @@ function conservative(){			//By Karthus
 					}	
 			}		
 			
-			if (ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit) && dealtCards[j].suit!=SPECIAL_SUIT){		// Get for Flush 
+			if (ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit) ){		// Get for Flush 
 				found=j;
 			//	alert("suit");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
@@ -92,7 +75,7 @@ function conservative(){			//By Karthus
 																
 			}
 				
-			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) && dealtCards[j].suit!=SPECIAL_SUIT) )){	// Get for Straight 	
+			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
 				found=j;
 			//	alert("Straight");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
