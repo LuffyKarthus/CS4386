@@ -44,12 +44,13 @@ function conservative(){		//By Karthus
 			//* return {focusCardIndex:found,destPos:destPos};	
 		}
 		else if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
-			found= i;		
+			found=i;		
 			alert("trial#3");											
 			return {focusCardIndex:found,destPos:destPos};
 		}
 		break;
 	}
+	alert("testing");
 //  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 	for (var i=0;i<9;i++){			
 
