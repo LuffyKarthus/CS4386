@@ -51,58 +51,56 @@ function conservative(){		//By Karthus
 			break;								
 		}
 	}
-	alert("testing");
 
 	for (var i=0;i<9;i++){												//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 		
 		for (var j=0;j<6;j++){
-				alert("test2");
-			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
-				found=j;
-				alert("test2");
-					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
+			
+								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
+									found=j;
+										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
-							for (var z=0;z<3;z++){
-								
-								if (!ai.grid[z]){
-									alert("pairs");
-									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-									return {focusCardIndex:found,destPos:destPos};	
+												for (var z=0;z<3;z++){
+													
+													if (!ai.grid[z]){
+														alert("pairs");
+														var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+														return {focusCardIndex:found,destPos:destPos};	
+													}
+												}
+										}	
 								}
-							}
-					}	
-			}
 				
 
-			if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		// Get for Flush 
-				found=j;
-					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
+								if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		// Get for Flush 
+									found=j;
+										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
-							for (var z=0;z<3;z++){
-								
-								if (!ai.grid[z]){
-									alert("flush");
-									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-									return {focusCardIndex:found,destPos:destPos};	
+												for (var z=0;z<3;z++){
+													
+													if (!ai.grid[z]){
+														alert("flush");
+														var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+														return {focusCardIndex:found,destPos:destPos};	
+													}
+												}
+										}						
 								}
-							}
-					}						
-			}
 
-			if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
-				found=j;
-					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
+								if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	// Get for Straight 	
+									found=j;
+										if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
 
-							for (var z=0;z<3;z++){
-								
-								if (!ai.grid[z]){
-									alert("straight");
-									var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-									return {focusCardIndex:found,destPos:destPos};	
-								}
-							}
-					}	
-			}		
+												for (var z=0;z<3;z++){
+													
+													if (!ai.grid[z]){
+														alert("straight");
+														var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+														return {focusCardIndex:found,destPos:destPos};	
+													}
+												}
+										}	
+								}		
 			
 		}	
 	}											//focusCardIndex : the index from the card deck 
