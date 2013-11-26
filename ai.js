@@ -40,6 +40,7 @@ function conservative(){		//By Karthus
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
 			alert("Torch");
+			//  need function update
 			return {focusCardIndex:found,destPos:destPos};
 		}
 	}
@@ -50,8 +51,8 @@ function conservative(){		//By Karthus
 		}
 	}
 	alert("testing");
-//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
-	for (var i=0;i<9;i++){			
+	
+	for (var i=0;i<9;i++){												//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 
 		for (var j=0;j<6;j++){
 
@@ -103,7 +104,7 @@ function conservative(){		//By Karthus
 			
 		}	
 	}											//focusCardIndex : the index from the card deck 
-	alert("random");
+	alert("random");						
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
 /*
