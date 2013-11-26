@@ -37,7 +37,9 @@ function conservative(){		//By Karthus
 		}
 	}
 
-	//&& dealtCards[j].suit!=SPECIAL_SUIT
+	
+
+
 	for (var i=0;i<9;i++){				//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
 
 		for (var j=0;j<6;j++){
@@ -58,7 +60,7 @@ function conservative(){		//By Karthus
 					}	
 			}		
 			
-			if (ai.grid[i]  && (dealtCards[j].suit==ai.grid[i].suit) ){		// Get for Flush 
+			if (ai.grid[i] && ai.grid[i+1] && (dealtCards[j].suit==ai.grid[i].suit || dealtCards[j].suit==ai.grid[i+1]).suit){		// Get for Flush 
 				found=j;
 			//	alert("suit");
 					if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){
