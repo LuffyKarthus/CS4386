@@ -34,16 +34,16 @@ function conservative(){		//By Karthus
 	for (var i = 0; i < 6; i++){
 		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
 			found=i;
-			return {focusCardIndex:found,destPos:destPos};	
+			break;	
 		}
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
-
+			break;
 			//* return {focusCardIndex:found,destPos:destPos};	
 		}
 		else if (dealtCards[i].suit != SPECIAL_SUIT ){								// normal cards		
 			found= i;													
-			return {focusCardIndex:found,destPos:destPos};
+			breask;
 		}
 	}
 //  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
