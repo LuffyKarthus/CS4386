@@ -51,24 +51,36 @@ function conservative()
 
 		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
 			found=i;
-			alert("Joker");
+			//alert("Joker");
 			return {focusCardIndex:found,destPos:destPos};	
 		}
 		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
 			found=i;
-			alert("Torch");
+			//alert("Torch");
 
-			do var k = Math.floor(Math.random()*9);
-			while(player.grid[k]);
-				
+			do (n = Math.floor(Math.random()*9))
+			while(!player.grid[n]);
 			
-			var destPos = {pos:k,x:(k%3)*105+player.gridPosX,y:Math.floor(k/3)*105+170};
-			break;
-
+			var destPos = {pos:n,x:(n%3)*105+player.gridPosX,y:Math.floor(n/3)*105+170};
+			
 			return {focusCardIndex:found,destPos:destPos,burnTarget:"player"};
 		}
+		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==1){
+			found=i;
+			//alert("Thief");															//get Thief
+			do (k = Math.floor(Math.random()*9))
+			while(!player.grid[k]);
+			var destPos = {pos:k,x:(k%3)*105+player.gridPosX,y:Math.floor(k/3)*105+170};
 
-	//		alert("Thief");															//get Thief
+
+			do (m = Math.floor(Math.random()*9))
+			while(ai.grid[m]);
+			var stealToPos = {pos:m,x:(m%3)*105+ai.gridPosX,y:Math.floor(m/3)*105+170};
+			alert(stealToPos.pos);
+
+			return {focusCardIndex:found,destPos:destPos,stealToPos:stealToPos};
+		}
+
 	}
 
 										//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
@@ -105,7 +117,7 @@ function conservative()
 										{												
 												for (var z=0;z<3;z++){
 													if (!ai.grid[z]){
-														alert("flush");
+													//	alert("flush");
 														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 														return {focusCardIndex:found,destPos:destPos};	
 													}
@@ -123,7 +135,7 @@ function conservative()
 											{
 													for (var z=0;z<3;z++){
 														if (!ai.grid[z]){
-															alert("straight");
+														//	alert("straight");
 															var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
 															return {focusCardIndex:found,destPos:destPos};	
 														}
@@ -133,10 +145,10 @@ function conservative()
 			
 		}	
 	}												//focusCardIndex : the index from the card deck 
-	alert("random");						
+	//alert("random");						
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
-	var destPos = {pos:i,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+	
 
 /*
 function aggressive(){
