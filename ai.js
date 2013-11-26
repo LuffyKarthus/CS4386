@@ -54,9 +54,9 @@ function conservative(){		//By Karthus
 	alert("testing");
 
 	for (var i=0;i<9;i++){												//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
-			alert("test1");
+		
 		for (var j=0;j<6;j++){
-
+				alert("test2");
 			if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){	// Get for pairs  and three of a kind  			
 				found=j;
 				alert("test2");
