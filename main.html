@@ -27,12 +27,10 @@ FLUSH = 4;
 STRAIGHT = 3;
 THREE_OF_A_KIND = 2;
 PAIR = 1;
-
 //Game resource///////////////////////////////////
 image = new Image();
 image.src = "image.png";
 image.onload = init;
-
 //////////////////////////////////////////////////
 function init(){
 	deck = new Deck();
@@ -61,12 +59,24 @@ function init(){
 }
 
 function gameLoop(){
-	if (playerTurn) {
-		
-	}
+	//Player
+	if (playerTurn)
+		if (player.move && player.noOfCard >= 9) {
+			player.move = false;
+			player.decision = "end";
+			
+			//......
+		}
 	
+	//AI
 	if (!playerTurn) {
-		//AI action	
+		if (ai.move && ai.noOfCard >= 9) {
+			ai.move = false;
+			ai.decision = "end";
+			
+			//.....
+		}
+		
 		if (!ai.decision && dealtCards[dealtCardIndex].scale == 1) {
 			ai.decision = aiAction();
 			
@@ -85,44 +95,51 @@ function gameLoop(){
 			if (dealtCards[focusCardIndex].posY < ai.decision.destPos.y) dealtCards[focusCardIndex].posY += Math.floor(moveSpeed*Math.sin(moveAngle));
 			if (dealtCards[focusCardIndex].posY > ai.decision.destPos.y) dealtCards[focusCardIndex].posY -= Math.floor(moveSpeed*Math.sin(moveAngle));
 			
+			//Arrive to the destination
 			if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x-moveSpeed && dealtCards[focusCardIndex].posX < ai.decision.destPos.x+moveSpeed &&
 				dealtCards[focusCardIndex].posY > ai.decision.destPos.y-moveSpeed && dealtCards[focusCardIndex].posY < ai.decision.destPos.y+moveSpeed) {
-				ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
-				dealtCards[focusCardIndex] = null;
-				focusCardIndex = -1;
+				//Poker, clown or torch (AI)
+				if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].suit == SPECIAL_SUIT &&
+					(dealtCards[focusCardIndex].rank == CLOWN_RANK || dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "ai"))
+					ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+				//Torch (Player)
+				if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "player")
+					player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+				//Thief
+				if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == THIEF_RANK) {
+					dealtCards[focusCardIndex] = player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+					player.updateHands();
+					
+					ai.decision.destPos = ai.decision.stealToPos;
+				} else {
+					dealtCards[focusCardIndex] = null;
+					focusCardIndex = -1;
 				
-				ai.move = false;
+					ai.move = false;
+				}
 			}
 		}
 	}
 	
-	if (playerTurn && player.decision == "end" || !playerTurn && ai.decision == "end")
+	if (playerTurn && player.decision == "end" || !playerTurn && ai.decision == "end") {
+		//Refill card
 		for (var i = 0; i < 6; i++)
 			if (!dealtCards[i]) {
 				dealtCards[i] = deck.dealCard();
 				dealtCardIndex = i;
 			}
-	
-	if (playerTurn && player.decision == "end") {
-		player.decision = null;
-		if (ai.noOfCard < 9) {
-			playerTurn = false;
+		
+		if (playerTurn) {
 			ai.move = true;
 			ai.decision = null;
-		}
-		else if (player.noOfCard < 9) player.move = true;
-		else inGame = false;
-	}
-	
-	if (!playerTurn && ai.decision == "end") {
-		ai.decision = null;
-		if (player.noOfCard < 9) {
-			playerTurn = true;
+		} else {
 			player.move = true;
 			player.decision = null;
 		}
-		else if (ai.noOfCard < 9) ai.move = true;
-		else inGame = false;
+		
+		playerTurn = !playerTurn;
+		
+		inGame = (player.noOfCard < 9 || ai.noOfCard < 9);
 	}
 	
 	renderBoard();

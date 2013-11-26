@@ -89,7 +89,7 @@ function mouseUpHandler(e){
 				}
 		}
 	
-	//Drop on ai's grid
+	//Drop on AI's grid
 	if (focusCardIndex >= 0 && mouseX >= ai.gridPosX && mouseX <= ai.gridPosX+300 && mouseY >= 170 && mouseY <= 470)
 		if ((mouseX-ai.gridPosX)%105 <= 90 && (mouseY-170)%105 <= 90) {
 			var posX = Math.floor((mouseX-ai.gridPosX)/105);
@@ -105,6 +105,7 @@ function mouseUpHandler(e){
 					ai.updateHands();
 					
 					isStealing = true;
+					
 					return;
 				}
 			}
