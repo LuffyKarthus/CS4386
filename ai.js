@@ -19,8 +19,11 @@ Plz follow the return format of aiAction().
 		rank:
 */
 function aiAction(){
-
+	//testing
+	return aggressive();
 	//return targetOriented();
+	//
+
 	//For refecing
 	for (var i = 0; i < 6; i++)
 
@@ -33,7 +36,7 @@ function aiAction(){
 		if (!ai.grid[(i+1)%8]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
-		}
+	
 	}
 
 	for (var i = 0; i < 6; i++){
@@ -123,8 +126,177 @@ function aiAction(){
 function aggressive(){
 	//thoughts by jimmyshum:
 	//ai player would not only be target-oriented, it would also think about the player grid for raising the probability of winning the game
+	var choose;
+	var destPos;
+	var prior = new Array();
+	var occupiedGrid = 0;
 
+	//count the empty grid in ai panel
+	for(var i=0;i<9;i++){
+		if(ai.grid[i]){
+			occupiedGrid++;
+		}
+	}
+	if(occupiedGrid == 0)
+		return targetOriented();
+
+	else{
+
+		//test
+		/*var str = "Player: ";
+		for(var i=0;i<9;i++){
+			str = str + player.grid[i] + " ";
+		}
+		str += " AI: ";
+		for(var i=0;i<9;i++){
+			str = str + ai.grid[i] + " ";
+		}
+		alert(str);*/
+
+		//--test
+
+
+		//consideration about the player Grid
+		var playerValueArr = checkPlayerGridValue(player.grid);
+
+		
+
+
+		for(var i=0;i<6;i++){
+			if(dealtCards[i].suit == SPECIAL_SUIT){
+				// Crown card
+				if(dealtCards[i].rank == 0){
+					choose = i;
+					if(!ai.grid[4]){
+						var p = 4;
+						destPos = {pos:p,x:(p%3)*105+ai.gridPosX,y:Math.floor(p/3)*105+170};
+						return {focusCardIndex:choose,destPos:destPos};
+				
+					}
+					else{
+						do{
+							do{
+								randNum = Math.floor(Math.random()*9);	
+							}while(randNum == 9);
+						
+							if (!ai.grid[randNum]) {
+								destPos = {pos:randNum,x:(randNum%3)*105+ai.gridPosX,y:Math.floor(randNum/3)*105+170};
+							}
+		
+						}while(ai.grid[randNum]);
+						
+						return {focusCardIndex:choose,destPos:destPos};
+				
+					}
+				} 
+				// Thief card
+				if(dealtCards[i].rank == 1){
+					choose = i;
+				}
+				// Torch card
+				if(dealtCards[i].rank == 2){
+					choose = i;
+					var highest = calMaxValue(playerValueArr);
+					for(var i=0;i<9;i++){
+						if(playerValueArr[i] == highest){
+							prior.push(i);
+						}
+					}
+					
+					var p = prior[Math.floor(Math.random()*prior.length)];
+					prior = new Array();
+					destPos = {pos:p,x:(p%3)*105+player.gridPosX,y:Math.floor(p/3)*105+170};
+					return {focusCardIndex:choose,destPos:destPos};
+				}
+			}
+		}
+		//test
+		return targetOriented();
+		//test
+
+		//consideration about the AI Grid
+		var AIValueArr = checkAIGridValue(dealtCards,ai.grid);
+		var maxValueInAIValueArr = new Array();
+		for(var i=0;i<6;i++){
+			maxValueInAIValueArr.push(calMaxValue(AIValueArr[i]));
+		}
+		var highest = calMaxValue(maxValueInAIValueArr);
+		for(var i=0;i<6;i++){
+			if(maxValueInAIValueArr[i] == highest){
+				prior.push(i);
+			}
+		}
+
+		choose = prior[Math.floor(Math.random()*prior.length)];
+		prior = new Array();
+
+
+
+		highest = calMaxValue(AIValueArr[choose]);
+		for(var i=0;i<9;i++){
+			//test
+			//alert("valueArr" + i + ": " + valueArr[choose][i] + "  highest: " + highest);
+			if(AIValueArr[choose][i] == highest){
+				prior.push(i);
+			}
+		}
+
+
+		//alert(prior.length);
+		do{
+			var p = prior[Math.floor(Math.random()*prior.length)];
+			if(!ai.grid[p]){
+				destPos = {pos:p,x:(p%3)*105+ai.gridPosX,y:Math.floor(p/3)*105+170};
+			}
+		}while(ai.grid[p]);
+		prior = new Array();
+	}
 }
+function checkPlayerGridValue(grid){
+	//var valueArr = new Array();
+	var playerGridValue = [0,0,0,0,0,0,0,0,0];
+		playerGridValue = calPlayerGridValue(playerGridValue,grid);
+		
+	return playerGridValue;
+}
+function calPlayerGridValue(value,grid){
+	var currValue = -1;
+	for(var i=0;i<9;i++){
+		//test
+		//alert("i: " + i + " "+grid[i]);
+
+		if(grid[i]){
+			var currCard = grid[i];
+			switch(i){
+				case 0: currValue = max(analysisPlayerGridCards(currCard,grid[1],grid[2]), analysisPlayerGridCards(currCard,grid[3],grid[6]), analysisPlayerGridCards(currCard,grid[4],grid[8]),0);break;
+				case 1: currValue = max(analysisPlayerGridCards(currCard,grid[0],grid[2]), analysisPlayerGridCards(currCard,grid[4],grid[7]),0,0);break;
+				case 2: currValue = max(analysisPlayerGridCards(currCard,grid[0],grid[1]), analysisPlayerGridCards(currCard,grid[5],grid[8]), analysisPlayerGridCards(currCard,grid[4],grid[6]),0);break;
+				case 3: currValue = max(analysisPlayerGridCards(currCard,grid[4],grid[5]), analysisPlayerGridCards(currCard,grid[0],grid[6]),0,0);break;
+				case 4: currValue = max(analysisPlayerGridCards(currCard,grid[3],grid[5]), analysisPlayerGridCards(currCard,grid[1],grid[7]), analysisPlayerGridCards(currCard,grid[0],grid[8]),analysisPlayerGridCards(currCard,grid[2],grid[6]));break;
+				case 5: currValue = max(analysisPlayerGridCards(currCard,grid[3],grid[4]), analysisPlayerGridCards(currCard,grid[2],grid[8]),0,0);break;
+				case 6: currValue = max(analysisPlayerGridCards(currCard,grid[7],grid[8]), analysisPlayerGridCards(currCard,grid[0],grid[3]), analysisPlayerGridCards(currCard,grid[2],grid[4]),0);break;
+				case 7: currValue = max(analysisPlayerGridCards(currCard,grid[6],grid[8]), analysisPlayerGridCards(currCard,grid[1],grid[4]),0,0);break;
+				case 8: currValue = max(analysisPlayerGridCards(currCard,grid[6],grid[7]), analysisPlayerGridCards(currCard,grid[2],grid[5]), analysisPlayerGridCards(currCard,grid[0],grid[4]),0);break;
+		
+			}
+		}
+		else{
+			currValue = -1;
+		}
+		
+		//if(!currCard){
+			
+		//}
+
+		//test
+		//alert("curr:" + i + " currValue:" + currValue);
+		//
+		value[i] = currValue;
+	}
+	return value;
+}
+
+
 function targetOriented(){
 	//thoughts by jimmyshum:
 	//ai player would like to choose some particular conditions for awarding higher scores 
@@ -155,7 +327,7 @@ function targetOriented(){
 		else
 			return random();
 		//test
-		alert("choose-0: " +choose);
+		//alert("choose-0: " +choose);
 
 
 		//For the ai grid part
@@ -179,7 +351,7 @@ function targetOriented(){
 
 	}
 	else{
-		var valueArr = checkValue(dealtCards,ai.grid);
+		var valueArr = checkAIGridValue(dealtCards,ai.grid);
 		var maxValueInValueArr = new Array();
 		for(var i=0;i<6;i++){
 			maxValueInValueArr.push(calMaxValue(valueArr[i]));
@@ -197,18 +369,25 @@ function targetOriented(){
 
 		highest = calMaxValue(valueArr[choose]);
 		for(var i=0;i<9;i++){
+			//test
+			//alert("valueArr" + i + ": " + valueArr[choose][i] + "  highest: " + highest);
 			if(valueArr[choose][i] == highest){
 				prior.push(i);
 			}
 		}
-		var p = prior[Math.floor(Math.random()*prior.length)];
-		if(!ai.grid[p]){
-			destPos = {pos:p,x:(p%3)*105+ai.gridPosX,y:Math.floor(p/3)*105+170};
-		}
+
+
+		//alert(prior.length);
+		do{
+			var p = prior[Math.floor(Math.random()*prior.length)];
+			if(!ai.grid[p]){
+				destPos = {pos:p,x:(p%3)*105+ai.gridPosX,y:Math.floor(p/3)*105+170};
+			}
+		}while(ai.grid[p]);
 		prior = new Array();
 
 		//test
-		alert("choose: " + choose + "  destPos: " + p );
+		//alert("choose: " + choose + "  destPos: " + p );
 
 
 		return {focusCardIndex:choose,destPos:destPos};
@@ -240,7 +419,15 @@ function max(num1,num2,num3,num4){
 		highest = num4;
 	return highest;
 }
-function analysisCards(dealtCard,card1,card2){
+function analysisPlayerGridCards(playerCard,card1,card2){
+	return analysisGridCards(playerCard,card1,card2);
+}
+function analysisAIGridCards(dealtCard,card1,card2){
+	return analysisGridCards(dealtCard,card1,card2);
+}
+
+//to analysis 
+function analysisGridCards(dealtCard,card1,card2){
 	var c1 = -1;
 	var c2 = -1;
 	//for the case of no card inside the grid
@@ -248,7 +435,47 @@ function analysisCards(dealtCard,card1,card2){
 		c1 = 0;
 	if(!card2)
 		c2 = 0;
+	if(c1 == -1 && c2 == -1){
+		//Three cards exists
+	if((dealtCard.rank >= 10 && dealtCard.rank <= 12) && (card1.rank >= 10 && card1.rank <= 12) && (card2.rank >= 10 && card2.rank <= 12)){
+		if(dealtCard.suit == card1.suit && dealtCard.suit == card2.suit && card1.suit == card2.suit){
+			if(dealtCard.rank != card1.rank && dealtCard.rank != card2.rank && card1.rank != card2.rank){ //JQK Straight Flush
+				return 6+2;
+			}
 
+		}
+		else{
+			if(dealtCard.rank != card1.rank && dealtCard.rank != card2.rank && card1.rank != card2.rank){ //JQK Straight
+				return 3+2;
+			}
+			else // Same kind
+				return 2+2;
+		}
+	}
+	else{ //not JQK
+		var cardArr = new Array();
+			cardArr.push(dealtCard.rank);
+			cardArr.push(card1.rank);
+			cardArr.push(card2.rank);
+			cardArr.sort();
+		if(dealtCard.suit == card1.suit && dealtCard.suit == card2.suit && card1.suit == card2.suit){
+			if(cardArr[2] - cardArr[1] == 1 && cardArr[1] - cardArr[0] == 1){ //Straight Flush
+				return 5+2;
+			}
+			else //Flush
+				return 4+2;
+		}
+		else
+			if(cardArr[2] - cardArr[1] == 1 && cardArr[1] - cardArr[0] == 1){ //Straight
+				return 3+2;
+			}
+			else if(dealtCard.rank - card1.rank == 0 && dealtCard.rank - card2.rank == 0)//same kind
+				return 2+2;
+			else //Cant form anything
+				return 0;
+	}
+
+	}
 	//for dealtCard only
 	if(c1 == 0 && c2 == 0){
 		//no comparison
@@ -334,67 +561,27 @@ function analysisCards(dealtCard,card1,card2){
 	}
 
 
-	//Three cards exists
-
-	if((dealtCard.rank >= 10 && dealtCard.rank <= 12) && (card1.rank >= 10 && card1.rank <= 12) && (card2.rank >= 10 && card2.rank <= 12)){
-		if(dealtCard.suit == card1.suit && dealtCard.suit == card2.suit && card1.suit == card2.suit){
-			if(dealtCard.rank != card1.rank && dealtCard.rank != card2.rank && card1.rank != card2.rank){ //JQK Straight Flush
-				return 6;
-			}
-
-		}
-		else{
-			if(dealtCard.rank != card1.rank && dealtCard.rank != card2.rank && card1.rank != card2.rank){ //JQK Straight
-				return 3;
-			}
-			else // Same kind
-				return 2;
-		}
-	}
-	else{ //not JQK
-		var cardArr = new Array();
-			cardArr.push(dealtCard.rank);
-			cardArr.push(card1.rank);
-			cardArr.push(card2.rank);
-			cardArr.sort();
-		if(dealtCard.suit == card1.suit && dealtCard.suit == card2.suit && card1.suit == card2.suit){
-			if(cardArr[2] - cardArr[1] == 1 && cardArr[1] - cardArr[0] == 1){ //Straight Flush
-				return 5;
-			}
-			else //Flush
-				return 4;
-		}
-		else
-			if(cardArr[2] - cardArr[1] == 1 && cardArr[1] - cardArr[0] == 1){ //Straight
-				return 3;
-			}
-			else if(dealtCard.rank - card1.rank == 0 && dealtCard.rank - card2.rank == 0)//same kind
-				return 2;
-			else //Cant form anything
-				return 0;
-	}
-	return 0;
-
+	
 
 
 
 }
-function calValue(value,dealtCard,grid){
+function calAIGridValue(value,dealtCard,grid){
 	var currValue = -1;
 	for(var i=0;i<9;i++){
 
 
 		if(!grid[i]){
 			switch(i){
-				case 0: currValue = max(analysisCards(dealtCard,grid[1],grid[2]), analysisCards(dealtCard,grid[3],grid[6]), analysisCards(dealtCard,grid[4],grid[8]),0);break;
-				case 1: currValue = max(analysisCards(dealtCard,grid[0],grid[2]), analysisCards(dealtCard,grid[4],grid[7]),0,0);break;
-				case 2: currValue = max(analysisCards(dealtCard,grid[0],grid[1]), analysisCards(dealtCard,grid[5],grid[8]), analysisCards(dealtCard,grid[4],grid[6]),0);break;
-				case 3: currValue = max(analysisCards(dealtCard,grid[4],grid[5]), analysisCards(dealtCard,grid[0],grid[6]),0,0);break;
-				case 4: currValue = max(analysisCards(dealtCard,grid[3],grid[5]), analysisCards(dealtCard,grid[1],grid[7]), analysisCards(dealtCard,grid[0],grid[8]),analysisCards(dealtCard,grid[2],grid[6]));break;
-				case 5: currValue = max(analysisCards(dealtCard,grid[3],grid[4]), analysisCards(dealtCard,grid[2],grid[8]),0,0);break;
-				case 6: currValue = max(analysisCards(dealtCard,grid[7],grid[8]), analysisCards(dealtCard,grid[0],grid[3]), analysisCards(dealtCard,grid[2],grid[4]),0);break;
-				case 7: currValue = max(analysisCards(dealtCard,grid[6],grid[8]), analysisCards(dealtCard,grid[1],grid[4]),0,0);break;
-				case 8: currValue = max(analysisCards(dealtCard,grid[6],grid[7]), analysisCards(dealtCard,grid[2],grid[5]), analysisCards(dealtCard,grid[0],grid[4]),0);break;
+				case 0: currValue = max(analysisAIGridCards(dealtCard,grid[1],grid[2]), analysisAIGridCards(dealtCard,grid[3],grid[6]), analysisAIGridCards(dealtCard,grid[4],grid[8]),0);break;
+				case 1: currValue = max(analysisAIGridCards(dealtCard,grid[0],grid[2]), analysisAIGridCards(dealtCard,grid[4],grid[7]),0,0);break;
+				case 2: currValue = max(analysisAIGridCards(dealtCard,grid[0],grid[1]), analysisAIGridCards(dealtCard,grid[5],grid[8]), analysisAIGridCards(dealtCard,grid[4],grid[6]),0);break;
+				case 3: currValue = max(analysisAIGridCards(dealtCard,grid[4],grid[5]), analysisAIGridCards(dealtCard,grid[0],grid[6]),0,0);break;
+				case 4: currValue = max(analysisAIGridCards(dealtCard,grid[3],grid[5]), analysisAIGridCards(dealtCard,grid[1],grid[7]), analysisAIGridCards(dealtCard,grid[0],grid[8]),analysisAIGridCards(dealtCard,grid[2],grid[6]));break;
+				case 5: currValue = max(analysisAIGridCards(dealtCard,grid[3],grid[4]), analysisAIGridCards(dealtCard,grid[2],grid[8]),0,0);break;
+				case 6: currValue = max(analysisAIGridCards(dealtCard,grid[7],grid[8]), analysisAIGridCards(dealtCard,grid[0],grid[3]), analysisAIGridCards(dealtCard,grid[2],grid[4]),0);break;
+				case 7: currValue = max(analysisAIGridCards(dealtCard,grid[6],grid[8]), analysisAIGridCards(dealtCard,grid[1],grid[4]),0,0);break;
+				case 8: currValue = max(analysisAIGridCards(dealtCard,grid[6],grid[7]), analysisAIGridCards(dealtCard,grid[2],grid[5]), analysisAIGridCards(dealtCard,grid[0],grid[4]),0);break;
 		
 			}
 		}
@@ -417,12 +604,12 @@ function calMaxValue(value){
 	}
 	return highest;
 }
-function checkValue(dealtCards,grid){
+function checkAIGridValue(dealtCards,grid){
 	var valueArr = new Array();
 	var value = [0,0,0,0,0,0,0,0,0];
 	for(var i=0;i<6;i++){
 		if(dealtCards[i].suit != SPECIAL_SUIT){
-			value = calValue(value,dealtCards[i],grid);
+			value = calAIGridValue(value,dealtCards[i],grid);
 		}
 		valueArr.push(value);
 
@@ -440,4 +627,48 @@ function checkValue(dealtCards,grid){
 	}
 	return valueArr;
 }
-*/
+
+
+////////////////////////end of target-oriented
+
+
+function random(){
+	//thoughts by jimmyshum:
+	//ai player would choose the cards in random
+
+	var randNum;
+
+	//For the CardDeck Part
+	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
+	do{
+	 	randNum = Math.floor(Math.random()*6);
+
+	 	//|check
+	 	//alert("choose: "+randNum);
+	 	//|check
+	}while(randNum == 6);
+	var choose = randNum;
+
+	//For the ai grid part
+	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
+	do{
+		do{
+			randNum = Math.floor(Math.random()*9);	
+		}while(randNum == 9);
+		//|check
+		//alert("destPos: "+randNum);
+		//|check
+		if (!ai.grid[randNum]) {
+			var destPos = {pos:randNum,x:(randNum%3)*105+ai.gridPosX,y:Math.floor(randNum/3)*105+170};
+		}
+		//|check
+		//alert(!ai.grid[randNum]);
+		//|check
+	}while(ai.grid[randNum]);
+
+	//focusCardIndex : the index from the card deck 
+	//destPos : the position of the ai grid 
+	return {focusCardIndex:choose,destPos:destPos};
+}
+
+}
