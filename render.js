@@ -31,11 +31,11 @@ function aniHighlightHand(gridPosX,matchPos){
 function aniDropCardEffect(gridPosX,effectPos){
 	if (animation) {
 		animation.clearRect(0,0,960,640);
-		animation.globalAlpha = 1-aniFrame*0.05;
+		animation.globalAlpha = 1-aniFrame*0.1;
 		animation.drawImage(image,0,560,108,108,Math.floor((gridPosX-9+105*(effectPos%3))-108*(aniFrame*0.05)*0.5),
 							Math.floor((161+105*Math.floor(effectPos/3))-108*(aniFrame*0.05)*0.5),108*(1+aniFrame*0.05),108*(1+aniFrame*0.05));
 		aniFrame++;
-		if (aniFrame > 20) aniClear();
+		if (aniFrame > 10) aniClear();
 	}
 }
 
@@ -55,7 +55,7 @@ function renderBoard(){
 		//Draw the arrow
 		board.save(); 
 		board.translate(480,320);
-		board.rotate(arrowRotateDegree*Math.PI/180);
+		board.rotate(arrowRotateDegree%360*Math.PI/180);
 		board.drawImage(image,270,680,80,80,-40,-40,80,80);
 		board.restore();
 		

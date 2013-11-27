@@ -43,7 +43,7 @@ function init(){
 	player = new Player("Human",115);
 	ai = new Player("Computer",545);
 	
-	//Get the canvas
+	//Get canvas
 	animation = $("#animation")[0].getContext && $("#animation")[0].getContext("2d");
 	board = $("#board")[0].getContext && $("#board")[0].getContext("2d");
 	surface = $("#surface")[0].getContext && $("#surface")[0].getContext("2d");
@@ -55,18 +55,16 @@ function init(){
 	$("#surface").mouseup(mouseUpHandler);
 	
 	playerTurn = true;
-	arrowRotateDegree = 90;
+	arrowRotateDegree = 0;
 	
 	inGame = true;
 	gameLoop();
 }
 
 function gameLoop(){
-	if ((!dealtCards[dealtCardIndex] || dealtCards[dealtCardIndex].scale >= 1) &&
-		(playerTurn && arrowRotateDegree%360 == 0 || !playerTurn && arrowRotateDegree%360 == 180)) {
+	if ((!dealtCards[dealtCardIndex] || dealtCards[dealtCardIndex].scale >= 1) && (playerTurn && arrowRotateDegree%360 == 0 || !playerTurn && arrowRotateDegree%360 == 180)) {
 		//Player
 		if (playerTurn)
-			//Pass the turn
 			if (player.move && player.noOfCard >= 9) {
 				player.move = false;
 				player.decision = "end";
@@ -76,7 +74,6 @@ function gameLoop(){
 		
 		//AI
 		if (!playerTurn) {
-			//Pass the turn
 			if (ai.move && ai.noOfCard >= 9) {
 				ai.move = false;
 				ai.decision = "end";
@@ -93,7 +90,7 @@ function gameLoop(){
 			}
 			
 			var moveSpeed = 10;
-			if (dealtCards[focusCardIndex] && dealtCards[focusCardIndex].scale == 1) {
+			if (focusCardIndex > -1 && dealtCards[focusCardIndex].scale == 1) {
 				//Move the cursor
 				var moveAngle = Math.abs(Math.atan((ai.mouseY-dealtCards[focusCardIndex].posY-42)/(ai.mouseX-dealtCards[focusCardIndex].posX-42)));
 				if (ai.mouseX < dealtCards[focusCardIndex].posX+42) ai.mouseX += Math.floor(moveSpeed*Math.cos(moveAngle));
@@ -107,7 +104,7 @@ function gameLoop(){
 					dealtCards[focusCardIndex].scale = 1.1;
 			}
 			
-			if (dealtCards[focusCardIndex] && dealtCards[focusCardIndex].scale == 1.1) {
+			if (focusCardIndex > -1 && dealtCards[focusCardIndex].scale == 1.1) {
 				//Move the card
 				var moveAngle = Math.abs(Math.atan((dealtCards[focusCardIndex].posY-ai.decision.destPos.y)/(dealtCards[focusCardIndex].posX-ai.decision.destPos.x)));
 				if (dealtCards[focusCardIndex].posX < ai.decision.destPos.x) {
@@ -130,7 +127,7 @@ function gameLoop(){
 				//Arrive to the destination
 				if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x-moveSpeed && dealtCards[focusCardIndex].posX < ai.decision.destPos.x+moveSpeed &&
 					dealtCards[focusCardIndex].posY > ai.decision.destPos.y-moveSpeed && dealtCards[focusCardIndex].posY < ai.decision.destPos.y+moveSpeed) {
-					//Poker, clown or torch to AI
+					//Poker, clown or torch (AI)
 					if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].suit == SPECIAL_SUIT &&
 						(dealtCards[focusCardIndex].rank == CLOWN_RANK || dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "ai")) {
 						ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
@@ -138,7 +135,7 @@ function gameLoop(){
 						aniClear();
 						aniShow = setInterval("aniDropCardEffect(ai.gridPosX,ai.decision.destPos.pos)",20);
 					}
-					//Torch to player
+					//Torch (Player)
 					if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "player") {
 						player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
 						
@@ -169,7 +166,6 @@ function gameLoop(){
 					dealtCardIndex = i;
 				}
 			
-			//Reset
 			if (playerTurn) {
 				ai.move = true;
 				ai.decision = null;
@@ -177,6 +173,7 @@ function gameLoop(){
 				player.move = true;
 				player.decision = null;
 			}
+			
 			playerTurn = !playerTurn;
 			
 			inGame = (player.noOfCard < 9 || ai.noOfCard < 9);
