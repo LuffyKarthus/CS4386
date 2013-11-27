@@ -1,11 +1,12 @@
 /* CSS Document */
 
 body {
-	background: url(pattern.png);
+	background: #FFFFFF;
 }
 
 div {
 	position: relative;
+	top: 20px;
 	width: 960px;
 	margin: auto;
 }

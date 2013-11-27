@@ -19,18 +19,12 @@ function checkHands(grid){
 		var cards = [grid[map[i][0]],grid[map[i][1]],grid[map[i][2]]];
 		var pairs = getPair(cards);
 		
-		if (royalFlush(cards))
-			hands[i] = new Hand(ROYAL_FLUSH,-1,map[i]);
-		else if (straightFlush(cards))
-			hands[i] = new Hand(STRAIGHT_FLUSH,isClown(grid[map[i][0]])?(isClown(grid[map[i][1]])?grid[map[i][2]].suit:grid[map[i][1]].suit):grid[map[i][0]].suit,map[i]);
-		else if (flush(cards))
-			hands[i] = new Hand(FLUSH,isClown(grid[map[i][0]])?(isClown(grid[map[i][1]])?grid[map[i][2]].suit:grid[map[i][1]].suit):grid[map[i][0]].suit,map[i]);
-		else if (straight(cards))
-			hands[i] = new Hand(STRAIGHT,-1,map[i]);
-		else if (threeOfAKind(cards))
-			hands[i] = new Hand(THREE_OF_A_KIND,-1,map[i]);
-		else if (pairs)
-			hands[i] = new Hand(PAIR,-1,[map[i][pairs[0]],map[i][pairs[1]]]);
+		if (royalFlush(cards)) hands[i] = new Hand(ROYAL_FLUSH,-1,map[i]);
+		else if (straightFlush(cards)) hands[i] = new Hand(STRAIGHT_FLUSH,cards[0].suit,map[i]);
+		else if (flush(cards)) hands[i] = new Hand(FLUSH,cards[0].suit,map[i]);
+		else if (straight(cards)) hands[i] = new Hand(STRAIGHT,-1,map[i]);
+		else if (threeOfAKind(cards)) hands[i] = new Hand(THREE_OF_A_KIND,-1,map[i]);
+		else if (pairs) hands[i] = new Hand(PAIR,-1,[map[i][pairs[0]],map[i][pairs[1]]]);
 		else hands[i] = null;
 	}
 	return hands;
