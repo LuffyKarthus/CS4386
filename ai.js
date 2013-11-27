@@ -20,7 +20,7 @@ Plz follow the return format of aiAction().
 */
 function aiAction(){
 	toReturn = conservative();
-	console.log(toReturn.destPos.pos+" "+toReturn.focusCardIndex);
+	console.log(toReturn.destPos.pos+" "+toReturn.destPos.y);
 	return toReturn;
 }
 	//return targetOriented();
@@ -33,7 +33,7 @@ function conservative()
 	var found;
 	
 	for (var i = 0; i < 9; i++){
-		if (!ai.grid[i%8]) {										//ai.grid[i] : check whether the grid has card or not 
+		if (!ai.grid[i%9]) {										//ai.grid[i] : check whether the grid has card or not 
 			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
 			break;
 		}
@@ -88,23 +88,14 @@ function conservative()
 		for (var j=0;j<6;j++){
 										// Get for pairs  and three of a kind  
 								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
-									found=j;	
-									//	if (ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		
-										/*
-										for(var k=0;k<8;k++)
-										{
-											if (!ai.grid[k])
-												ai.grid[k];
+									found=j;									
+									for (var z=0;z<3;z++){
+										if (!ai.grid[z]){
+											alert("pairs");
+											var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+											return {focusCardIndex:found,destPos:destPos};	
 										}
-										*/
-												for (var z=0;z<3;z++){
-													if (!ai.grid[z]){
-													//	alert("pairs");
-														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-														return {focusCardIndex:found,destPos:destPos};	
-													}
-												}
-									//	}	
+									}	
 								}
 				}
 	}
@@ -112,17 +103,14 @@ function conservative()
 	for (var i=0;i<9;i++){								
 		for (var j=0;j<6;j++){
 								if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		
-									found=j;
-							//			if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8])
-										{												
-												for (var z=0;z<3;z++){
-													if (!ai.grid[z]){
-													//	alert("flush");
-														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
-														return {focusCardIndex:found,destPos:destPos};	
-													}
-												}
-										}						
+									found=j;												
+									for (var z=0;z<3;z++){
+										if (!ai.grid[z]){
+											alert("flush");
+											var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+											return {focusCardIndex:found,destPos:destPos};	
+										}
+									}					
 								}
 			}
 		}	
@@ -135,8 +123,8 @@ function conservative()
 											{
 													for (var z=0;z<3;z++){
 														if (!ai.grid[z]){
-														//	alert("straight");
-															var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i%3)*105+170};
+															alert("straight");
+															var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
 															return {focusCardIndex:found,destPos:destPos};	
 														}
 													}
@@ -144,8 +132,7 @@ function conservative()
 									}		
 			
 		}	
-	}												//focusCardIndex : the index from the card deck 
-	//alert("random");						
+	}												//focusCardIndex : the index from the card deck 						
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
 	
@@ -472,3 +459,136 @@ function checkValue(dealtCards,grid){
 	return valueArr;
 }
 */
+
+
+
+
+function aiAction(){
+	toReturn = conservative();
+	console.log(toReturn.destPos.pos+" "+toReturn.destPos.y);
+	return toReturn;
+}
+	//return targetOriented();
+	//For refecing
+	//suit 0 - 3 => spade heart diamond club
+	//suit 4 => special card
+
+function conservative()
+{
+	var found;
+	
+	for (var i = 0; i < 9; i++){
+		if (!ai.grid[i%8]) {										//ai.grid[i] : check whether the grid has card or not 
+			var destPos = {pos:i,x:(i%3)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};	
+			break;
+		}
+	}
+	
+	for (var i = 0; i < 6; i++){
+		if (dealtCards[i].suit != SPECIAL_SUIT ){									// normal cards		
+			found=i;	
+			break;								
+		}
+	}
+	
+
+	for (var i = 0; i < 6; i++){
+
+		if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==0){				//get Joker  
+			found=i;
+			//alert("Joker");
+			return {focusCardIndex:found,destPos:destPos};	
+		}
+		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==2){		//get Torch 
+			found=i;
+			//alert("Torch");
+
+			do (n = Math.floor(Math.random()*9))
+			while(!player.grid[n]);
+			
+			var destPos = {pos:n,x:(n%3)*105+player.gridPosX,y:Math.floor(n/3)*105+170};
+			
+			return {focusCardIndex:found,destPos:destPos,burnTarget:"player"};
+		}
+		else if (dealtCards[i].suit==SPECIAL_SUIT && dealtCards[i].rank==1){
+			found=i;
+			//alert("Thief");															//get Thief
+			do (k = Math.floor(Math.random()*9))
+			while(!player.grid[k]);
+			var destPos = {pos:k,x:(k%3)*105+player.gridPosX,y:Math.floor(k/3)*105+170};
+
+
+			do (m = Math.floor(Math.random()*9))
+			while(ai.grid[m]);
+			var stealToPos = {pos:m,x:(m%3)*105+ai.gridPosX,y:Math.floor(m/3)*105+170};
+			alert(stealToPos.pos);
+
+			return {focusCardIndex:found,destPos:destPos,stealToPos:stealToPos};
+		}
+
+	}
+
+										//  Pairs,Flush,Straight.If a pattern can't be formed ,then simply pick a card
+	for (var i=0;i<9;i++){								
+		for (var j=0;j<6;j++){
+										// Get for pairs  and three of a kind  
+								if ( ai.grid[i]  &&  dealtCards[j].rank==ai.grid[i].rank ){				
+									found=j;	
+									//	if (ai.grid [(i+1)%8] && ai.grid[(i+2)%8]){ 		
+										/*
+										for(var k=0;k<8;k++)
+										{
+											if (!ai.grid[k])
+												ai.grid[k];
+										}
+										*/
+												for (var z=0;z<3;z++){
+													if (!ai.grid[z]){
+														alert("pairs");
+														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+														return {focusCardIndex:found,destPos:destPos};	
+													}
+												}
+									//	}	
+								}
+				}
+	}
+										// Get for Flush
+	for (var i=0;i<9;i++){								
+		for (var j=0;j<6;j++){
+								if (ai.grid[i] && dealtCards[j].suit==ai.grid[i].suit ){		
+									found=j;
+							//			if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8])
+										{												
+												for (var z=0;z<3;z++){
+													if (!ai.grid[z]){
+														alert("flush");
+														var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+														return {focusCardIndex:found,destPos:destPos};	
+													}
+												}
+										}						
+								}
+			}
+		}	
+										// Get for Straight
+	for (var i=0;i<9;i++){								
+		for (var j=0;j<6;j++){
+								if ( (ai.grid[i]  &&  ((dealtCards[j].rank-1>ai.grid[i].rank) || (dealtCards[j].rank+1>ai.grid[i].rank) ) )){	 	
+									found=j;
+									//		if (ai.grid[(i)] && ai.grid [(i+1)%8] && ai.grid[(i+2)%8])
+											{
+													for (var z=0;z<3;z++){
+														if (!ai.grid[z]){
+															alert("straight");
+															var destPos = {pos:z,x:(z)*105+ai.gridPosX,y:Math.floor(i/3)*105+170};
+															return {focusCardIndex:found,destPos:destPos};	
+														}
+													}
+											}	
+									}		
+			
+		}	
+	}												//focusCardIndex : the index from the card deck 						
+	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
+}
