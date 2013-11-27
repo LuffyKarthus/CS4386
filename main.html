@@ -38,7 +38,6 @@ function init(){
 	dealtCards = new Array();
 	for (var i = 0; i < 6; i++)
 		if (!dealtCards[i]) dealtCards[i] = deck.dealCard();
-	dealtCardIndex = 5;
 	
 	player = new Player("Human",115);
 	ai = new Player("Computer",545);
@@ -55,130 +54,126 @@ function init(){
 	$("#surface").mouseup(mouseUpHandler);
 	
 	playerTurn = true;
-	arrowRotateDegree = 0;
 	
 	inGame = true;
 	gameLoop();
 }
 
 function gameLoop(){
-	if ((!dealtCards[dealtCardIndex] || dealtCards[dealtCardIndex].scale >= 1) && (playerTurn && arrowRotateDegree%360 == 0 || !playerTurn && arrowRotateDegree%360 == 180)) {
-		//Player
-		if (playerTurn)
-			if (player.move && player.noOfCard >= 9) {
-				player.move = false;
-				player.decision = "end";
-				
-				//......
-			}
+	//Player
+	if (playerTurn)
+		if (player.move && player.noOfCard >= 9) {
+			player.move = false;
+			player.decision = "end";
+			
+			//......
+		}
+	
+	//AI
+	if (!playerTurn) {
+		if (ai.move && ai.noOfCard >= 9) {
+			ai.move = false;
+			ai.decision = "end";
+			
+			//......
+		}
 		
-		//AI
-		if (!playerTurn) {
-			if (ai.move && ai.noOfCard >= 9) {
-				ai.move = false;
-				ai.decision = "end";
-				
-				//......
+		if (!ai.decision && dealtCards[dealtCardIndex].scale == 1) {
+			ai.decision = aiAction();
+			
+			focusCardIndex = ai.decision.focusCardIndex;
+			dealtCards[focusCardIndex].posX = 210+focusCardIndex*90;
+			dealtCards[focusCardIndex].posY = 520;
+		}
+		
+		var moveSpeed = 10;
+		if (focusCardIndex > -1 && dealtCards[focusCardIndex].scale == 1) {
+			//Move the cursor
+			var moveAngle = Math.abs(Math.atan((ai.mouseY-dealtCards[focusCardIndex].posY-42)/(ai.mouseX-dealtCards[focusCardIndex].posX-42)));
+			if (ai.mouseX < dealtCards[focusCardIndex].posX+42) ai.mouseX += Math.floor(moveSpeed*Math.cos(moveAngle));
+			if (ai.mouseX > dealtCards[focusCardIndex].posX+42) ai.mouseX -= Math.floor(moveSpeed*Math.cos(moveAngle));
+			if (ai.mouseY < dealtCards[focusCardIndex].posY+42) ai.mouseY += Math.floor(moveSpeed*Math.sin(moveAngle));
+			if (ai.mouseY > dealtCards[focusCardIndex].posY+42) ai.mouseY -= Math.floor(moveSpeed*Math.sin(moveAngle));
+			
+			//Arrive to the card
+			if (ai.mouseX > dealtCards[focusCardIndex].posX+42-moveSpeed && ai.mouseX < dealtCards[focusCardIndex].posX+42+moveSpeed &&
+				ai.mouseY > dealtCards[focusCardIndex].posY+42-moveSpeed && ai.mouseY < dealtCards[focusCardIndex].posY+42+moveSpeed) dealtCards[focusCardIndex].scale = 1.1;
+		}
+		
+		if (focusCardIndex > -1 && dealtCards[focusCardIndex].scale == 1.1) {
+			//Move the card
+			var moveAngle = Math.abs(Math.atan((dealtCards[focusCardIndex].posY-ai.decision.destPos.y)/(dealtCards[focusCardIndex].posX-ai.decision.destPos.x)));
+			if (dealtCards[focusCardIndex].posX < ai.decision.destPos.x) {
+				dealtCards[focusCardIndex].posX += Math.floor(moveSpeed*Math.cos(moveAngle));
+				ai.mouseX += Math.floor(moveSpeed*Math.cos(moveAngle));
+			}
+			if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x) {
+				dealtCards[focusCardIndex].posX -= Math.floor(moveSpeed*Math.cos(moveAngle));
+				ai.mouseX -= Math.floor(moveSpeed*Math.cos(moveAngle));
+			}
+			if (dealtCards[focusCardIndex].posY < ai.decision.destPos.y) {
+				dealtCards[focusCardIndex].posY += Math.floor(moveSpeed*Math.sin(moveAngle));
+				ai.mouseY += Math.floor(moveSpeed*Math.sin(moveAngle));
+			}
+			if (dealtCards[focusCardIndex].posY > ai.decision.destPos.y) {
+				dealtCards[focusCardIndex].posY -= Math.floor(moveSpeed*Math.sin(moveAngle));
+				ai.mouseY -= Math.floor(moveSpeed*Math.sin(moveAngle));
 			}
 			
-			if (!ai.decision) {
-				ai.decision = aiAction();
-				
-				focusCardIndex = ai.decision.focusCardIndex;
-				dealtCards[focusCardIndex].posX = 210+focusCardIndex*90;
-				dealtCards[focusCardIndex].posY = 520;
-			}
-			
-			var moveSpeed = 10;
-			if (focusCardIndex > -1 && dealtCards[focusCardIndex].scale == 1) {
-				//Move the cursor
-				var moveAngle = Math.abs(Math.atan((ai.mouseY-dealtCards[focusCardIndex].posY-42)/(ai.mouseX-dealtCards[focusCardIndex].posX-42)));
-				if (ai.mouseX < dealtCards[focusCardIndex].posX+42) ai.mouseX += Math.floor(moveSpeed*Math.cos(moveAngle));
-				if (ai.mouseX > dealtCards[focusCardIndex].posX+42) ai.mouseX -= Math.floor(moveSpeed*Math.cos(moveAngle));
-				if (ai.mouseY < dealtCards[focusCardIndex].posY+42) ai.mouseY += Math.floor(moveSpeed*Math.sin(moveAngle));
-				if (ai.mouseY > dealtCards[focusCardIndex].posY+42) ai.mouseY -= Math.floor(moveSpeed*Math.sin(moveAngle));
-				
-				//Arrive to the card
-				if (ai.mouseX > dealtCards[focusCardIndex].posX+42-moveSpeed && ai.mouseX < dealtCards[focusCardIndex].posX+42+moveSpeed &&
-					ai.mouseY > dealtCards[focusCardIndex].posY+42-moveSpeed && ai.mouseY < dealtCards[focusCardIndex].posY+42+moveSpeed)
-					dealtCards[focusCardIndex].scale = 1.1;
-			}
-			
-			if (focusCardIndex > -1 && dealtCards[focusCardIndex].scale == 1.1) {
-				//Move the card
-				var moveAngle = Math.abs(Math.atan((dealtCards[focusCardIndex].posY-ai.decision.destPos.y)/(dealtCards[focusCardIndex].posX-ai.decision.destPos.x)));
-				if (dealtCards[focusCardIndex].posX < ai.decision.destPos.x) {
-					dealtCards[focusCardIndex].posX += Math.floor(moveSpeed*Math.cos(moveAngle));
-					ai.mouseX += Math.floor(moveSpeed*Math.cos(moveAngle));
-				}
-				if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x) {
-					dealtCards[focusCardIndex].posX -= Math.floor(moveSpeed*Math.cos(moveAngle));
-					ai.mouseX -= Math.floor(moveSpeed*Math.cos(moveAngle));
-				}
-				if (dealtCards[focusCardIndex].posY < ai.decision.destPos.y) {
-					dealtCards[focusCardIndex].posY += Math.floor(moveSpeed*Math.sin(moveAngle));
-					ai.mouseY += Math.floor(moveSpeed*Math.sin(moveAngle));
-				}
-				if (dealtCards[focusCardIndex].posY > ai.decision.destPos.y) {
-					dealtCards[focusCardIndex].posY -= Math.floor(moveSpeed*Math.sin(moveAngle));
-					ai.mouseY -= Math.floor(moveSpeed*Math.sin(moveAngle));
-				}
-				
-				//Arrive to the destination
-				if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x-moveSpeed && dealtCards[focusCardIndex].posX < ai.decision.destPos.x+moveSpeed &&
-					dealtCards[focusCardIndex].posY > ai.decision.destPos.y-moveSpeed && dealtCards[focusCardIndex].posY < ai.decision.destPos.y+moveSpeed) {
-					//Poker, clown or torch (AI)
-					if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].suit == SPECIAL_SUIT &&
-						(dealtCards[focusCardIndex].rank == CLOWN_RANK || dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "ai")) {
-						ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
-						
-						aniClear();
-						aniShow = setInterval("aniDropCardEffect(ai.gridPosX,ai.decision.destPos.pos)",20);
-					}
-					//Torch (Player)
-					if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "player") {
-						player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
-						
-						aniClear();
-						aniShow = setInterval("aniDropCardEffect(player.gridPosX,ai.decision.destPos.pos)",20);
-					}
-					//Thief
-					if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == THIEF_RANK) {
-						dealtCards[focusCardIndex] = player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
-						player.updateHands();
-						
-						ai.decision.destPos = ai.decision.stealToPos;
-					} else {
-						dealtCards[focusCardIndex] = null;
-						focusCardIndex = -1;
+			//Arrive to the destination
+			if (dealtCards[focusCardIndex].posX > ai.decision.destPos.x-moveSpeed && dealtCards[focusCardIndex].posX < ai.decision.destPos.x+moveSpeed &&
+				dealtCards[focusCardIndex].posY > ai.decision.destPos.y-moveSpeed && dealtCards[focusCardIndex].posY < ai.decision.destPos.y+moveSpeed) {
+				//Poker, clown or torch (AI)
+				if (dealtCards[focusCardIndex].suit != SPECIAL_SUIT || dealtCards[focusCardIndex].suit == SPECIAL_SUIT &&
+					(dealtCards[focusCardIndex].rank == CLOWN_RANK || dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "ai")) {
+					ai.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
 					
-						ai.move = false;
-					}
+					aniClear();
+					aniShow = setInterval("aniDropCardEffect(ai.gridPosX,ai.decision.destPos.pos)",20);
+				}
+				//Torch (Player)
+				if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == TORCH_RANK && ai.decision.burnTarget == "player") {
+					player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+					
+					aniClear();
+					aniShow = setInterval("aniDropCardEffect(player.gridPosX,ai.decision.destPos.pos)",20);
+				}
+				//Thief
+				if (dealtCards[focusCardIndex].suit == SPECIAL_SUIT && dealtCards[focusCardIndex].rank == THIEF_RANK) {
+					dealtCards[focusCardIndex] = player.updateGrid(ai.decision.destPos.pos,dealtCards[focusCardIndex]);
+					player.updateHands();
+					
+					ai.decision.destPos = ai.decision.stealToPos;
+				} else {
+					dealtCards[focusCardIndex] = null;
+					focusCardIndex = -1;
+				
+					ai.move = false;
 				}
 			}
+		}
+	}
+	
+	if (playerTurn && player.decision == "end" || !playerTurn && ai.decision == "end") {
+		//Refill card
+		for (var i = 0; i < 6; i++)
+			if (!dealtCards[i]) {
+				dealtCards[i] = deck.dealCard();
+				dealtCardIndex = i;
+			}
+		
+		if (playerTurn) {
+			ai.move = true;
+			ai.decision = null;
+		} else {
+			player.move = true;
+			player.decision = null;
 		}
 		
-		if (playerTurn && player.decision == "end" || !playerTurn && ai.decision == "end") {
-			//Refill card
-			for (var i = 0; i < 6; i++)
-				if (!dealtCards[i]) {
-					dealtCards[i] = deck.dealCard();
-					dealtCardIndex = i;
-				}
-			
-			if (playerTurn) {
-				ai.move = true;
-				ai.decision = null;
-			} else {
-				player.move = true;
-				player.decision = null;
-			}
-			
-			playerTurn = !playerTurn;
-			
-			inGame = (player.noOfCard < 9 || ai.noOfCard < 9);
-		}
-	} else arrowRotateDegree += 10;
+		playerTurn = !playerTurn;
+		
+		inGame = (player.noOfCard < 9 || ai.noOfCard < 9);
+	}
 	
 	renderBoard();
 	renderSurface();

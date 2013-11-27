@@ -87,11 +87,8 @@ function mouseUpHandler(e){
 					aniShow = setInterval("aniDropCardEffect(player.gridPosX,"+effectPos+")",20);
 					
 					dealtCards[focusCardIndex] = null;
-					focusCardIndex = -1;
 					isStealing = false;
 					player.move = false;
-					
-					return;
 				}
 		}
 	
@@ -121,16 +118,11 @@ function mouseUpHandler(e){
 					aniShow = setInterval("aniDropCardEffect(ai.gridPosX,"+effectPos+")",20);
 					
 					dealtCards[focusCardIndex] = null;
-					focusCardIndex = -1;
-					isStealing = false;
 					player.move = false;
-					
-					return;
 				}
 		}
 	
 	if (!isStealing) {
-		aniClear();
 		focusCardIndex = -1;
 	}
 }
