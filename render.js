@@ -39,6 +39,20 @@ function aniDropCardEffect(gridPosX,effectPos){
 	}
 }
 
+function aniBurnCardEffect(gridPosX,effectPos){
+	if (animation) {
+		animation.clearRect(0,0,960,640);
+		animation.globalAlpha = 1-aniFrame*0.05;
+		animation.drawImage(image,270,360,90,90,gridPosX+105*(effectPos%3),170+105*Math.floor(effectPos/3),90,90);
+		if (aniFrame%5 == 0) animation.drawImage(image,225,560,80,100,Math.floor(gridPosX+5+105*(effectPos%3)-90*(aniFrame*0.05)*0.25),
+									Math.floor(260+105*Math.floor(effectPos/3)-100*(1+aniFrame*0.025)),80*(1+aniFrame*0.025),100*(1+aniFrame*0.025));
+		else animation.drawImage(image,315,560,80,100,Math.floor(gridPosX+5+105*(effectPos%3)-90*(aniFrame*0.05)*0.25),
+									Math.floor(260+105*Math.floor(effectPos/3)-100*(1+aniFrame*0.025)),80*(1+aniFrame*0.025),100*(1+aniFrame*0.025));
+		aniFrame++;
+		if (aniFrame > 20) aniClear();
+	}
+}
+
 function aniClear(){
 	if (aniShow) clearInterval(aniShow);
 	if (animation) animation.clearRect(0,0,960,640);
@@ -77,7 +91,14 @@ function renderSurface(){
 				if (dealtCards[i].scale < 1) dealtCards[i].scale += 0.1;
 				else if (i != focusCardIndex) dealtCards[i].scale = 1;
 			}
-		if (focusCardIndex >= 0) dealtCards[focusCardIndex].drawCard(surface,dealtCards[focusCardIndex].posX,dealtCards[focusCardIndex].posY);
+		if (focusCardIndex >= 0) {
+			dealtCards[focusCardIndex].drawCard(surface,dealtCards[focusCardIndex].posX,dealtCards[focusCardIndex].posY);
+			if (isStealing) {
+				surface.globalAlpha = 0.4;
+				surface.drawImage(image,90,360,90,90,Math.floor(dealtCards[focusCardIndex].posX-4.5),Math.floor(dealtCards[focusCardIndex].posY-4.5),99,99);
+				surface.globalAlpha = 1;
+			}
+		}
 		surface.drawImage(image,250,470,22,34,ai.mouseX,ai.mouseY,22,34);
 	}
 }

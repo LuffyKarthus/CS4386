@@ -82,7 +82,7 @@ function Player(name,gridPosX){
 	this.score = 0;
 	this.shownScore = 0;
 	
-	this.move = true;
+	this.move = false;
 	this.mouseX = this.gridPosX+147;
 	this.mouseY = 317;
 	this.decision = null;
@@ -137,6 +137,12 @@ function Player(name,gridPosX){
 					aniClear();
 					aniHighlightHandPos = this.hands[i].matchPos;
 					aniShow = setInterval("aniHighlightHand("+this.gridPosX+",aniHighlightHandPos)",60);
+					
+					if (this.hands[i].kind == ROYAL_FLUSH || this.hands[i].kind == STRAIGHT_FLUSH) playSound(STRAIGHT_FLUSH_MATCH);
+					else if (this.hands[i].kind == FLUSH) playSound(FLUSH_MATCH);
+					else if (this.hands[i].kind == STRAIGHT) playSound(STRAIGHT_MATCH);
+					else playSound(RANK_MATCH);
+					
 					return;
 				}
 			}

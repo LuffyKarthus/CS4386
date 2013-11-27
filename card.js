@@ -36,7 +36,8 @@ function isClown(card){
 
 function royalFlush(cards){
 	return (cards[0] && cards[1] && cards[2] &&
-			(cards[0].rank > 9 || isClown(cards[0])) && (cards[1].rank > 9 || isClown(cards[1])) && (cards[2].rank > 9 || isClown(cards[2])) && straightFlush(cards));
+			(cards[0].rank == 0 || cards[0].rank > 9 || isClown(cards[0])) && (cards[1].rank == 0 || cards[1].rank > 9 || isClown(cards[1])) &&
+			(cards[2].rank == 0 || cards[2].rank > 9 || isClown(cards[2])) && straightFlush(cards));
 }
 
 function straightFlush(cards){
