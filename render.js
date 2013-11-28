@@ -33,7 +33,7 @@ function aniDropCardEffect(gridPosX,effectPos){
 		animation.clearRect(0,0,960,640);
 		animation.globalAlpha = 1-aniFrame*0.05;
 		animation.drawImage(image,0,560,108,108,Math.floor((gridPosX-9+105*(effectPos%3))-108*(aniFrame*0.05)*0.5),
-							Math.floor((161+105*Math.floor(effectPos/3))-108*(aniFrame*0.05)*0.5),108*(1+aniFrame*0.05),108*(1+aniFrame*0.05));
+								Math.floor((161+105*Math.floor(effectPos/3))-108*(aniFrame*0.05)*0.5),108*(1+aniFrame*0.05),108*(1+aniFrame*0.05));
 		aniFrame++;
 		if (aniFrame > 20) aniClear();
 	}
@@ -45,7 +45,7 @@ function aniBurnCardEffect(gridPosX,effectPos){
 		animation.globalAlpha = 1-aniFrame*0.05;
 		animation.drawImage(image,270,360,90,90,gridPosX+105*(effectPos%3),170+105*Math.floor(effectPos/3),90,90);
 		if (aniFrame%5 == 0) animation.drawImage(image,225,560,80,100,Math.floor(gridPosX+5+105*(effectPos%3)-90*(aniFrame*0.05)*0.25),
-									Math.floor(260+105*Math.floor(effectPos/3)-100*(1+aniFrame*0.025)),80*(1+aniFrame*0.025),100*(1+aniFrame*0.025));
+													Math.floor(260+105*Math.floor(effectPos/3)-100*(1+aniFrame*0.025)),80*(1+aniFrame*0.025),100*(1+aniFrame*0.025));
 		else animation.drawImage(image,315,560,80,100,Math.floor(gridPosX+5+105*(effectPos%3)-90*(aniFrame*0.05)*0.25),
 									Math.floor(260+105*Math.floor(effectPos/3)-100*(1+aniFrame*0.025)),80*(1+aniFrame*0.025),100*(1+aniFrame*0.025));
 		aniFrame++;
@@ -73,10 +73,6 @@ function renderBoard(){
 		board.drawImage(image,270,680,80,80,-40,-40,80,80);
 		board.restore();
 		
-		board.drawImage(image,0,680,90,90,210,520,90,90);
-		for (var i = 0; i < 4; i++)
-			board.drawImage(image,90,680,90,90,300+90*i,520,90,90);
-		board.drawImage(image,180,680,90,90,660,520,90,90);
 		player.drawContent();
 		ai.drawContent();
 	}	
@@ -85,6 +81,11 @@ function renderBoard(){
 function renderSurface(){
 	if (surface) {
 		surface.clearRect(0,0,960,640);
+		surface.drawImage(image,0,680,90,90,210,520,90,90);
+		for (var i = 0; i < 4; i++)
+			surface.drawImage(image,90,680,90,90,300+90*i,520,90,90);
+		surface.drawImage(image,180,680,90,90,660,520,90,90);
+		
 		for (var i = 0; i < 6; i++)
 			if (dealtCards[i]) {
 				if (i != focusCardIndex) dealtCards[i].drawCard(surface,210+90*i,520);
@@ -100,5 +101,34 @@ function renderSurface(){
 			}
 		}
 		surface.drawImage(image,250,470,22,34,ai.mouseX,ai.mouseY,22,34);
+	}
+}
+
+function renderWelcome(){
+	if (welcome) {
+		welcome.clearRect(0,0,960,640);
+		for (var i = 0; i < aniFlyingCards.length; i++)
+			if (aniFlyingCards[i]) {
+				welcome.globalAlpha = Math.max(1-aniFlyingCards[i].card.scale*0.2,0);
+				aniFlyingCards[i].card.drawCard(welcome,	aniFlyingCards[i].card.posX-45,aniFlyingCards[i].card.posY-45);
+				aniFlyingCards[i].card.scale += 0.1;
+				aniFlyingCards[i].card.posX += Math.floor(15*Math.cos(aniFlyingCards[i].flyAngle));
+				aniFlyingCards[i].card.posY += Math.floor(15*Math.sin(aniFlyingCards[i].flyAngle));
+			}
+		welcome.globalAlpha = 1;
+		welcome.drawImage(image,0,515,380,45,290,aniLogoPosY,380,45);
+		if (focusDifficultyIndex > -1) {
+			welcome.drawImage(image,0,780,300,100,180+300*(focusDifficultyIndex%2),260+100*Math.floor(focusDifficultyIndex*0.5),300,100);
+			welcome.clearRect(200+300*(focusDifficultyIndex%2),280+100*Math.floor(focusDifficultyIndex*0.5),260,60);
+		}
+		for (var i = 0; i < 4; i++)
+			welcome.drawImage(image,20+300*i,800,260,60,200+300*(i%2),280+100*Math.floor(i*0.5),260,60);
+			
+		welcome.fillStyle = "#0033FF";
+		welcome.font = "30px Lilita One";
+		welcome.textAlign = "center";
+		welcome.fillText("Please select a difficulty",480,500);
+		welcome.font = "15px Lilita One";
+		welcome.fillText("Developed by Eric, Jimmy and Karthus",480,610);
 	}
 }

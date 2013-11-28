@@ -67,7 +67,7 @@ NORMAL = 1;    //Target
 EASY = 0;      //Random
 
 //Player's grid position
-HUMAN_GRID_X = 115;
+PLAYER_GRID_X = 115;
 AI_GRID_X = 545;
 
 //////////////////////////////////////////////////
@@ -86,35 +86,50 @@ function getResource(){
 	animation = $("#animation")[0].getContext && $("#animation")[0].getContext("2d");
 	board = $("#board")[0].getContext && $("#board")[0].getContext("2d");
 	surface = $("#surface")[0].getContext && $("#surface")[0].getContext("2d");
-	mask = $("#mask")[0].getContext && $("#mask")[0].getContext("2d");
+	welcome = $("#welcome")[0].getContext && $("#welcome")[0].getContext("2d");
 	
 	//Add event handlers
 	$("#surface").mousedown(mouseDownHandler);
 	$("#surface").mousemove(mouseMoveHandler);
-	$("#surface").mouseout(mouseOutHandler);
 	$("#surface").mouseup(mouseUpHandler);
-	$("#welcome").mousedown(mouseDownHandler);
+	$("#surface").mouseout(mouseOutHandler);
+	$("#welcome").mousedown(welcomeMouseDownHandler);
+	$("#welcome").mousemove(welcomeMouseMoveHandler);
 	
+	aniFlyingCards = new Array();
+	aniLogoPosY = 170;
+	gameDifficulty = -1;
 	gameWelcome();
 }
 
 function gameWelcome(){
-	if (mask) {
-			
-	}
+	if (gameDifficulty == -1) setTimeout(function(){
+														do {
+															var suit = Math.floor(Math.random()*5);
+															var rank = Math.floor(Math.random()*13);
+														} while (suit == SPECIAL_SUIT && rank > TORCH_RANK);
+														var card = new Card(suit,rank);
+														var flyAngle = Math.floor(Math.random()*360);
+														card.posX = 480;
+														card.posY = 320;
+														if (Math.random() < 0.5) aniFlyingCards.push({card:card,flyAngle:flyAngle})},20);
 	
-	$("#mask").fadeOut(1000);
-	gameInit();
+	renderWelcome();
+	if (gameDifficulty > -1) aniLogoPosY -= 3;
+	 
+	if (aniLogoPosY >= 20 || gameDifficulty == -1) setTimeout("gameWelcome()",20);
+	else {
+		gameInit();
+		$("#welcome").fadeOut(500);
+	}
 }
 
-function gameInit(aiType){
+function gameInit(){
 	deck = new Deck();
 	dealtCards = new Array();
-	for (var i = 0; i < 6; i++)
-		if (!dealtCards[i]) dealtCards[i] = deck.dealCard();
-	dealtCardIndex = 5;
+	dealtCardIndex = -1;
 	
-	player = new Player("Human",HUMAN_GRID_X);
+	player = new Player("Human",PLAYER_GRID_X);
 	ai = new Player("AI",AI_GRID_X);
 	
 	arrowRotateDegree = 90;
@@ -266,7 +281,8 @@ function gameLoop(){
 }
 
 function gameDie(){
-	alert("END!");
+	playSound(END_GAME);
+	$("#surface").fadeOut(500);
 }
 </script>
 </head>
@@ -276,7 +292,7 @@ function gameDie(){
 <canvas id="board" width="960" height="640"></canvas>
 <canvas id="animation" width="960" height="640"></canvas>
 <canvas id="surface" width="960" height="640"></canvas>
-<canvas id="mask" width="960" height="640"></canvas>
+<canvas id="welcome" width="960" height="640"></canvas>
 </div>
 </body>
 </html>

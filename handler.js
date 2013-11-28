@@ -1,6 +1,29 @@
 // JavaScript Document
+focusDifficultyIndex = -1;
+
 focusCardIndex = -1;
 isStealing = false;
+
+function welcomeMouseDownHandler(e){
+	var mouseX = e.offsetX;
+	var mouseY = e.offsetY;
+	//console.log("Down: "+mouseX+" "+mouseY);
+	
+	if (gameDifficulty == -1 && mouseX >= 180 && mouseX <= 780 && mouseY >= 280 && mouseY <= 480) {
+		gameDifficulty = Math.floor((mouseY-280)/100)*2+Math.floor((mouseX-180)/300);
+		playSound(PICK_CARD);
+	}
+}
+
+function welcomeMouseMoveHandler(e){
+	var mouseX = e.offsetX;
+	var mouseY = e.offsetY;
+	//console.log("Down: "+mouseX+" "+mouseY);
+	
+	if (gameDifficulty == -1 && mouseX >= 180 && mouseX <= 780 && mouseY >= 280 && mouseY <= 480)
+		focusDifficultyIndex = Math.floor((mouseY-280)/100)*2+Math.floor((mouseX-180)/300);
+	else focusDifficultyIndex = -1;
+}
 
 function mouseDownHandler(e){
 	if (!player.move || isStealing) return;
