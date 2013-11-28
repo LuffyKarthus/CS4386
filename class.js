@@ -132,16 +132,17 @@ function Player(name,gridPosX){
 				this.hands[i] = newHands[i];
 				this.score = getHandsScore(this.hands);
 				
-				//Show the animation
+				//Show the animation and play the sound
 				if (this.hands[i]) {
 					aniClear();
 					aniHighlightHandPos = this.hands[i].matchPos;
 					aniShow = setInterval("aniHighlightHand("+this.gridPosX+",aniHighlightHandPos)",60);
 					
-					if (this.hands[i].kind == ROYAL_FLUSH || this.hands[i].kind == STRAIGHT_FLUSH) playSound(STRAIGHT_FLUSH_MATCH);
-					else if (this.hands[i].kind == FLUSH) playSound(FLUSH_MATCH);
-					else if (this.hands[i].kind == STRAIGHT) playSound(STRAIGHT_MATCH);
-					else playSound(RANK_MATCH);
+					if (playerTurn && this.gridPosX == PLAYER_GRID_X || !playerTurn && this.gridPosX == AI_GRID_X)
+						if (this.hands[i].kind == ROYAL_FLUSH || this.hands[i].kind == STRAIGHT_FLUSH) playSound(STRAIGHT_FLUSH_MATCH);
+						else if (this.hands[i].kind == FLUSH) playSound(FLUSH_MATCH);
+						else if (this.hands[i].kind == STRAIGHT) playSound(STRAIGHT_MATCH);
+						else playSound(RANK_MATCH);
 					
 					return;
 				}
@@ -165,7 +166,11 @@ function Player(name,gridPosX){
 		for (var i = 0; i < 9; i++)
 			if (this.grid[i]) this.grid[i].drawCard(board,this.gridPosX+105*(i%3),170+105*Math.floor(i/3));
 		//Draw the player's hands
-		for (var i = 0; i < 8; i++)
-			if (this.hands[i]) this.hands[i].drawHand(this.gridPosX+2+i*38);
+		for (var i = 0; i < 8; i++) {
+			if (this.hands[i]) {
+				if (aniHighlightHandInFoucusIndex == i) board.drawImage(image,295,455,60,60,this.gridPosX-13+38*i,120,60,60);
+				this.hands[i].drawHand(this.gridPosX+2+i*38);
+			}
+		}
 	}
 }
