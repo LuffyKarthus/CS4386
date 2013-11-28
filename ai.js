@@ -728,6 +728,8 @@ function random(){
 	//destPos : the position of the ai grid 
 	return {focusCardIndex:choose,destPos:destPos};
 }
+
+
 function conservative(){
 	var choose;
 	var destPos;
@@ -843,7 +845,7 @@ function calAIGridValueForConservative(value,dealtCard,grid){
 				case 5: currValue = max(analysisAIGridCardsForConservative(dealtCard,grid[3],grid[4]), analysisAIGridCardsForConservative(dealtCard,grid[2],grid[8]),0,0);break;
 				case 6: currValue = max(analysisAIGridCardsForConservative(dealtCard,grid[7],grid[8]), analysisAIGridCardsForConservative(dealtCard,grid[0],grid[3]), analysisAIGridCardsForConservative(dealtCard,grid[2],grid[4]),0);break;
 				case 7: currValue = max(analysisAIGridCardsForConservative(dealtCard,grid[6],grid[8]), analysisAIGridCardsForConservative(dealtCard,grid[1],grid[4]),0,0);break;
-				case 8: currValue = max(analysisAIGridCardsForConservative(dealtCard,grid[6],grid[7]), analysisAIGridCardsForConservative(dealtCard,grid[2],grid[5]), analysisAIGridCards(dealtCard,grid[0],grid[4]),0);break;
+				case 8: currValue = max(analysisAIGridCardsForConservative(dealtCard,grid[6],grid[7]), analysisAIGridCardsForConservative(dealtCard,grid[2],grid[5]), analysisAIGridCardsForConservative(dealtCard,grid[0],grid[4]),0);break;
 		
 			}
 		}
