@@ -24,6 +24,16 @@ event.src = "event.wav";
 hand = new Audio();
 hand.src = "hand.wav";
 
+bgmH = new Audio();
+bgmH.loop = true;
+bgmH.volume = 0.1;
+bgmH.src = "makaimura.mp3";
+
+bgmN = new Audio();
+bgmN.loop = true;
+bgmN.volume = 0.05;
+bgmN.src = "spelunk.mp3";
+
 //Constant////////////////////////////////////////
 //Sound
 POP_CARD = [sound,0,0.2];
@@ -130,7 +140,13 @@ function gameInit(){
 	dealtCardIndex = -1;
 	
 	player = new Player("Human",PLAYER_GRID_X);
-	ai = new Player("AI",AI_GRID_X);
+	switch (gameDifficulty) {
+		case VERY_HARD: var aiType = "Very Hard"; bgmH.play(); break;
+		case HARD: var aiType = "Hard"; bgmH.play(); break;
+		case NORMAL: var aiType = "Normal"; bgmN.play(); break;
+		case EASY: var aiType = "Easy"; bgmN.play(); break;
+	}
+	ai = new Player(aiType+" AI",AI_GRID_X);
 	
 	arrowRotateDegree = 90;
 	arrowRotateDirection = ((Math.random() >= 0.5)?10:-10);
@@ -281,11 +297,17 @@ function gameLoop(){
 }
 
 function gameDie(){
-	playSound(END_GAME);
 	$("#surface").fadeOut(500);
-	
-	for (var i = 0; i < 9; i++)
-		if (player.hands[i]) setInterval("aniHighlightHand(player.gridPosX,i)",20*i);
+	if (board) {
+		board.fillStyle = "#0033FF";
+		board.font = "60px Lilita One";
+		board.textAlign = "center";
+		if (player.score > ai.score) {
+			board.fillText("WIN",player.gridPosX+150,580);
+			playSound(END_GAME);
+		}
+		else if (player.score < ai.score) board.fillText("WIN",ai.gridPosX+150,580);
+	}
 }
 </script>
 </head>
