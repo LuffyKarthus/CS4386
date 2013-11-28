@@ -21,7 +21,8 @@ Plz follow the return format of aiAction().
 */
 function aiAction(){
 	//testing
-	return veryAggressive();
+	return conservative();
+	//return veryAggressive();
 	//return random();
 	//return aggressive();
 	//return targetOriented();
@@ -628,7 +629,7 @@ function veryAggressive(){
 		return targetOriented();
 		//test
 
-		//consideration about the AI Grid
+		/*//consideration about the AI Grid
 		var AIValueArr = checkAIGridValue(dealtCards,ai.grid);
 
 		var maxValueInAIValueArr = new Array();
@@ -664,7 +665,7 @@ function veryAggressive(){
 				destPos = {pos:p,x:(p%3)*105+ai.gridPosX,y:Math.floor(p/3)*105+170};
 			}
 		}while(ai.grid[p]);
-		prior = new Array();
+		prior = new Array();*/
 	}
 }
 function aggressive(){
@@ -944,6 +945,7 @@ function analysisGridCards(dealtCard,card1,card2){
 	}
 
 }
+
 function max(num1,num2,num3,num4){
 	//check
 	//alert(num1 + " " + num2 + " " + num3 + " " + num4);
@@ -1165,9 +1167,290 @@ function random(){
 	//destPos : the position of the ai grid 
 	return {focusCardIndex:choose,destPos:destPos};
 }
+function conservative(){
+	var choose;
+	var destPos;
+	var prior = new Array();
+	var occupiedGrid = 0;
+	//count the empty grid in ai panel
+	for(var i=0;i<9;i++){
+		if(ai.grid[i]){
+			occupiedGrid++;
+		}
+	}
+
+	//Action dealing with the number of empty grid , the first step
+	if(occupiedGrid == 0){
+		for(var i=0;i<6;i++){
+			if(dealtCards[i].suit!=SPECIAL_SUIT){
+				if(dealtCards[i].rank >= 10 && dealtCards[i].rank <= 12){
+					prior.push(i);
+				}
+			}
+		}
+		if(prior.length > 0){
+			choose = prior[Math.floor(Math.random()*prior.length)];
+			prior = new Array();
+		}
+		else
+			return random();
+		//test
+		//alert("choose-0: " +choose);
 
 
-function conservative()
+		//For the ai grid part
+		//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
+		do{
+			do{
+				randNum = Math.floor(Math.random()*9);	
+			}while(randNum == 9);
+			//|check
+			//alert("destPos: "+randNum);
+			//|check
+			if (!ai.grid[randNum]) {
+				destPos = {pos:randNum,x:(randNum%3)*105+ai.gridPosX,y:Math.floor(randNum/3)*105+170};
+			}
+			//|check
+			//alert(!ai.grid[randNum]);
+			//|check
+		}while(ai.grid[randNum]);
+
+		return {focusCardIndex:choose,destPos:destPos};
+
+	}
+	else{
+		var valueArr = checkAIGridValueForConservative(dealtCards,ai.grid);
+		var maxValueInValueArr = new Array();
+		for(var i=0;i<6;i++){
+			maxValueInValueArr.push(calMaxValue(valueArr[i]));
+		}
+		var highest = calMaxValue(maxValueInValueArr);
+		for(var i=0;i<6;i++){
+			if(maxValueInValueArr[i] == highest){
+				prior.push(i);
+			}
+		}
+		choose = prior[Math.floor(Math.random()*prior.length)];
+		prior = new Array();
+
+
+
+		highest = calMaxValue(valueArr[choose]);
+		for(var i=0;i<9;i++){
+			//test
+			//alert("valueArr" + i + ": " + valueArr[choose][i] + "  highest: " + highest);
+			if(valueArr[choose][i] == highest){
+				prior.push(i);
+			}
+		}
+
+
+		//alert(prior.length);
+		do{
+			var p = prior[Math.floor(Math.random()*prior.length)];
+			if(!ai.grid[p]){
+				destPos = {pos:p,x:(p%3)*105+ai.gridPosX,y:Math.floor(p/3)*105+170};
+			}
+		}while(ai.grid[p]);
+		prior = new Array();
+
+		//test
+		//alert("choose: " + choose + "  destPos: " + p );
+
+
+		return {focusCardIndex:choose,destPos:destPos};
+
+
+
+	}
+	return random();
+}
+//to analysis 
+
+function calAIGridValueForConservative(value,dealtCard,grid){
+	var currValue = -1;
+	for(var i=0;i<9;i++){
+
+
+		if(!grid[i]){
+			switch(i){
+				case 0: currValue = max(analysisAIGridCards(dealtCard,grid[1],grid[2]), analysisAIGridCards(dealtCard,grid[3],grid[6]), analysisAIGridCards(dealtCard,grid[4],grid[8]),0);break;
+				case 1: currValue = max(analysisAIGridCards(dealtCard,grid[0],grid[2]), analysisAIGridCards(dealtCard,grid[4],grid[7]),0,0);break;
+				case 2: currValue = max(analysisAIGridCards(dealtCard,grid[0],grid[1]), analysisAIGridCards(dealtCard,grid[5],grid[8]), analysisAIGridCards(dealtCard,grid[4],grid[6]),0);break;
+				case 3: currValue = max(analysisAIGridCards(dealtCard,grid[4],grid[5]), analysisAIGridCards(dealtCard,grid[0],grid[6]),0,0);break;
+				case 4: currValue = max(analysisAIGridCards(dealtCard,grid[3],grid[5]), analysisAIGridCards(dealtCard,grid[1],grid[7]), analysisAIGridCards(dealtCard,grid[0],grid[8]),analysisAIGridCards(dealtCard,grid[2],grid[6]));break;
+				case 5: currValue = max(analysisAIGridCards(dealtCard,grid[3],grid[4]), analysisAIGridCards(dealtCard,grid[2],grid[8]),0,0);break;
+				case 6: currValue = max(analysisAIGridCards(dealtCard,grid[7],grid[8]), analysisAIGridCards(dealtCard,grid[0],grid[3]), analysisAIGridCards(dealtCard,grid[2],grid[4]),0);break;
+				case 7: currValue = max(analysisAIGridCards(dealtCard,grid[6],grid[8]), analysisAIGridCards(dealtCard,grid[1],grid[4]),0,0);break;
+				case 8: currValue = max(analysisAIGridCards(dealtCard,grid[6],grid[7]), analysisAIGridCards(dealtCard,grid[2],grid[5]), analysisAIGridCards(dealtCard,grid[0],grid[4]),0);break;
+		
+			}
+		}
+
+		//test
+		//alert("curr:" + i + " currValue:" + currValue);
+		//
+		value[i] = currValue;
+	}
+	return value;
+	
+
+}
+
+function checkAIGridValueForConservative(dealtCards,grid){
+	var valueArr = new Array();
+	var value = [0,0,0,0,0,0,0,0,0];
+	for(var i=0;i<6;i++){
+		if(dealtCards[i].suit != SPECIAL_SUIT){
+			value = calAIGridValueForConservative(value,dealtCards[i],grid);
+		}
+		valueArr.push(value);
+
+
+
+
+		value = [0,0,0,0,0,0,0,0,0];
+	}
+	return valueArr;
+}
+
+function analysisAIGridCardsForConservative(dealtCard,card1,card2){
+	return analysisGridCardsForConservative(dealtCard,card1,card2);
+}
+function analysisGridCardsForConservative(dealtCard,card1,card2){
+	var c1 = -1;
+	var c2 = -1;
+	//for the case of no card inside the grid
+	if(!card1)
+		c1 = 0;
+	if(!card2)
+		c2 = 0;
+	if(c1 == -1 && c2 == -1){
+		//Three cards exists
+	if((dealtCard.rank >= 10 && dealtCard.rank <= 12) && (card1.rank >= 10 && card1.rank <= 12) && (card2.rank >= 10 && card2.rank <= 12)){
+		if(dealtCard.suit == card1.suit && dealtCard.suit == card2.suit && card1.suit == card2.suit){
+			if(dealtCard.rank != card1.rank && dealtCard.rank != card2.rank && card1.rank != card2.rank){ //JQK Straight Flush
+				return (8-6)+2;
+			}
+
+		}
+		else{
+			if(dealtCard.rank != card1.rank && dealtCard.rank != card2.rank && card1.rank != card2.rank){ //JQK Straight
+				return (8-3)+2;
+			}
+			else // Same kind
+				return (8-2)+2;
+		}
+	}
+	else{ //not JQK
+		var cardArr = new Array();
+			cardArr.push(dealtCard.rank);
+			cardArr.push(card1.rank);
+			cardArr.push(card2.rank);
+			cardArr.sort();
+		if(dealtCard.suit == card1.suit && dealtCard.suit == card2.suit && card1.suit == card2.suit){
+			if(cardArr[2] - cardArr[1] == 1 && cardArr[1] - cardArr[0] == 1){ //Straight Flush
+				return (8-5)+2;
+			}
+			else //Flush
+				return (8-4)+2;
+		}
+		else
+			if(cardArr[2] - cardArr[1] == 1 && cardArr[1] - cardArr[0] == 1){ //Straight
+				return (8-3)+2;
+			}
+			else if(dealtCard.rank - card1.rank == 0 && dealtCard.rank - card2.rank == 0)//same kind
+				return (8-2)+2;
+			else //Cant form anything
+				return 0;
+	}
+
+	}
+	//for dealtCard only
+	if(c1 == 0 && c2 == 0){
+		//no comparison
+		return 1;
+
+	}
+	//for one 
+	if(c1 == 0){
+		if(dealtCard.rank >= 10 && dealtCard.rank <= 12 && card2.rank >= 10 && card2.rank <= 12){ //JQK 
+			if(dealtCard.suit == card2.suit && dealtCard.rank != card2.rank){ //JQK Straight Flush
+				return 8-6;
+			}
+			else{
+				if(dealtCard.rank - card2.rank >= -2 && dealtCard.rank - card2.rank <= 2 && dealtCard.rank != card2.rank){  //JQK Straight
+					return 8-3;
+				}
+				else if(dealtCard.rank - card2.rank == 0){ //JQK same kind
+					return 8-2;
+				}
+			}
+		}
+		else{
+			
+			if(dealtCard.suit == card2.suit){ //not JQK
+				if(dealtCard.rank - card2.rank >= -2 && dealtCard.rank - card2.rank <= 2 && dealtCard.rank != card2.rank){ //Straight Flush
+					return 8-5;
+				}
+				else	//Flush
+					return 8-4;
+			}
+			else{
+				if(dealtCard.rank - card2.rank >= -2 && dealtCard.rank - card2.rank <= 2 && dealtCard.rank != card2.rank){ //Straight
+					return 8-3;
+				}
+				else if(dealtCard.rank - card2.rank == 0){ //Same kind
+					return 8-2;
+				}
+				else //can't form these kind above
+					return 0;
+			}
+			
+
+		}
+
+	}
+
+	if(c2 == 0){
+		if(dealtCard.rank >= 10 && dealtCard.rank <= 12 && card1.rank >= 10 && card1.rank <= 12){ //JQK 
+			if(dealtCard.suit == card1.suit && dealtCard.rank != card1.rank){ //JQK Straight Flush
+				return 8-6;
+			}
+			else{
+				if(dealtCard.rank - card1.rank >= -2 && dealtCard.rank - card1.rank <= 2 && dealtCard.rank != card1.rank){  //JQK Straight
+					return 8-3;
+				}
+				else if(dealtCard.rank - card1.rank == 0){ //JQK same kind
+					return 8-2;
+				}
+			}
+		}
+		else{
+			if(dealtCard.suit == card1.suit){ //not JQK
+				if(dealtCard.rank - card1.rank >= -2 && dealtCard.rank - card1.rank <= 2 && dealtCard.rank != card1.rank){ //Straight Flush
+					return 8-5;
+				}
+				else	//Flush
+					return 8-4;
+			}
+			else{
+				if(dealtCard.rank - card1.rank >= -2 && dealtCard.rank - card1.rank <= 2 && dealtCard.rank != card1.rank){ //Straight
+					return 8-3;
+				}
+				else if(dealtCard.rank - card1.rank == 0){ //Same kind
+					return 8-2;
+				}
+				else //can't form these kind above
+					return 0;
+			}
+		
+
+		}
+
+	}
+}
+/*function conservative()
 {
 	var found;
 	
@@ -1274,5 +1557,5 @@ function conservative()
 	}												//focusCardIndex : the index from the card deck 						
 	return {focusCardIndex:found,destPos:destPos};	//destPos : the position of the ai grid 
 }
-
+*/
 
