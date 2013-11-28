@@ -15,23 +15,12 @@ Please follow the return format of aiAction()
 4. if AI want to use torch, provide the burn target
 		burnTarget: (ai/player)
 */
-<<<<<<< HEAD
-function aiAction(){
-	//testing
-	//return conservative();
-	//return veryAggressive();
-	//return random();
-	return aggressive();
-	//return targetOriented();
-
-=======
-
 function aiAction(){
 	if (gameDifficulty == VERY_HARD) return veryAggressive();
 	else if (gameDifficulty == HARD) return aggressive();
 	else if (gameDifficulty == NORMAL) return targetOriented();
 	else return random();
->>>>>>> 029ba3d8d1c6ab14dfe0233d6f097b67458e44a4
+
 }
 
 function veryAggressive(){
