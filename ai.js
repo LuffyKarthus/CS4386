@@ -17,9 +17,9 @@ Please follow the return format of aiAction()
 */
 
 function aiAction(){
-	if (gameDifficuly == VERY_HARD) return veryAggressive();
-	else if (gameDifficuly == HARD) return aggressive();
-	else if (gameDifficuly == NORMAL) return targetOriented();
+	if (gameDifficulty == VERY_HARD) return veryAggressive();
+	else if (gameDifficulty == HARD) return aggressive();
+	else if (gameDifficulty == NORMAL) return targetOriented();
 	else return random();
 }
 
