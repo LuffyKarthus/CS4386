@@ -283,6 +283,9 @@ function gameLoop(){
 function gameDie(){
 	playSound(END_GAME);
 	$("#surface").fadeOut(500);
+	
+	for (var i = 0; i < 9; i++)
+		if (player.hands[i]) setInterval("aniHighlightHand(player.gridPosX,i)",20*i);
 }
 </script>
 </head>

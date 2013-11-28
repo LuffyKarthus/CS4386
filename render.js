@@ -117,13 +117,10 @@ function renderWelcome(){
 			}
 		welcome.globalAlpha = 1;
 		welcome.drawImage(image,0,515,380,45,290,aniLogoPosY,380,45);
-		if (focusDifficultyIndex > -1) {
-			welcome.drawImage(image,0,780,300,100,180+300*(focusDifficultyIndex%2),260+100*Math.floor(focusDifficultyIndex*0.5),300,100);
-			welcome.clearRect(200+300*(focusDifficultyIndex%2),280+100*Math.floor(focusDifficultyIndex*0.5),260,60);
+		for (var i = 0; i < 4; i++) {
+			if (focusDifficultyIndex == i) welcome.drawImage(image,300*i,780,300,100,180+300*(i%2),260+100*Math.floor(i*0.5),300,100);
+			else welcome.drawImage(image,20+300*i,800,260,60,200+300*(i%2),280+100*Math.floor(i*0.5),260,60);
 		}
-		for (var i = 0; i < 4; i++)
-			welcome.drawImage(image,20+300*i,800,260,60,200+300*(i%2),280+100*Math.floor(i*0.5),260,60);
-			
 		welcome.fillStyle = "#0033FF";
 		welcome.font = "30px Lilita One";
 		welcome.textAlign = "center";
