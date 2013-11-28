@@ -15,12 +15,19 @@ Please follow the return format of aiAction()
 4. if AI want to use torch, provide the burn target
 		burnTarget: (ai/player)
 */
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2aae06a1c21a67d4c36cd7ad45f7219a4a7364b5
 function aiAction(){
 	if (gameDifficulty == VERY_HARD) return veryAggressive();
 	else if (gameDifficulty == HARD) return aggressive();
 	else if (gameDifficulty == NORMAL) return targetOriented();
 	else return random();
+<<<<<<< HEAD
+=======
 
+>>>>>>> 2aae06a1c21a67d4c36cd7ad45f7219a4a7364b5
 }
 
 function veryAggressive(){
@@ -83,6 +90,7 @@ function veryAggressive(){
 					var isChoose = false;
 
 					for(var i=0;i<9;i++){
+						if(player.grid[i])
 						if(player.grid[i].suit == SPECIAL_SUIT){
 							if(player.grid[i].rank == 0){
 								var p = i;
@@ -728,9 +736,13 @@ function random(){
 	//destPos : the position of the ai grid 
 	return {focusCardIndex:choose,destPos:destPos};
 }
+<<<<<<< HEAD
 
 
 function conservative(){
+=======
+/*function conservative(){
+>>>>>>> 3ac04ad449be3f2d55d51fab67378a9ba20ab97a
 	var choose;
 	var destPos;
 	var prior = new Array();
