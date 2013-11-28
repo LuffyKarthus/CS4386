@@ -15,19 +15,12 @@ Please follow the return format of aiAction()
 4. if AI want to use torch, provide the burn target
 		burnTarget: (ai/player)
 */
-<<<<<<< HEAD
 
-=======
->>>>>>> 2aae06a1c21a67d4c36cd7ad45f7219a4a7364b5
 function aiAction(){
 	if (gameDifficulty == VERY_HARD) return veryAggressive();
 	else if (gameDifficulty == HARD) return aggressive();
 	else if (gameDifficulty == NORMAL) return targetOriented();
 	else return random();
-<<<<<<< HEAD
-=======
-
->>>>>>> 2aae06a1c21a67d4c36cd7ad45f7219a4a7364b5
 }
 
 function veryAggressive(){
@@ -703,17 +696,19 @@ function random(){
 	//ai player would choose the cards in random
 
 	var randNum;
-
+	var choose;
 	//For the CardDeck Part
 	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
 	do{
-	 	randNum = Math.floor(Math.random()*6);
-
+		do{
+	 		randNum = Math.floor(Math.random()*6);
+	 		choose = randNum;
+	 	}while(dealtCards[randNum].suit == SPECIAL_SUIT);
 	 	//|check
 	 	//alert("choose: "+randNum);
 	 	//|check
 	}while(randNum == 6);
-	var choose = randNum;
+	
 
 	//For the ai grid part
 	//to ensure that the random num is within 0 - 5 (6 will cause arrayOutOfBound)
@@ -736,11 +731,7 @@ function random(){
 	//destPos : the position of the ai grid 
 	return {focusCardIndex:choose,destPos:destPos};
 }
-<<<<<<< HEAD
 
-
-function conservative(){
-=======
 /*function conservative(){
 >>>>>>> 3ac04ad449be3f2d55d51fab67378a9ba20ab97a
 	var choose;
