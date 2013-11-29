@@ -168,7 +168,8 @@ function Player(name,gridPosX){
 		//Draw the player's hands
 		for (var i = 0; i < 8; i++) {
 			if (this.hands[i]) {
-				if (aniHighlightHandInFoucusIndex == i) board.drawImage(image,295,455,60,60,this.gridPosX-13+38*i,120,60,60);
+				if (aniHighlightHandInFoucusIndex == i && player.mouseX >= this.gridPosX && player.mouseX <= this.gridPosX+300)
+					board.drawImage(image,295,455,60,60,this.gridPosX-13+38*i,120,60,60);
 				this.hands[i].drawHand(this.gridPosX+2+i*38);
 			}
 		}

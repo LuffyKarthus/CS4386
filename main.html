@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>Tic-A-Tac Poker</title>
-<link href="http://fonts.googleapis.com/css?family=Lilita+One" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="theme.css" media="all">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Lilita+One" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="ai.js"></script>
 <script src="card.js"></script>
 <script src="class.js"></script>
@@ -19,20 +19,27 @@ image.onload = getResource;
 
 sound = new Audio();
 sound.src = "sound.wav";
+sound.preload = "auto";
+
 event = new Audio();
 event.src = "event.wav";
+event.preload = "auto";
+
 hand = new Audio();
 hand.src = "hand.wav";
+hand.preload = "auto";
 
 bgmH = new Audio();
 bgmH.loop = true;
-bgmH.volume = 0.1;
+bgmH.volume = 0.05;
 bgmH.src = "makaimura.mp3";
+bgmH.preload = "auto";
 
 bgmN = new Audio();
 bgmN.loop = true;
 bgmN.volume = 0.05;
 bgmN.src = "spelunk.mp3";
+bgmN.preload = "auto";
 
 //Constant////////////////////////////////////////
 //Sound
@@ -113,16 +120,19 @@ function getResource(){
 }
 
 function gameWelcome(){
-	if (gameDifficulty == -1) setTimeout(function(){
-														do {
-															var suit = Math.floor(Math.random()*5);
-															var rank = Math.floor(Math.random()*13);
-														} while (suit == SPECIAL_SUIT && rank > TORCH_RANK);
-														var card = new Card(suit,rank);
-														var flyAngle = Math.floor(Math.random()*360);
-														card.posX = 480;
-														card.posY = 320;
-														if (Math.random() < 0.5) aniFlyingCards.push({card:card,flyAngle:flyAngle})},20);
+	if (gameDifficulty == -1) setTimeout(
+		function(){
+			do {
+				var suit = Math.floor(Math.random()*5);
+				var rank = Math.floor(Math.random()*13);
+			} while (suit == SPECIAL_SUIT && rank > TORCH_RANK);
+			var card = new Card(suit,rank);
+			var flyAngle = Math.floor(Math.random()*360);
+			card.posX = 480;
+			card.posY = 320;
+			if (Math.random() < 0.5) aniFlyingCards.push({card:card,flyAngle:flyAngle})
+		}
+	,20);
 	
 	renderWelcome();
 	if (gameDifficulty > -1) aniLogoPosY -= 3;

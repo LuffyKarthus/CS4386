@@ -82,7 +82,7 @@ function mouseMoveHandler(e){
 				aniClear();
 				aniHighlightHandInFoucus = true;
 				aniHighlightHandInFoucusIndex = index;
-				aniShow = setInterval(function(){aniHighlightHand(player.gridPosX,ai.hands[index].matchPos)},20);
+				aniShow = setInterval(function(){aniHighlightHand(ai.gridPosX,ai.hands[index].matchPos)},20);
 			}
 		} else {
 			aniHighlightHandInFoucus = false;
